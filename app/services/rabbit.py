@@ -39,9 +39,6 @@ class RabbitClient:
             self.channel.basic_publish(
                 exchange=exchange, routing_key=routing_key, body=body,
             )
-
-            return True
-
         except pika.exceptions.AMQPConnectionError as error:
             raise error
 

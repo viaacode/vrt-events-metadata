@@ -40,7 +40,7 @@ class EventListener:
             event = MetadataUpdatedEvent(body)
         except InvalidEventException as ex:
             # The message body doesn't have the required fields.
-            channel.basic_reject(delivery_tag=method.delivery_tag)
+            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
 
         # 3. Check if mediahaven has the object
         try:
@@ -50,9 +50,11 @@ class EventListener:
             fragment_id = fragment["MediaDataList"][0]["Internal"]["FragmentId"]
         except RequestException as ex:
             # An error occured when connecting to MH
+            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
             pass
         except KeyError as ex:
             # Fragment is not found in MH
+            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             pass
 
         # 4. Call mtd-transformation-service
@@ -65,12 +67,13 @@ class EventListener:
             transformation_response.raise_for_status()
         except RequestException as ex:
             # Metadata transformation failed.
+            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             pass
 
         # 5. Update mediahaven fragement with received metadata
 
         update_request = {
-            "correlation_id": "123",
+            "correlation_id": uuid.uuid4().hex,
             "fragment_id": fragment_id,
             "cp_id": mtd_cfg["transformation"],
             "data": transformation_response.text,
@@ -80,6 +83,7 @@ class EventListener:
             routing_key=self.config["mam-update-service"]["queue"],
             json.dumps(update_request),
         )
+
 
         channel.basic_ack(delivery_tag=method.delivery_tag)
 
