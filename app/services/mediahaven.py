@@ -70,11 +70,10 @@ class MediahavenClient:
 
         # Query is constructed as a string to prevent requests url encoding,
         # Mediahaven returns wrong result when encoded
-        query = f"q=%2b({query_key}:{value})&nrOfResults=1"
+        query = f"?q=%2b({query_key}:{value})&nrOfResults=1"
 
         # Send the GET request
         response = requests.get(f"{self.url}{query}", headers=headers,)
-        print(response.request.url)
 
         if response.status_code == 401:
             # AuthenticationException triggers a retry with a new token
