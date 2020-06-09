@@ -57,6 +57,9 @@ class EventListener:
                 "dc_identifier_localid", event.media_id
             )
             fragment_id = result["MediaDataList"][0]["Internal"]["FragmentId"]
+            self.log.debug(
+                "Found fragment id.", fragment_id=fragment_id, media_id=event.media_id
+            )
         except RequestException as ex:
             # An error occured when connecting to MH
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
