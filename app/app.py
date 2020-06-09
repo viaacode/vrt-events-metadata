@@ -46,6 +46,7 @@ class EventListener:
             if routing_key == "event.to.viaa.metadataUpdatedEvent":
                 event = MetadataUpdatedEvent(body)
         except InvalidEventException as ex:
+            self.log.info("Invalid event received.", event=body)
             # The message body doesn't have the required fields.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
@@ -61,6 +62,7 @@ class EventListener:
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
             return
         except KeyError as ex:
+            self.log.info("Fragment not found in MH", media_id=event.media_id)
             # Fragment is not found in MH
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
@@ -74,12 +76,15 @@ class EventListener:
             )
             transformation_response.raise_for_status()
         except RequestException as ex:
+            self.log.info(
+                "Failed to transform metadata in the sidecar format.",
+                metadata=event.metadata,
+            )
             # Metadata transformation failed.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
 
         # 5. Update mediahaven fragement with received metadata
-
         update_request = {
             "correlation_id": uuid.uuid4().hex,
             "fragment_id": fragment_id,
@@ -87,6 +92,9 @@ class EventListener:
             "data": transformation_response.text,
         }
 
+        self.log(
+            "Sending message to the mam update service!", update_request=update_request
+        )
         self.rabbit_client.send_message(
             routing_key=self.config["mam-update-service"]["queue"],
             body=json.dumps(update_request),
