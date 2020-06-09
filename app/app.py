@@ -56,6 +56,7 @@ class EventListener:
             result = self.mh_client.get_fragment(
                 "dc_identifier_localid", event.media_id
             )
+            self.log.debug("Mediahaven Result", result=result)
             fragment_id = result["MediaDataList"][0]["Internal"]["FragmentId"]
             self.log.debug(
                 "Found fragment id.", fragment_id=fragment_id, media_id=event.media_id
