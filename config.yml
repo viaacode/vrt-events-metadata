@@ -1,0 +1,20 @@
+viaa:
+    logging:
+        level: DEBUG
+app:
+    mediahaven: 
+        host: !ENV ${MEDIAHAVEN_HOST}
+        username: !ENV ${MEDIAHAVEN_USERNAME}
+        password: !ENV ${MEDIAHAVEN_PASSWORD}
+    rabbitmq:
+        host: !ENV ${RABBITMQ_HOST}
+        port: 5672
+        username: !ENV ${RABBITMQ_USERNAME}
+        password: !ENV ${RABBITMQ_PASSWORD}
+        queue: !ENV ${RABBITMQ_QUEUE}
+    mtd-transformer: 
+        host: !ENV ${MTD_TRANSFORMER}
+        transformation: OR-rf5kf25
+    mam-update-service:
+        queue: mam-update-requests
+
