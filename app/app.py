@@ -48,6 +48,7 @@ class EventListener:
         except InvalidEventException as ex:
             # The message body doesn't have the required fields.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
+            return
 
         # 3. Check if mediahaven has the object
         try:
@@ -58,11 +59,11 @@ class EventListener:
         except RequestException as ex:
             # An error occured when connecting to MH
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
-            pass
+            return
         except KeyError as ex:
             # Fragment is not found in MH
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-            pass
+            return
 
         # 4. Call mtd-transformation-service
         try:
@@ -75,7 +76,7 @@ class EventListener:
         except RequestException as ex:
             # Metadata transformation failed.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-            pass
+            return
 
         # 5. Update mediahaven fragement with received metadata
 
