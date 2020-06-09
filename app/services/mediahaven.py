@@ -68,14 +68,12 @@ class MediahavenClient:
     def get_fragment(self, query_key: str, value: str) -> dict:
         headers = self._construct_headers()
 
-        # Construct URL query parameters
-        params: dict = {
-            "q": f'%2b({query_key}:"{value}")',
-            "nrOfResults": 1,
-        }
+        # Query is constructed as a string to prevent requests url encoding,
+        # Mediahaven returns wrong result when encoded
+        query = f"q=%2b({query_key}:{value})&nrOfResults=1"
 
         # Send the GET request
-        response = requests.get(self.url, headers=headers, params=params,)
+        response = requests.get(f"{self.url}{query}", headers=headers,)
         print(response.request.url)
         print(str(params))
 
