@@ -46,7 +46,7 @@ class EventListener:
             if routing_key == "event.to.viaa.metadataUpdatedEvent":
                 event = MetadataUpdatedEvent(body)
         except InvalidEventException as ex:
-            self.log.info("Invalid event received.", event=body)
+            self.log.info("Invalid event received.", event=body, exception=ex)
             # The message body doesn't have the required fields.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
@@ -62,7 +62,9 @@ class EventListener:
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
             return
         except KeyError as ex:
-            self.log.info("Fragment not found in MH", media_id=event.media_id)
+            self.log.info(
+                "Fragment not found in MH", media_id=event.media_id, exception=ex
+            )
             # Fragment is not found in MH
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
@@ -79,6 +81,7 @@ class EventListener:
             self.log.info(
                 "Failed to transform metadata in the sidecar format.",
                 metadata=event.metadata,
+                exception=ex,
             )
             # Metadata transformation failed.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
