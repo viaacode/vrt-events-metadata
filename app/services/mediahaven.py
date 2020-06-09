@@ -76,6 +76,8 @@ class MediahavenClient:
 
         # Send the GET request
         response = requests.get(self.url, headers=headers, params=params,)
+        print(response.request.url)
+        print(str(params))
 
         if response.status_code == 401:
             # AuthenticationException triggers a retry with a new token
