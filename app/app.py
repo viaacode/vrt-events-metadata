@@ -37,9 +37,9 @@ class EventListener:
 
         # 2. Get metadata from event
         try:
-            if routing_key == "getMetadataResponse":
+            if routing_key == "event.to.viaa.getMetadataResponse":
                 event = GetMetadataResponse(body)
-            if routing_key == "metadataUpdatedEvent"
+            if routing_key == "event.to.viaa.metadataUpdatedEvent"
                 event = MetadataUpdatedEvent(body)
         except InvalidEventException as ex:
             # The message body doesn't have the required fields.
