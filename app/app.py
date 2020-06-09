@@ -10,7 +10,11 @@ from requests.exceptions import RequestException
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
-from app.helpers.events_parser import InvalidEventException, MetadataUpdatedEvent, GetMetadataResponse
+from app.helpers.events_parser import (
+    InvalidEventException,
+    MetadataUpdatedEvent,
+    GetMetadataResponse,
+)
 from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
 from pika.exceptions import AMQPConnectionError
@@ -33,13 +37,13 @@ class EventListener:
         """Main method that will handle the incoming messages.
         """
         # 1. Determine if event is getMetadataResponse or MetadataUpdate
-        routing_key = method.routing_key        
+        routing_key = method.routing_key
 
         # 2. Get metadata from event
         try:
             if routing_key == "event.to.viaa.getMetadataResponse":
                 event = GetMetadataResponse(body)
-            if routing_key == "event.to.viaa.metadataUpdatedEvent"
+            if routing_key == "event.to.viaa.metadataUpdatedEvent":
                 event = MetadataUpdatedEvent(body)
         except InvalidEventException as ex:
             # The message body doesn't have the required fields.
@@ -84,9 +88,8 @@ class EventListener:
 
         self.rabbit_client.send_message(
             routing_key=self.config["mam-update-service"]["queue"],
-            json.dumps(update_request),
+            body=json.dumps(update_request),
         )
-
 
         channel.basic_ack(delivery_tag=method.delivery_tag)
 
