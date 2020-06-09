@@ -95,7 +95,7 @@ class EventListener:
             "data": transformation_response.text,
         }
 
-        self.log(
+        self.log.info(
             "Sending message to the mam update service!", update_request=update_request
         )
         self.rabbit_client.send_message(
