@@ -56,7 +56,7 @@ class EventListener:
             result = self.mh_client.get_fragment(
                 "dc_identifier_localid", event.media_id
             )
-            self.log.debug("Mediahaven Result", result=result)
+
             fragment_id = result["MediaDataList"][0]["Internal"]["FragmentId"]
             self.log.debug(
                 "Found fragment id.", fragment_id=fragment_id, media_id=event.media_id
@@ -92,20 +92,13 @@ class EventListener:
             return
 
         # 5. Update mediahaven fragement with received metadata
-        update_request = {
-            "correlation_id": uuid.uuid4().hex,
-            "fragment_id": fragment_id,
-            "cp_id": mtd_cfg["transformation"],
-            "data": transformation_response.text,
-        }
-
-        self.log.info(
-            "Sending message to the mam update service!", update_request=update_request
-        )
-        self.rabbit_client.send_message(
-            routing_key=self.config["mam-update-service"]["queue"],
-            body=json.dumps(update_request),
-        )
+        try:
+            self.mh_client.update_metadata(fragment_id, transformation_response.text)
+        except RequestException as ex:
+            # An error occured when connecting to MH
+            self.log.error("Error while updating metadata.", error=ex, fragment_id=fragment_id)
+            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
+            return
 
         channel.basic_ack(delivery_tag=method.delivery_tag)
 
