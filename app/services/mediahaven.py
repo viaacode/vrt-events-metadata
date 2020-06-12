@@ -103,4 +103,4 @@ class MediahavenClient:
         # If there is an HTTP error, raise it
         response.raise_for_status()
 
-        return response.json()
+        return True

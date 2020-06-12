@@ -25,6 +25,6 @@ def test_parse_metadata_updated_event():
     event = MetadataUpdatedEvent(xml)
 
     # ASSERT
-    assert event.media_id == "123"
+    assert event.media_id == "TESTJEVANRUDOLF"
     assert event.timestamp == "2019-09-24T17:21:28.787+02:00"
     assert not event.metadata == ""
