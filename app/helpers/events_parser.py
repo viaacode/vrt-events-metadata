@@ -9,7 +9,9 @@ NAMESPACES = {"vrt": "http://www.vrt.be/mig/viaa/api"}
 
 
 class InvalidEventException(Exception):
-    pass
+    def __init__(self, message, **kwargs):
+        self.message = message
+        self.kwargs = kwargs
 
 
 class MetadataUpdatedEvent:
@@ -26,17 +28,14 @@ class MetadataUpdatedEvent:
         try:
             tree = etree.parse(BytesIO(xml))
         except etree.XMLSyntaxError:
-            return None
+            raise InvalidEventException("Event is not valid XML.")
 
         try:
             return tree.xpath("/vrt:metadataUpdatedEvent", namespaces=NAMESPACES)[0]
         except IndexError:
-            return None
+            raise InvalidEventException("Event is not a 'metadataUpdatedEvent'.")
 
     def __get_xpath_from_event(self, xpath, xml=False) -> str:
-        if self.event is None:
-            return ""
-
         try:
             if xml:
                 return etree.tostring(
@@ -46,7 +45,7 @@ class MetadataUpdatedEvent:
                 return self.event.xpath(xpath, namespaces=NAMESPACES)[0].text
 
         except IndexError:
-            return ""
+            raise InvalidEventException(f"'{xpath}' is not present in the event.")
 
 
 class GetMetadataResponse:
@@ -63,17 +62,14 @@ class GetMetadataResponse:
         try:
             tree = etree.parse(BytesIO(xml))
         except etree.XMLSyntaxError:
-            return None
+            raise InvalidEventException("Event is not valid XML.")
 
         try:
             return tree.xpath("/vrt:getMetadataResponse", namespaces=NAMESPACES)[0]
         except IndexError:
-            return None
+            raise InvalidEventException("Event is not a 'GetMetadataResponse'.")
 
     def __get_xpath_from_event(self, xpath, xml=False) -> str:
-        if self.event is None:
-            return ""
-
         try:
             if xml:
                 return etree.tostring(
@@ -82,4 +78,4 @@ class GetMetadataResponse:
             else:
                 return self.event.xpath(xpath, namespaces=NAMESPACES)[0].text
         except IndexError:
-            return ""
+            raise InvalidEventException(f"'{xpath}' is not present in the event.")
