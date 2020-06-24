@@ -46,7 +46,7 @@ class EventListener:
             if routing_key == "event.to.viaa.metadataUpdatedEvent":
                 event = MetadataUpdatedEvent(body)
         except InvalidEventException as ex:
-            self.log.info("Invalid event received.", event=body, exception=ex)
+            self.log.info("Invalid event received.", body=body, exception=ex)
             # The message body doesn't have the required fields.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
@@ -96,7 +96,9 @@ class EventListener:
             self.mh_client.update_metadata(fragment_id, transformation_response.text)
         except RequestException as ex:
             # An error occured when connecting to MH
-            self.log.error("Error while updating metadata.", error=ex, fragment_id=fragment_id)
+            self.log.error(
+                "Error while updating metadata.", error=ex, fragment_id=fragment_id
+            )
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
 
