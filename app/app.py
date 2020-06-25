@@ -8,7 +8,7 @@ from datetime import datetime
 
 import requests
 from pika.exceptions import AMQPConnectionError
-from requests.exceptions import RequestException
+from requests.exceptions import HTTPError, RequestException
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
@@ -83,25 +83,35 @@ class EventListener:
                 url, data=event.metadata, headers={"Content-Type": "application/xml"},
             )
             transformation_response.raise_for_status()
-        except RequestException as ex:
+        except HTTPError as ex:
             self.log.info(
                 "Failed to transform metadata in the sidecar format.",
                 metadata=event.metadata,
                 exception=ex,
             )
-            # Metadata transformation failed.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
+        except RequestException as ex:
+            # An error occured when connecting to MTD-transfo, requeue to try again after 10 secs.
+            time.sleep(10)
+            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
+            return
+
 
         # 5. Update mediahaven fragement with received metadata
         try:
             self.mh_client.update_metadata(fragment_id, transformation_response.text)
-        except RequestException as ex:
-            # An error occured when connecting to MH
+        except HTTPError as ex:
+            # Invalid metadata update
             self.log.error(
                 "Error while updating metadata.", error=ex, fragment_id=fragment_id
             )
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
+            return
+        except RequestException as ex:
+            # An error occured when connecting to MH, requeue to try again after 10 secs.
+            time.sleep(10)
+            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
             return
 
         channel.basic_ack(delivery_tag=method.delivery_tag)
