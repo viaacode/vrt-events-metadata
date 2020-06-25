@@ -2,22 +2,23 @@
 # -*- coding: utf-8 -*-
 
 import json
+import time
 import uuid
 from datetime import datetime
 
 import requests
+from pika.exceptions import AMQPConnectionError
 from requests.exceptions import RequestException
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
 from app.helpers.events_parser import (
+    GetMetadataResponse,
     InvalidEventException,
     MetadataUpdatedEvent,
-    GetMetadataResponse,
 )
 from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
-from pika.exceptions import AMQPConnectionError
 
 
 class EventListener:
@@ -62,7 +63,8 @@ class EventListener:
                 "Found fragment id.", fragment_id=fragment_id, media_id=event.media_id
             )
         except RequestException as ex:
-            # An error occured when connecting to MH
+            # An error occured when connecting to MH, requeue to try again after 10 secs.
+            time.sleep(10)
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
             return
         except KeyError as ex:
