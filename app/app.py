@@ -67,7 +67,7 @@ class EventListener:
             time.sleep(10)
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
             return
-        except KeyError as ex:
+        except IndexError as ex:
             self.log.info(
                 "Fragment not found in MH", media_id=event.media_id, exception=ex
             )
