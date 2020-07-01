@@ -5,7 +5,11 @@ from io import BytesIO
 from lxml import etree
 
 # Constants
-NAMESPACES = {"vrt": "http://www.vrt.be/mig/viaa/api"}
+NAMESPACES = {
+    "vrt": "http://www.vrt.be/mig/viaa/api",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "ebu": "urn:ebu:metadata-schema:ebuCore_2012",
+}
 
 
 class InvalidEventException(Exception):
@@ -53,6 +57,7 @@ class GetMetadataResponse:
 
     def __init__(self, xml):
         self.event = self.__get_event(xml)
+        self.__validate_metadata()
         self.timestamp = self.__get_xpath_from_event("./vrt:timestamp")
         self.metadata = self.__get_xpath_from_event("./vrt:metadata", xml=True)
         self.media_id = self.__get_xpath_from_event("./vrt:correlationId")
@@ -69,7 +74,7 @@ class GetMetadataResponse:
         except IndexError:
             raise InvalidEventException("Event is not a 'GetMetadataResponse'.")
 
-    def __get_xpath_from_event(self, xpath, xml=False) -> str:
+    def __get_xpath_from_event(self, xpath, xml=False, default: str = None) -> str:
         try:
             if xml:
                 return etree.tostring(
@@ -78,4 +83,61 @@ class GetMetadataResponse:
             else:
                 return self.event.xpath(xpath, namespaces=NAMESPACES)[0].text
         except IndexError:
-            raise InvalidEventException(f"'{xpath}' is not present in the event.")
+            if default is not None:
+                return default
+            else:
+                raise InvalidEventException(f"'{xpath}' is not present in the event.")
+
+    def __validate_metadata(self):
+        # Mandatory variables = message is invalid
+        framerate = int(
+            self.__get_xpath_from_event(
+                "(//ebu:format[@formatDefinition='current'])[1]/ebu:videoFormat/ebu:frameRate"
+            )
+        )
+        som = self.__get_xpath_from_event(
+            "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='SOM']"
+        )
+        duration = self.__get_xpath_from_event(
+            "//ebu:description[@typeDefinition='duration']/dc:description"
+        )
+
+        # Optional = set default value
+        soc = self.__get_xpath_from_event(
+            "(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode",
+            default="00:00:00:00",
+        )
+        eoc = self.__get_xpath_from_event(
+            "(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode",
+            default=duration,
+        )
+        eom = self.__get_xpath_from_event(
+            "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='EOM']",
+            default=duration,
+        )
+
+        timecodes = [
+            self.__timecode_to_frames(timecode, framerate)
+            for timecode in [som, soc, eoc, eom]
+        ]
+
+        if timecodes != sorted(timecodes):
+            raise InvalidEventException(
+                f"Something is wrong with the SOM, SOC, EOC, EOM order."
+            )
+
+        if bool(self.__get_xpath_from_event(
+            "(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode",
+            default=0,
+        )) ^ bool(self.__get_xpath_from_event(
+            "(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode",
+            default=0,
+        )):
+            raise InvalidEventException(
+                f"Only SOC or EOC is present. They should both be present or none at all."
+            )
+
+    def __timecode_to_frames(self, timecode, framerate):
+        hours, minutes, seconds, frames = [int(part) for part in timecode.split(":")]
+
+        return (hours * 3600 + minutes * 60 + seconds) * framerate + frames
