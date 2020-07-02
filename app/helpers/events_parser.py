@@ -27,7 +27,7 @@ class Event(object):
         self.timestamp = self._get_xpath_from_event("./vrt:timestamp")
         self.metadata = self._get_xpath_from_event("./vrt:metadata", xml=True)
 
-    def _get_xpath_from_event(self, xpath, xml=False, default: str = None) -> str:
+    def _get_xpath_from_event(self, xpath, xml=False, optional: bool = False) -> str:
         try:
             if xml:
                 return etree.tostring(
@@ -36,65 +36,63 @@ class Event(object):
             else:
                 return self.event.xpath(xpath, namespaces=NAMESPACES)[0].text
         except IndexError:
-            if default is not None:
-                return default
+            if optional:
+                return ""
             else:
                 raise InvalidEventException(f"'{xpath}' is not present in the event.")
 
     def _validate_metadata(self):
-        # Mandatory variables = message is invalid
         framerate = int(
             self._get_xpath_from_event(
                 "(//ebu:format[@formatDefinition='current'])[1]/ebu:videoFormat/ebu:frameRate"
             )
         )
-        som = self._get_xpath_from_event(
-            "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='SOM']"
-        )
         duration = self._get_xpath_from_event(
             "//ebu:description[@typeDefinition='duration']/dc:description"
         )
-
-        # Optional = set default value
+        som = self._get_xpath_from_event(
+            "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='SOM']"
+        )
         soc = self._get_xpath_from_event(
             "(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode",
-            default="00:00:00:00",
+            optional=True,
         )
         eoc = self._get_xpath_from_event(
             "(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode",
-            default=duration,
+            optional=True,
         )
         eom = self._get_xpath_from_event(
             "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='EOM']",
-            default=duration,
+            optional=True,
         )
 
-        timecodes = [
-            self.__timecode_to_frames(timecode, framerate)
-            for timecode in [som, soc, eoc, eom]
-        ]
+        if bool(soc) ^ bool(eoc):
+            raise InvalidEventException(
+                f"Only SOC or EOC is present. They should both be present or none at all."
+            )
+
+        duration_frames = self.__timecode_to_frames(duration, framerate)
+        som_frames = self.__timecode_to_frames(som, framerate)
+        soc_frames = self.__timecode_to_frames(soc, framerate) if soc else som_frames
+        eoc_frames = (
+            self.__timecode_to_frames(eoc, framerate)
+            if eoc
+            else som_frames + duration_frames
+        )
+        eom_frames = (
+            self.__timecode_to_frames(eom, framerate)
+            if eom
+            else som_frames + duration_frames
+        )
+
+        timecodes = [som_frames, soc_frames, eoc_frames, eom_frames]
 
         if timecodes != sorted(timecodes):
             raise InvalidEventException(
                 f"Something is wrong with the SOM, SOC, EOC, EOM order."
             )
 
-        if bool(
-            self._get_xpath_from_event(
-                "(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode",
-                default=0,
-            )
-        ) ^ bool(
-            self._get_xpath_from_event(
-                "(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode",
-                default=0,
-            )
-        ):
-            raise InvalidEventException(
-                f"Only SOC or EOC is present. They should both be present or none at all."
-            )
-
-    def __timecode_to_frames(self, timecode, framerate):
+    def __timecode_to_frames(self, timecode: str, framerate: int) -> int:
         try:
             hours, minutes, seconds, frames = [
                 int(part) for part in timecode.split(":")
