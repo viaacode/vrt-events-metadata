@@ -13,6 +13,7 @@ INVALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponseOnlySoc",
     "getMetadataResponseSocAfterEom",
     "getMetadataResponseSomMissing",
+    "getMetadataResponseMalformedTimecode",
 ]
 
 

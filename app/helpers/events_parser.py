@@ -18,63 +18,16 @@ class InvalidEventException(Exception):
         self.kwargs = kwargs
 
 
-class MetadataUpdatedEvent:
-    """Convenience class for an updated metadata Event"""
+class Event(object):
+    """The base Event object."""
 
     def __init__(self, xml):
-        self.event = self.__get_event(xml)
-        self.timestamp = self.__get_xpath_from_event("./vrt:timestamp")
-        self.metadata = self.__get_xpath_from_event("./vrt:metadata", xml=True)
-        self.media_id = self.__get_xpath_from_event("./vrt:mediaId")
+        self.event = self._get_event(xml)
+        self._validate_metadata()
+        self.timestamp = self._get_xpath_from_event("./vrt:timestamp")
+        self.metadata = self._get_xpath_from_event("./vrt:metadata", xml=True)
 
-    def __get_event(self, xml: str):
-        """Parse the input XML to a DOM"""
-        try:
-            tree = etree.parse(BytesIO(xml))
-        except etree.XMLSyntaxError:
-            raise InvalidEventException("Event is not valid XML.")
-
-        try:
-            return tree.xpath("/vrt:metadataUpdatedEvent", namespaces=NAMESPACES)[0]
-        except IndexError:
-            raise InvalidEventException("Event is not a 'metadataUpdatedEvent'.")
-
-    def __get_xpath_from_event(self, xpath, xml=False) -> str:
-        try:
-            if xml:
-                return etree.tostring(
-                    self.event.xpath(xpath, namespaces=NAMESPACES)[0]
-                ).decode("utf-8")
-            else:
-                return self.event.xpath(xpath, namespaces=NAMESPACES)[0].text
-
-        except IndexError:
-            raise InvalidEventException(f"'{xpath}' is not present in the event.")
-
-
-class GetMetadataResponse:
-    """Convenience class for an XML getMetadataResponse Event"""
-
-    def __init__(self, xml):
-        self.event = self.__get_event(xml)
-        self.__validate_metadata()
-        self.timestamp = self.__get_xpath_from_event("./vrt:timestamp")
-        self.metadata = self.__get_xpath_from_event("./vrt:metadata", xml=True)
-        self.media_id = self.__get_xpath_from_event("./vrt:correlationId")
-
-    def __get_event(self, xml: str):
-        """Parse the input XML to a DOM"""
-        try:
-            tree = etree.parse(BytesIO(xml))
-        except etree.XMLSyntaxError:
-            raise InvalidEventException("Event is not valid XML.")
-
-        try:
-            return tree.xpath("/vrt:getMetadataResponse", namespaces=NAMESPACES)[0]
-        except IndexError:
-            raise InvalidEventException("Event is not a 'GetMetadataResponse'.")
-
-    def __get_xpath_from_event(self, xpath, xml=False, default: str = None) -> str:
+    def _get_xpath_from_event(self, xpath, xml=False, default: str = None) -> str:
         try:
             if xml:
                 return etree.tostring(
@@ -88,30 +41,30 @@ class GetMetadataResponse:
             else:
                 raise InvalidEventException(f"'{xpath}' is not present in the event.")
 
-    def __validate_metadata(self):
+    def _validate_metadata(self):
         # Mandatory variables = message is invalid
         framerate = int(
-            self.__get_xpath_from_event(
+            self._get_xpath_from_event(
                 "(//ebu:format[@formatDefinition='current'])[1]/ebu:videoFormat/ebu:frameRate"
             )
         )
-        som = self.__get_xpath_from_event(
+        som = self._get_xpath_from_event(
             "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='SOM']"
         )
-        duration = self.__get_xpath_from_event(
+        duration = self._get_xpath_from_event(
             "//ebu:description[@typeDefinition='duration']/dc:description"
         )
 
         # Optional = set default value
-        soc = self.__get_xpath_from_event(
+        soc = self._get_xpath_from_event(
             "(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode",
             default="00:00:00:00",
         )
-        eoc = self.__get_xpath_from_event(
+        eoc = self._get_xpath_from_event(
             "(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode",
             default=duration,
         )
-        eom = self.__get_xpath_from_event(
+        eom = self._get_xpath_from_event(
             "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='EOM']",
             default=duration,
         )
@@ -126,18 +79,70 @@ class GetMetadataResponse:
                 f"Something is wrong with the SOM, SOC, EOC, EOM order."
             )
 
-        if bool(self.__get_xpath_from_event(
-            "(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode",
-            default=0,
-        )) ^ bool(self.__get_xpath_from_event(
-            "(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode",
-            default=0,
-        )):
+        if bool(
+            self._get_xpath_from_event(
+                "(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode",
+                default=0,
+            )
+        ) ^ bool(
+            self._get_xpath_from_event(
+                "(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode",
+                default=0,
+            )
+        ):
             raise InvalidEventException(
                 f"Only SOC or EOC is present. They should both be present or none at all."
             )
 
     def __timecode_to_frames(self, timecode, framerate):
-        hours, minutes, seconds, frames = [int(part) for part in timecode.split(":")]
+        try:
+            hours, minutes, seconds, frames = [
+                int(part) for part in timecode.split(":")
+            ]
+        except (TypeError, AttributeError, ValueError) as error:
+            raise InvalidEventException(
+                f"Invalid timecode in the event.", timecode=timecode
+            )
 
         return (hours * 3600 + minutes * 60 + seconds) * framerate + frames
+
+
+class MetadataUpdatedEvent(Event):
+    """Convenience class for an updated metadata Event"""
+
+    def __init__(self, xml):
+        super().__init__(xml)
+        self.media_id = super()._get_xpath_from_event("./vrt:mediaId")
+
+    def _get_event(self, xml: str):
+        """Parse the input XML to a DOM"""
+        try:
+            tree = etree.parse(BytesIO(xml))
+        except etree.XMLSyntaxError:
+            raise InvalidEventException("Event is not valid XML.")
+
+        try:
+            return tree.xpath(f"/vrt:metadataUpdatedEvent", namespaces=NAMESPACES)[0]
+        except IndexError:
+            raise InvalidEventException(f"Event is not a 'metadataUpdatedEvent'.")
+
+
+class GetMetadataResponse(Event):
+    """Convenience class for an XML getMetadataResponse Event"""
+
+    def __init__(self, xml):
+        super().__init__(xml)
+        self.media_id = super()._get_xpath_from_event("./vrt:correlationId")
+
+    def _get_event(self, xml: str):
+        """Parse the input XML to a DOM"""
+        try:
+            tree = etree.parse(BytesIO(xml))
+        except etree.XMLSyntaxError:
+            raise InvalidEventException("Event is not valid XML.")
+
+        try:
+            return tree.xpath(f"/vrt:getMetadataResponse", namespaces=NAMESPACES)[0]
+        except IndexError:
+            raise InvalidEventException(f"Event is not a 'getMetadataResponse'.")
+
