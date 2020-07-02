@@ -1,0 +1,20 @@
+viaa:
+    logging:
+        level: DEBUG
+app:
+    mediahaven: 
+        host: 
+        username: 
+        password:
+    rabbitmq:
+        host:
+        port:
+        username:
+        password:
+        queue:
+    mtd-transformer: 
+        host:
+        transformation:
+    mam-update-service:
+        queue:
+
