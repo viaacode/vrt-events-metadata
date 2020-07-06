@@ -14,12 +14,19 @@ INVALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponseSocAfterEom",
     "getMetadataResponseSomMissing",
     "getMetadataResponseMalformedTimecode",
+    "getMetadataResponseHiresMissing",
+]
+
+VALID_METADATA_RESPONSE_EVENTS = [
+    "getMetadataResponse",
+    "getMetadataResponseLoresNodeBeforeHires",
 ]
 
 
-def test_parse_get_metadata_response():
+@pytest.mark.parametrize("event", VALID_METADATA_RESPONSE_EVENTS)
+def test_parse_get_metadata_response(event):
     # ARRANGE
-    xml = resources.load_xml_resource("getMetadataResponse")
+    xml = resources.load_xml_resource(event)
 
     # ACT
     event = GetMetadataResponse(xml)

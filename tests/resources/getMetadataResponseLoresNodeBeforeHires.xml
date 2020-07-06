@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ns2:getMetadataResponse xmlns="http://www.vrt.be/mig/viaa" 
+  xmlns:ns2="http://www.vrt.be/mig/viaa/api" 
+  xmlns:ns3="http://purl.org/dc/elements/1.1/" 
+  xmlns:ns4="urn:ebu:metadata-schema:ebuCore_2012">
+  <ns2:correlationId>123</ns2:correlationId>
+  <ns2:timestamp>2019-09-24T17:21:28.787+02:00</ns2:timestamp>
+  <ns2:status>SUCCESS</ns2:status>
+  <ns2:metadata>
+    <ns4:title>
+      <ns3:title>Winners FIFA BEST Awards</ns3:title>
+    </ns4:title>
+    <ns4:alternativeTitle>
+      <ns3:title/>
+    </ns4:alternativeTitle>
+    <ns4:alternativeTitle typeDefinition="season">
+      <ns3:title/>
+    </ns4:alternativeTitle>
+    <ns4:alternativeTitle typeDefinition="series">
+      <ns3:title>EVS</ns3:title>
+    </ns4:alternativeTitle>
+    <ns4:alternativeTitle typeDefinition="program">
+      <ns3:title/>
+    </ns4:alternativeTitle>
+    <ns4:creator>
+      <ns4:organisationDetails>
+        <ns4:organisationName/>
+      </ns4:organisationDetails>
+      <ns4:role typeDefinition="productionCompany"/>
+    </ns4:creator>
+    <ns4:creator>
+      <ns4:organisationDetails>
+        <ns4:organisationName/>
+      </ns4:organisationDetails>
+      <ns4:role typeDefinition="provenance"/>
+    </ns4:creator>
+    <ns4:subject note=""/>
+    <ns4:description typeDefinition="short">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:description typeDefinition="long">
+      <ns3:description>[Juergen Klopp, Megan Rapinoe and Lionel Messi win awards in Milano]?\nJuergen Klopp wins coach of the year, Megan Rapinoe best female player, Lionel Messi best male player and Jill Ellis best female coach at the FIFA BEST awards.\n?-Vs of BEST award exteriors\n?-Kylian Mbapp\xc3\xa9 exiting ceremony\n?-WS Sari Van Veenendaal\n?SOUNDBITE (English) Virgil Van Dyke:""\n?-Jill Ellis exiting ceremony\n?SOUNDBITE (German) Juergen Klopp: "The curse seems lifted, as of now things go only in the right direction. We will see. It was a very successful year for us. This is great but as i said on stage, if Maurizio (Pochettino) had won that final than someone else would be lifting this trophy. Well now I have it, so is life. This is not something I would ever have expected, not when I finished school, not when I finished my studies. This is a special moment"\n?-Lionel Messi exiting ceremony hastily\n?SOUNDBITE (English) Megan Rapinoe:""\n?-MS Lucy Bronze\n?SOUNDBITE (English) Luka Modric:""\n?-WS of La Scala theater with award\nOpnamelocatie: MilanoITALYEUROPE</ns3:description>
+    </ns4:description>
+    <ns4:description typeDefinition="season">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:description typeDefinition="comment">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:description typeDefinition="cast">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:description typeDefinition="category">
+      <ns3:description>sport</ns3:description>
+    </ns4:description>
+    <ns4:description typeDefinition="categoryTrailer">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:description typeDefinition="productionMethod">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:description typeDefinition="status">
+      <ns3:description>nieuw</ns3:description>
+    </ns4:description>
+    <ns4:description typeDefinition="cleanMediaVersion">
+      <ns3:description>0</ns3:description>
+    </ns4:description>
+    <ns4:description typeDefinition="hasBeenBroadcasted">
+      <ns3:description>true</ns3:description>
+    </ns4:description>
+    <ns4:description typeDefinition="contentCheck">
+      <ns3:description>false</ns3:description>
+    </ns4:description>
+    <ns4:description typeDefinition="historicalFormat">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:description typeDefinition="duration">
+      <ns3:description>00:03:24:21</ns3:description>
+    </ns4:description>
+    <ns4:description typeDefinition="rights">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:description typeDefinition="rightsType">
+      <ns3:description/>
+    </ns4:description>
+    <ns4:publisher>
+      <ns4:organisationDetails>
+        <ns4:organisationName>EBU SPORT</ns4:organisationName>
+      </ns4:organisationDetails>
+      <ns4:role typeDefinition="publisher"/>
+    </ns4:publisher>
+    <ns4:date>
+      <ns4:created/>
+      <ns4:alternative startDate="2019-09-24" startTime="00:00:00" typeDefinition="mainDate"/>
+    </ns4:date>
+    <ns4:type>
+      <ns4:genre typeDefinition=""/>
+      <ns4:objectType typeDefinition="footage"/>
+    </ns4:type>
+    <ns4:format formatDefinition="current">
+      <ns4:videoFormat videoFormatDefinition="lores">
+        <ns4:width>1280</ns4:width>
+        <ns4:height>720</ns4:height>
+        <ns4:frameRate>25</ns4:frameRate>
+        <ns4:aspectRatio>
+          <ns4:factorNumerator>16</ns4:factorNumerator>
+          <ns4:factorDenominator>9</ns4:factorDenominator>
+        </ns4:aspectRatio>
+        <ns4:codec>
+          <ns4:name>H264</ns4:name>
+        </ns4:codec>
+        <ns4:bitRate>2668816</ns4:bitRate>
+      </ns4:videoFormat>
+      <ns4:containerFormat formatDefinition="MP4"/>
+      <ns4:start>
+        <ns4:timecode>00:00:00:00</ns4:timecode>
+      </ns4:start>
+      <ns4:end>
+        <ns4:timecode>00:03:24:21</ns4:timecode>
+      </ns4:end>
+      <ns4:technicalAttributeString typeDefinition="SOM">00:00:00:00</ns4:technicalAttributeString>
+    </ns4:format>
+    <ns4:format formatDefinition="current">
+      <ns4:videoFormat videoFormatDefinition="hires">
+        <ns4:width>1920</ns4:width>
+        <ns4:height>1080</ns4:height>
+        <ns4:frameRate>25</ns4:frameRate>
+        <ns4:aspectRatio>
+          <ns4:factorNumerator>16</ns4:factorNumerator>
+          <ns4:factorDenominator>9</ns4:factorDenominator>
+        </ns4:aspectRatio>
+        <ns4:codec>
+          <ns4:name>AVC-I</ns4:name>
+        </ns4:codec>
+        <ns4:bitRate>113664000</ns4:bitRate>
+      </ns4:videoFormat>
+      <ns4:containerFormat formatDefinition="MXF OP1a"/>
+      <ns4:start>
+        <ns4:timecode>00:00:00:00</ns4:timecode>
+      </ns4:start>
+      <ns4:end>
+        <ns4:timecode>00:03:24:21</ns4:timecode>
+      </ns4:end>
+      <ns4:technicalAttributeString typeDefinition="SOM">00:00:00:00</ns4:technicalAttributeString>
+    </ns4:format>
+    <ns4:identifier typeDefinition="MEDIA_ID">
+      <ns3:identifier>AIM10048454</ns3:identifier>
+      <ns4:attributor>
+        <ns4:organisationDetails>
+          <ns4:organisationName>AIM</ns4:organisationName>
+        </ns4:organisationDetails>
+      </ns4:attributor>
+    </ns4:identifier>
+    <ns4:identifier typeDefinition="historicalRecordNumber">
+      <ns3:identifier/>
+    </ns4:identifier>
+    <ns4:rights>
+      <ns4:rightsHolder>
+        <ns4:organisationDetails>
+          <ns4:organisationName>Rechtenhouder: ZZEBU\nRechteninfo: The material may be used only by Eurovision active members and sub-licensees.\n</ns4:organisationName>
+        </ns4:organisationDetails>
+      </ns4:rightsHolder>
+    </ns4:rights>
+  </ns2:metadata>
+</ns2:getMetadataResponse>

@@ -23,9 +23,9 @@ class Event(object):
 
     def __init__(self, xml):
         self.event = self._get_event(xml)
-        self._validate_metadata()
         self.timestamp = self._get_xpath_from_event("./vrt:timestamp")
         self.metadata = self._get_xpath_from_event("./vrt:metadata", xml=True)
+        self._validate_metadata()
 
     def _get_xpath_from_event(self, xpath, xml=False, optional: bool = False) -> str:
         try:
@@ -42,27 +42,24 @@ class Event(object):
                 raise InvalidEventException(f"'{xpath}' is not present in the event.")
 
     def _validate_metadata(self):
+        base_xpath = "//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='hires']]"
         framerate = int(
-            self._get_xpath_from_event(
-                "(//ebu:format[@formatDefinition='current'])[1]/ebu:videoFormat/ebu:frameRate"
-            )
+            self._get_xpath_from_event(f"{base_xpath}/ebu:videoFormat/ebu:frameRate")
         )
         duration = self._get_xpath_from_event(
             "//ebu:description[@typeDefinition='duration']/dc:description"
         )
         som = self._get_xpath_from_event(
-            "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='SOM']"
+            f"{base_xpath}/ebu:technicalAttributeString[@typeDefinition='SOM']"
         )
         soc = self._get_xpath_from_event(
-            "(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode",
-            optional=True,
+            f"{base_xpath}/ebu:start/ebu:timecode", optional=True,
         )
         eoc = self._get_xpath_from_event(
-            "(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode",
-            optional=True,
+            f"{base_xpath}/ebu:end/ebu:timecode", optional=True,
         )
         eom = self._get_xpath_from_event(
-            "(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='EOM']",
+            f"{base_xpath}/ebu:technicalAttributeString[@typeDefinition='EOM']",
             optional=True,
         )
 
