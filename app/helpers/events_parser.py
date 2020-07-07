@@ -23,7 +23,8 @@ class Event(object):
 
     def __init__(self, xml):
         self.event = self._get_event(xml)
-        self.timestamp = self._get_xpath_from_event("./vrt:timestamp")
+        # TODO: Timestamp is currently optional, waiting on VRT to implement, see DEV-1052
+        self.timestamp = self._get_xpath_from_event("./vrt:timestamp", optional=True)
         self.metadata = self._get_xpath_from_event("./vrt:metadata", xml=True)
         self._validate_metadata()
 
