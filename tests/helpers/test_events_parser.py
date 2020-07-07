@@ -1,18 +1,38 @@
 import pytest
 
-from app.helpers.events_parser import GetMetadataResponse, MetadataUpdatedEvent
+from app.helpers.events_parser import (
+    GetMetadataResponse,
+    MetadataUpdatedEvent,
+    InvalidEventException,
+)
 from tests.resources import resources
 
+INVALID_METADATA_RESPONSE_EVENTS = [
+    "getMetadataResponseDurationMissing",
+    "getMetadataResponseFramerateMissing",
+    "getMetadataResponseOnlySoc",
+    "getMetadataResponseSocAfterEom",
+    "getMetadataResponseSomMissing",
+    "getMetadataResponseMalformedTimecode",
+    "getMetadataResponseHiresMissing",
+]
 
-def test_parse_get_metadata_response():
+VALID_METADATA_RESPONSE_EVENTS = [
+    "getMetadataResponse",
+    "getMetadataResponseLoresNodeBeforeHires",
+]
+
+
+@pytest.mark.parametrize("event", VALID_METADATA_RESPONSE_EVENTS)
+def test_parse_get_metadata_response(event):
     # ARRANGE
-    xml = resources.load_xml_resource("getMetadataResponse2")
+    xml = resources.load_xml_resource(event)
 
     # ACT
     event = GetMetadataResponse(xml)
 
     # ASSERT
-    assert event.media_id == "TESTJEVANRUDOLF"
+    assert event.media_id == "123"
     assert event.timestamp == "2019-09-24T17:21:28.787+02:00"
     assert not event.metadata == ""
 
@@ -28,3 +48,13 @@ def test_parse_metadata_updated_event():
     assert event.media_id == "TESTJEVANRUDOLF"
     assert event.timestamp == "2019-09-24T17:21:28.787+02:00"
     assert not event.metadata == ""
+
+
+@pytest.mark.parametrize("event", INVALID_METADATA_RESPONSE_EVENTS)
+def test_parse_invalid_get_metadata_response(event):
+    # ARRANGE
+    xml = resources.load_xml_resource(event)
+
+    # ACT
+    with pytest.raises(InvalidEventException):
+        event = GetMetadataResponse(xml)

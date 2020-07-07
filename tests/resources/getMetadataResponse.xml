@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ns2:getMetadataResponse xmlns="http://www.vrt.be/mig/viaa" xmlns:ns2="http://www.vrt.be/mig/viaa/api" xmlns:ns3="http://purl.org/dc/elements/1.1/" xmlns:ns4="urn:ebu:metadata-schema:ebuCore_2012">
+<ns2:getMetadataResponse xmlns="http://www.vrt.be/mig/viaa" 
+  xmlns:ns2="http://www.vrt.be/mig/viaa/api" 
+  xmlns:ns3="http://purl.org/dc/elements/1.1/" 
+  xmlns:ns4="urn:ebu:metadata-schema:ebuCore_2012">
   <ns2:correlationId>123</ns2:correlationId>
   <ns2:timestamp>2019-09-24T17:21:28.787+02:00</ns2:timestamp>
   <ns2:status>SUCCESS</ns2:status>

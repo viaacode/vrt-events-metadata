@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ns2:metadataUpdatedEvent xmlns="http://www.vrt.be/mig/viaa" 
+<ns2:getMetadataResponse xmlns="http://www.vrt.be/mig/viaa" 
   xmlns:ns2="http://www.vrt.be/mig/viaa/api" 
   xmlns:ns3="http://purl.org/dc/elements/1.1/" 
   xmlns:ns4="urn:ebu:metadata-schema:ebuCore_2012">
-  <ns2:mediaId>TESTJEVANRUDOLF</ns2:mediaId>
+  <ns2:correlationId>123</ns2:correlationId>
   <ns2:timestamp>2019-09-24T17:21:28.787+02:00</ns2:timestamp>
+  <ns2:status>SUCCESS</ns2:status>
   <ns2:metadata>
     <ns4:title>
-      <ns3:title>Rudolf was hier...</ns3:title>
+      <ns3:title>Winners FIFA BEST Awards</ns3:title>
     </ns4:title>
     <ns4:alternativeTitle>
       <ns3:title/>
@@ -114,9 +115,6 @@
       <ns4:start>
         <ns4:timecode>00:00:00:00</ns4:timecode>
       </ns4:start>
-      <ns4:end>
-        <ns4:timecode>00:03:24:21</ns4:timecode>
-      </ns4:end>
       <ns4:technicalAttributeString typeDefinition="SOM">00:00:00:00</ns4:technicalAttributeString>
     </ns4:format>
     <ns4:format formatDefinition="current">
@@ -143,7 +141,7 @@
       <ns4:technicalAttributeString typeDefinition="SOM">00:00:00:00</ns4:technicalAttributeString>
     </ns4:format>
     <ns4:identifier typeDefinition="MEDIA_ID">
-      <ns3:identifier>TESTJEVANRUDOLF</ns3:identifier>
+      <ns3:identifier>AIM10048454</ns3:identifier>
       <ns4:attributor>
         <ns4:organisationDetails>
           <ns4:organisationName>AIM</ns4:organisationName>
@@ -161,4 +159,4 @@
       </ns4:rightsHolder>
     </ns4:rights>
   </ns2:metadata>
-</ns2:metadataUpdatedEvent>
+</ns2:getMetadataResponse>
