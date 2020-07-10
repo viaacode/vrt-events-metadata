@@ -12,11 +12,7 @@ from requests.exceptions import HTTPError, RequestException
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
-from app.helpers.events_parser import (
-    GetMetadataResponse,
-    InvalidEventException,
-    MetadataUpdatedEvent,
-)
+from app.helpers.events_parser import Event, InvalidEventException
 from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
 
@@ -38,16 +34,13 @@ class EventListener:
         """Main method that will handle the incoming messages.
         """
         # 1. Determine if event is getMetadataResponse or MetadataUpdate
-        routing_key = method.routing_key
+        event_type = method.routing_key.split(".")[-1]
 
         # 2. Get metadata from event
         try:
-            if routing_key == "event.to.viaa.getMetadataResponse":
-                event = GetMetadataResponse(body)
-            if routing_key == "event.to.viaa.metadataUpdatedEvent":
-                event = MetadataUpdatedEvent(body)
+            event = Event(event_type, body)
         except InvalidEventException as ex:
-            self.log.info("Invalid event received.", body=body, exception=ex)
+            self.log.warning("Invalid event received.", body=body, exception=ex)
             # The message body doesn't have the required fields.
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
@@ -96,7 +89,6 @@ class EventListener:
             time.sleep(10)
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
             return
-
 
         # 5. Update mediahaven fragement with received metadata
         try:

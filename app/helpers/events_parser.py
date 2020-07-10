@@ -21,12 +21,22 @@ class InvalidEventException(Exception):
 class Event(object):
     """The base Event object."""
 
-    def __init__(self, xml):
+    def __init__(self, event_type: str, xml: bytes):
         self.event = self._get_event(xml)
         # TODO: Timestamp is currently optional, waiting on VRT to implement, see DEV-1052
         self.timestamp = self._get_xpath_from_event("./vrt:timestamp", optional=True)
         self.metadata = self._get_xpath_from_event("./vrt:metadata", xml=True)
+        self.media_id = self._get_xpath_from_event(
+            "//ebu:identifier[@typeDefinition='MEDIA_ID']/dc:identifier"
+        )
         self._validate_metadata()
+
+    def _get_event(self, xml: str):
+        """Parse the input XML to a DOM"""
+        try:
+            return etree.parse(BytesIO(xml))
+        except etree.XMLSyntaxError:
+            raise InvalidEventException("Event is not valid XML.")
 
     def _get_xpath_from_event(self, xpath, xml=False, optional: bool = False) -> str:
         try:
@@ -101,44 +111,3 @@ class Event(object):
             )
 
         return (hours * 3600 + minutes * 60 + seconds) * framerate + frames
-
-
-class MetadataUpdatedEvent(Event):
-    """Convenience class for an updated metadata Event"""
-
-    def __init__(self, xml):
-        super().__init__(xml)
-        self.media_id = super()._get_xpath_from_event("./vrt:mediaId")
-
-    def _get_event(self, xml: str):
-        """Parse the input XML to a DOM"""
-        try:
-            tree = etree.parse(BytesIO(xml))
-        except etree.XMLSyntaxError:
-            raise InvalidEventException("Event is not valid XML.")
-
-        try:
-            return tree.xpath(f"/vrt:metadataUpdatedEvent", namespaces=NAMESPACES)[0]
-        except IndexError:
-            raise InvalidEventException(f"Event is not a 'metadataUpdatedEvent'.")
-
-
-class GetMetadataResponse(Event):
-    """Convenience class for an XML getMetadataResponse Event"""
-
-    def __init__(self, xml):
-        super().__init__(xml)
-        self.media_id = super()._get_xpath_from_event("./vrt:correlationId")
-
-    def _get_event(self, xml: str):
-        """Parse the input XML to a DOM"""
-        try:
-            tree = etree.parse(BytesIO(xml))
-        except etree.XMLSyntaxError:
-            raise InvalidEventException("Event is not valid XML.")
-
-        try:
-            return tree.xpath(f"/vrt:getMetadataResponse", namespaces=NAMESPACES)[0]
-        except IndexError:
-            raise InvalidEventException(f"Event is not a 'getMetadataResponse'.")
-
