@@ -16,6 +16,7 @@ INVALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponseHiresMissing",
     "getMetadataResponseMediaIDMissing",
     "getMetadataResponseInvalidTimecode",
+    "getMetadataResponseWrongRootTag",
     "invalidXml",
 ]
 
@@ -44,8 +45,9 @@ INVALID_TIMECODES = [
     "00:100:00:02",
     "-5:00:00:02",
     "01:-03:03:04",
-    "Ik heb zin in een zin, maar heeft deze zin wel zin?"
+    "Ik heb zin in een zin, maar heeft deze zin wel zin?",
 ]
+
 
 @pytest.mark.parametrize("event", VALID_METADATA_RESPONSE_EVENTS)
 def test_parse_get_metadata_response(event):
@@ -83,6 +85,7 @@ def test_parse_invalid_get_metadata_response(event):
     with pytest.raises(InvalidEventException):
         event = Event("getMetadataResponse", xml)
 
+
 @pytest.mark.parametrize("timecode", VALID_TIMECODES)
 def test_timecode_to_frames(timecode):
     # ARRANGE
@@ -94,6 +97,7 @@ def test_timecode_to_frames(timecode):
 
     # ASSERT
     assert frames == timecode[2]
+
 
 @pytest.mark.parametrize("timecode", INVALID_TIMECODES)
 def test_invalid_timecode_to_frames(timecode):

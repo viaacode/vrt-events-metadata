@@ -22,7 +22,7 @@ class Event(object):
     """The base Event object."""
 
     def __init__(self, event_type: str, xml: bytes):
-        self.event = self._get_event(xml)
+        self.event = self._get_event(event_type, xml)
         # TODO: Timestamp is currently optional, waiting on VRT to implement, see DEV-1052
         self.timestamp = self._get_xpath_from_event("./vrt:timestamp", optional=True)
         self.metadata = self._get_xpath_from_event("./vrt:metadata", xml=True)
@@ -31,12 +31,17 @@ class Event(object):
         )
         self._validate_metadata()
 
-    def _get_event(self, xml: str):
+    def _get_event(self, event_type: str, xml: str):
         """Parse the input XML to a DOM"""
         try:
-            return etree.parse(BytesIO(xml))
+            tree = etree.parse(BytesIO(xml))
         except etree.XMLSyntaxError:
             raise InvalidEventException("Event is not valid XML.")
+
+        try:
+            return tree.xpath(f"/vrt:{event_type}", namespaces=NAMESPACES)[0]
+        except IndexError:
+            raise InvalidEventException(f"Event is not a '{event_type}'.")
 
     def _get_xpath_from_event(self, xpath, xml=False, optional: bool = False) -> str:
         try:
