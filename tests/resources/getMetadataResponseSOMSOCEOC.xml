@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<viaa:getMetadataResponse xmlns:viaa="http://www.vrt.be/mig/viaa/api" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ebu="urn:ebu:metadata-schema:ebuCore_2012" xmlns:ns4="http://www.vrt.be/mig/viaa">
+  <viaa:correlationId>test_correlation</viaa:correlationId>
+  <viaa:timestamp>2019-09-24T17:21:28.787+02:00</viaa:timestamp>
+  <viaa:status>SUCCESS</viaa:status>
+  <viaa:metadata>
+    <ebu:title>
+      <dc:title>titel003</dc:title>
+    </ebu:title>
+    <ebu:alternativeTitle>
+      <dc:title>alt_titel</dc:title>
+    </ebu:alternativeTitle>
+    <ebu:alternativeTitle typeDefinition="season">
+      <dc:title>seizoen</dc:title>
+    </ebu:alternativeTitle>
+    <ebu:alternativeTitle typeDefinition="series">
+      <dc:title>reekstitel</dc:title>
+    </ebu:alternativeTitle>
+    <ebu:alternativeTitle typeDefinition="program">
+      <dc:title>titel001</dc:title>
+    </ebu:alternativeTitle>
+    <ebu:creator>
+      <ebu:organisationDetails>
+        <ebu:organisationName>productiehuis</ebu:organisationName>
+      </ebu:organisationDetails>
+      <ebu:role typeDefinition="productionCompany" />
+    </ebu:creator>
+    <ebu:creator>
+      <ebu:organisationDetails>
+        <ebu:organisationName />
+      </ebu:organisationDetails>
+      <ebu:role typeDefinition="provenance" />
+    </ebu:creator>
+    <ebu:subject note="" />
+    <ebu:description typeDefinition="short">
+      <dc:description>korte inhoud</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="long">
+      <dc:description>beschrijving</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="season">
+      <dc:description />
+    </ebu:description>
+    <ebu:description typeDefinition="comment">
+      <dc:description>opmerking</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="cast">
+      <dc:description>Cast</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="category">
+      <dc:description>onbepaald</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="categoryTrailer">
+      <dc:description />
+    </ebu:description>
+    <ebu:description typeDefinition="productionMethod">
+      <dc:description>gemengd</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="status">
+      <dc:description>nieuw</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="cleanMediaVersion">
+      <dc:description />
+    </ebu:description>
+    <ebu:description typeDefinition="hasBeenBroadcasted">
+      <dc:description>true</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="contentCheck">
+      <dc:description>false</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="historicalFormat">
+      <dc:description>formaat</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="duration">
+      <dc:description>00:00:50:00</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="rights">
+      <dc:description>Toelichting</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="rightsType">
+      <dc:description>vrij gebruik</dc:description>
+    </ebu:description>
+    <ebu:publisher>
+      <ebu:organisationDetails>
+        <ebu:organisationName />
+      </ebu:organisationDetails>
+      <ebu:role typeDefinition="publisher" />
+    </ebu:publisher>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Journalist</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="reporter" />
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Archivaris</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="archivaris" />
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Assistent</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="assistant" />
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Commentator</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="commentator" />
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Medewerker</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="onbepaald" />
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Presentator</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="presenter" />
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Producer</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="producer" />
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Regisseur</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="director" />
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Scenarist</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="scenarist" />
+    </ebu:contributor>
+    <ebu:date>
+      <ebu:created />
+      <ebu:alternative startDate="1970-05-01" startTime="00:00:00" typeDefinition="mainDate" />
+    </ebu:date>
+    <ebu:type>
+      <ebu:genre typeDefinition="hosting" />
+      <ebu:objectType typeDefinition="item" />
+    </ebu:type>
+    <ebu:format formatDefinition="current">
+      <ebu:videoFormat videoFormatDefinition="hires">
+        <ebu:width>1920</ebu:width>
+        <ebu:height>1080</ebu:height>
+        <ebu:frameRate>25</ebu:frameRate>
+        <ebu:aspectRatio>
+          <ebu:factorNumerator>16</ebu:factorNumerator>
+          <ebu:factorDenominator>9</ebu:factorDenominator>
+        </ebu:aspectRatio>
+        <ebu:codec>
+          <ebu:name>AVC-I</ebu:name>
+        </ebu:codec>
+        <ebu:bitRate>113664000</ebu:bitRate>
+      </ebu:videoFormat>
+      <ebu:containerFormat formatDefinition="MXF OP1a" />
+      <ebu:start>
+        <ebu:timecode>10:13:40:00</ebu:timecode>
+      </ebu:start>
+      <ebu:end>
+        <ebu:timecode>10:14:30:00</ebu:timecode>
+      </ebu:end>
+      <ebu:technicalAttributeString typeDefinition="SOM">10:13:39:00</ebu:technicalAttributeString>
+    </ebu:format>
+    <ebu:format formatDefinition="current">
+      <ebu:videoFormat videoFormatDefinition="lores">
+        <ebu:width>1280</ebu:width>
+        <ebu:height>720</ebu:height>
+        <ebu:frameRate>25</ebu:frameRate>
+        <ebu:aspectRatio>
+          <ebu:factorNumerator>16</ebu:factorNumerator>
+          <ebu:factorDenominator>9</ebu:factorDenominator>
+        </ebu:aspectRatio>
+        <ebu:codec>
+          <ebu:name>H264</ebu:name>
+        </ebu:codec>
+        <ebu:bitRate>6342896</ebu:bitRate>
+      </ebu:videoFormat>
+      <ebu:containerFormat formatDefinition="MP4" />
+      <ebu:start>
+        <ebu:timecode>10:13:40:00</ebu:timecode>
+      </ebu:start>
+      <ebu:end>
+        <ebu:timecode>10:14:30:00</ebu:timecode>
+      </ebu:end>
+      <ebu:technicalAttributeString typeDefinition="SOM">10:13:39:00</ebu:technicalAttributeString>
+    </ebu:format>
+    <ebu:identifier typeDefinition="MEDIA_ID">
+      <dc:identifier>TEST_ID</dc:identifier>
+      <ebu:attributor>
+        <ebu:organisationDetails>
+          <ebu:organisationName />
+        </ebu:organisationDetails>
+      </ebu:attributor>
+    </ebu:identifier>
+    <ebu:identifier typeDefinition="historicalRecordNumber">
+      <dc:identifier>onr</dc:identifier>
+    </ebu:identifier>
+    <ebu:identifier typeDefinition="historicalCarrier">
+      <dc:identifier>Historische drager</dc:identifier>
+    </ebu:identifier>
+    <ebu:relation typeDefinition="Item behoort tot programma">
+      <ebu:relationIdentifier>
+        <dc:identifier>testmeemoo_001</dc:identifier>
+      </ebu:relationIdentifier>
+    </ebu:relation>
+    <ebu:rights>
+      <ebu:rightsHolder>
+        <ebu:organisationDetails>
+          <ebu:organisationName>Rechteninfo</ebu:organisationName>
+        </ebu:organisationDetails>
+      </ebu:rightsHolder>
+    </ebu:rights>
+    <ebu:publicationHistory>
+      <ebu:publicationEvent>
+        <ebu:publicationDate>1980-09-03</ebu:publicationDate>
+        <ebu:publicationTime>00:00:00</ebu:publicationTime>
+        <ebu:publicationChannel typeDefinition="Radio 2 Oost-Vlaanderen" typeLabel="KETNET">details</ebu:publicationChannel>
+      </ebu:publicationEvent>
+      <ebu:publicationEvent>
+        <ebu:publicationDate>1970-05-03</ebu:publicationDate>
+        <ebu:publicationTime>00:00:00</ebu:publicationTime>
+        <ebu:publicationChannel typeDefinition="onbepaald" />
+      </ebu:publicationEvent>
+    </ebu:publicationHistory>
+  </viaa:metadata>
+</viaa:getMetadataResponse>
