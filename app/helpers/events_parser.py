@@ -92,11 +92,7 @@ class Event(object):
             if eoc
             else som_frames + duration_frames
         )
-        eom_frames = (
-            self.__timecode_to_frames(eom, framerate)
-            if eom
-            else eoc_frames
-        )
+        eom_frames = self.__timecode_to_frames(eom, framerate) if eom else eoc_frames
 
         timecodes = [som_frames, soc_frames, eoc_frames, eom_frames]
 
