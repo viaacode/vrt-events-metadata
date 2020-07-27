@@ -23,6 +23,7 @@ INVALID_METADATA_RESPONSE_EVENTS = [
 VALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponse",
     "getMetadataResponseLoresNodeBeforeHires",
+    "getMetadataResponseSOMSOCEOC",
 ]
 
 VALID_TIMECODES = [
@@ -58,7 +59,7 @@ def test_parse_get_metadata_response(event):
     event = Event("getMetadataResponse", xml)
 
     # ASSERT
-    assert event.media_id == "AIM10048454"
+    assert event.media_id == "TEST_ID"
     assert event.timestamp == "2019-09-24T17:21:28.787+02:00"
     assert not event.metadata == ""
 
