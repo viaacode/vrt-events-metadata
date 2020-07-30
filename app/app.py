@@ -12,10 +12,10 @@ from requests.exceptions import HTTPError, RequestException
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
-from app.helpers.events_parser import Event, InvalidEventException
+from app.helpers.events_parser import EventParser
 from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
-
+from app.models.exceptions import InvalidEventException
 
 class EventListener:
     def __init__(self):
@@ -23,6 +23,7 @@ class EventListener:
         self.log = logging.get_logger(__name__, config=configParser)
         self.config = configParser.app_cfg
         self.mh_client = MediahavenClient(self.config)
+        self.event_parser = EventParser()
 
         try:
             self.rabbit_client = RabbitClient()
@@ -38,7 +39,7 @@ class EventListener:
 
         # 2. Get metadata from event
         try:
-            event = Event(event_type, body)
+            event = self.event_parser.parse_event(event_type, body)
         except InvalidEventException as ex:
             self.log.warning("Invalid event received.", body=body, exception=ex)
             # The message body doesn't have the required fields.
@@ -52,6 +53,8 @@ class EventListener:
             )
 
             fragment_id = result["MediaDataList"][0]["Internal"]["FragmentId"]
+            department_id = result["MediaDataList"][0]["Internal"]["DepartmentId"]
+            pid = result["MediaDataList"][0]["Administrative"]["ExternalId"]
             self.log.debug(
                 "Found fragment id.", fragment_id=fragment_id, media_id=event.media_id
             )
@@ -67,8 +70,13 @@ class EventListener:
             # Fragment is not found in MH
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
+        
+        # 4. Save ebucore metadata as colleteral
+        try:
+            external_id = f"{pid}_metadata"
+            self.mh_client.upload_file(file, external_id, department_id)
 
-        # 4. Call mtd-transformation-service
+        # 5. Call mtd-transformation-service
         try:
             mtd_cfg = self.config["mtd-transformer"]
             url = f"{mtd_cfg['host']}/transform/?transformation={mtd_cfg['transformation']}"
@@ -90,7 +98,7 @@ class EventListener:
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
             return
 
-        # 5. Update mediahaven fragement with received metadata
+        # 6. Update mediahaven fragement with received metadata
         try:
             self.mh_client.update_metadata(fragment_id, transformation_response.text)
         except HTTPError as ex:

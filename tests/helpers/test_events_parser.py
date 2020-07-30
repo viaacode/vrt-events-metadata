@@ -1,9 +1,10 @@
 import pytest
+from app.models.event import Event
+from app.models.metadata import Metadata
+from app.helpers.events_parser import EventParser
+from app.models.exceptions import InvalidEventException
 
-from app.helpers.events_parser import (
-    Event,
-    InvalidEventException,
-)
+
 from tests.resources import resources
 
 INVALID_METADATA_RESPONSE_EVENTS = [
@@ -54,47 +55,54 @@ INVALID_TIMECODES = [
 def test_parse_get_metadata_response(event):
     # ARRANGE
     xml = resources.load_xml_resource(event)
+    event_parser = EventParser()
 
     # ACT
-    event = Event("getMetadataResponse", xml)
+    event = event_parser.get_event("getMetadataResponse", xml)
 
     # ASSERT
-    assert event.media_id == "TEST_ID"
+    assert event.metadata.media_id == "TEST_ID"
     assert event.timestamp == "2019-09-24T17:21:28.787+02:00"
-    assert not event.metadata == ""
+    assert event.status == "SUCCESS"
+    assert event.correlation_id == "test_correlation"
+    assert event.metadata.raw is not None
 
 
 def test_parse_metadata_updated_event():
     # ARRANGE
     xml = resources.load_xml_resource("metadataUpdatedEvent")
+    event_parser = EventParser()
 
     # ACT
-    event = Event("metadataUpdatedEvent", xml)
+    event = event_parser.get_event("metadataUpdatedEvent", xml)
 
     # ASSERT
-    assert event.media_id == "TESTJEVANRUDOLF"
+    assert event.metadata.media_id == "TESTJEVANRUDOLF"
     assert event.timestamp == "2019-09-24T17:21:28.787+02:00"
-    assert not event.metadata == ""
+    assert event.media_id == "TESTJEVANRUDOLF"
+    assert event.metadata.raw is not None
 
 
 @pytest.mark.parametrize("event", INVALID_METADATA_RESPONSE_EVENTS)
 def test_parse_invalid_get_metadata_response(event):
     # ARRANGE
     xml = resources.load_xml_resource(event)
+    event_parser = EventParser()
 
     # ACT
     with pytest.raises(InvalidEventException):
-        event = Event("getMetadataResponse", xml)
+        event = event_parser.get_event("getMetadataResponse", xml)
 
 
 @pytest.mark.parametrize("timecode", VALID_TIMECODES)
 def test_timecode_to_frames(timecode):
     # ARRANGE
     xml = resources.load_xml_resource("getMetadataResponse")
-    event = Event("getMetadataResponse", xml)
+    event_parser = EventParser()
+    event = event_parser.get_event("getMetadataResponse", xml)
 
     # ACT
-    frames = event._Event__timecode_to_frames(timecode[0], timecode[1])
+    frames = event.metadata._Metadata__timecode_to_frames(timecode[0], timecode[1])
 
     # ASSERT
     assert frames == timecode[2]
@@ -104,8 +112,10 @@ def test_timecode_to_frames(timecode):
 def test_invalid_timecode_to_frames(timecode):
     # ARRANGE
     xml = resources.load_xml_resource("getMetadataResponse")
-    event = Event("getMetadataResponse", xml)
+    event_parser = EventParser()
+    event = event_parser.get_event("getMetadataResponse", xml)
 
     # ACT
     with pytest.raises(InvalidEventException):
-        frames = event._Event__timecode_to_frames(timecode[0], 25)
+        event.metadata._Metadata__timecode_to_frames(timecode[0], timecode[1])
+

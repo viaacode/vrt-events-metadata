@@ -104,3 +104,19 @@ class MediahavenClient:
         response.raise_for_status()
 
         return True
+
+    @__authenticate
+    def upload_file(self, file, external_id: str, department_id: str) -> None:
+        headers = self._construct_headers()
+
+        data = {
+            "file": file,
+            "title": "metadataUpdated",
+            "externalId": external_id,
+            "autoPublish": True,
+            "departmentId": department_id
+        }
+
+        # Send the POST request, as multipart/form-data
+        response = requests.post(self.url, headers=headers, files=data)
+
