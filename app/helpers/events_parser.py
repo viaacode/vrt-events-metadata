@@ -50,7 +50,7 @@ class EventParser(object):
             raise InvalidEventException(f"Event is not a '{event_type}'.")
 
     def _parse_metadata(self):
-        raw = self.event.xpath("./vrt:metadata", namespaces=NAMESPACES)[0]
+        raw = self._get_xpath_from_event("./vrt:metadata", xml=True)
 
         base_xpath = "//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='hires']]"
         framerate = int(

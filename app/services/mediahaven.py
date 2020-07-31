@@ -4,6 +4,7 @@
 from lxml import etree
 
 import functools
+from io import StringIO
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -106,17 +107,18 @@ class MediahavenClient:
         return True
 
     @__authenticate
-    def upload_file(self, file, external_id: str, department_id: str) -> None:
+    def upload_file(self, file: str, external_id: str, department_id: str) -> None:
         headers = self._construct_headers()
 
-        data = {
-            "file": file,
-            "title": "metadataUpdated",
+        payload = {
+            "title": f"Collateral: metadata for pid: {external_id}",
             "externalId": external_id,
             "autoPublish": True,
-            "departmentId": department_id
+            "departmentId": department_id,
         }
 
+        files = [("file", StringIO(file))]
+
         # Send the POST request, as multipart/form-data
-        response = requests.post(self.url, headers=headers, files=data)
+        response = requests.post(self.url, headers=headers, data=payload, files=files)
 

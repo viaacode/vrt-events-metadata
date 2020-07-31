@@ -17,6 +17,7 @@ from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
 from app.models.exceptions import InvalidEventException
 
+
 class EventListener:
     def __init__(self):
         configParser = ConfigParser()
@@ -39,7 +40,7 @@ class EventListener:
 
         # 2. Get metadata from event
         try:
-            event = self.event_parser.parse_event(event_type, body)
+            event = self.event_parser.get_event(event_type, body)
         except InvalidEventException as ex:
             self.log.warning("Invalid event received.", body=body, exception=ex)
             # The message body doesn't have the required fields.
@@ -70,24 +71,30 @@ class EventListener:
             # Fragment is not found in MH
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
-        
+
         # 4. Save ebucore metadata as colleteral
         try:
             external_id = f"{pid}_metadata"
-            self.mh_client.upload_file(file, external_id, department_id)
+            self.mh_client.upload_file(event.metadata.raw, external_id, department_id)
+        except Exception:
+            self.log.info("Failed to upload metadata as collateral")
+            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
+
 
         # 5. Call mtd-transformation-service
         try:
             mtd_cfg = self.config["mtd-transformer"]
             url = f"{mtd_cfg['host']}/transform/?transformation={mtd_cfg['transformation']}"
             transformation_response = requests.post(
-                url, data=event.metadata, headers={"Content-Type": "application/xml"},
+                url,
+                data=event.metadata.raw,
+                headers={"Content-Type": "application/xml"},
             )
             transformation_response.raise_for_status()
         except HTTPError as ex:
             self.log.info(
                 "Failed to transform metadata in the sidecar format.",
-                metadata=event.metadata,
+                metadata=event.metadata.raw,
                 exception=ex,
             )
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
