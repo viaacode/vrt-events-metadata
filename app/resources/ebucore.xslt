@@ -11,7 +11,7 @@
     <xsl:template match="/">
         <ebu:ebuCoreMain>
             <ebu:coreMetadata>
-                <xsl:copy-of select="*/viaa:metadata/*" copy-namespaces="no"/>
+                <xsl:copy-of select="*/viaa:metadata"/>
             </ebu:coreMetadata>
         </ebu:ebuCoreMain>
     </xsl:template>
