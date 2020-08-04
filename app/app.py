@@ -13,6 +13,7 @@ from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
 from app.helpers.events_parser import EventParser
+from app.helpers.xml_helper import transform_to_ebucore
 from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
 from app.models.exceptions import InvalidEventException
@@ -75,11 +76,11 @@ class EventListener:
         # 4. Save ebucore metadata as colleteral
         try:
             external_id = f"{pid}_metadata"
-            self.mh_client.upload_file(event.metadata.raw, external_id, department_id)
+            file = transform_to_ebucore(event.metadata.raw)
+            self.mh_client.upload_file(file, pid, external_id, department_id)
         except Exception:
             self.log.info("Failed to upload metadata as collateral")
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-
 
         # 5. Call mtd-transformation-service
         try:
