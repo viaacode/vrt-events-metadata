@@ -107,7 +107,9 @@ class MediahavenClient:
         return True
 
     @__authenticate
-    def upload_file(self, file: bytes, pid:str, external_id: str, department_id: str) -> None:
+    def upload_file(
+        self, file: bytes, pid: str, external_id: str, department_id: str
+    ) -> None:
         headers = self._construct_headers()
 
         payload = {
@@ -125,4 +127,3 @@ class MediahavenClient:
 
         # Send the POST request, as multipart/form-data
         response = requests.post(self.url, headers=headers, data=payload, files=files)
-

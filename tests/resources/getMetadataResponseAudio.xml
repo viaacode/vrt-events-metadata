@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<viaa:getMetadataResponse xmlns:viaa="http://www.vrt.be/mig/viaa/api"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:ebu="urn:ebu:metadata-schema:ebuCore_2012"
+    xmlns:ns4="http://www.vrt.be/mig/viaa">
+    <viaa:timestamp>2019-09-24T17:21:28.787+02:00</viaa:timestamp>
+    <viaa:correlationId>test_correlation</viaa:correlationId>
+    <viaa:status>SUCCESS</viaa:status>
+    <viaa:metadata>
+        <ebu:title>
+            <dc:title>Start je dag - Oost-Vlaanderen 23/07/2020 06-08U</dc:title>
+        </ebu:title>
+        <ebu:alternativeTitle>
+            <dc:title/>
+        </ebu:alternativeTitle>
+        <ebu:alternativeTitle typeDefinition="season">
+            <dc:title/>
+        </ebu:alternativeTitle>
+        <ebu:alternativeTitle typeDefinition="series">
+            <dc:title>Start je dag - Oost-Vlaanderen</dc:title>
+        </ebu:alternativeTitle>
+        <ebu:alternativeTitle typeDefinition="program">
+            <dc:title>Start je dag - Oost-Vlaanderen 23/07/2020 06-08U</dc:title>
+        </ebu:alternativeTitle>
+        <ebu:creator>
+            <ebu:organisationDetails>
+                <ebu:organisationName>Radio</ebu:organisationName>
+            </ebu:organisationDetails>
+            <ebu:role typeDefinition="productionCompany"/>
+        </ebu:creator>
+        <ebu:creator>
+            <ebu:organisationDetails>
+                <ebu:organisationName/>
+            </ebu:organisationDetails>
+            <ebu:role typeDefinition="provenance"/>
+        </ebu:creator>
+        <ebu:subject note=""/>
+        <ebu:description typeDefinition="short">
+            <dc:description>Regionale uitzending. Nieuws uit Oost-Vlaanderen.</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="long">
+            <dc:description>Regionale uitzending. Nieuws uit Oost-Vlaanderen.</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="season">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="comment">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="cast">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="category">
+            <dc:description>algemeen</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="categoryTrailer">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="productionMethod">
+            <dc:description>intern</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="status">
+            <dc:description>nieuw</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="cleanMediaVersion">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="hasBeenBroadcasted">
+            <dc:description>true</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="contentCheck">
+            <dc:description>false</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="historicalFormat">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="duration">
+            <dc:description>02:00:00:01</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="rights">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="rightsType">
+            <dc:description/>
+        </ebu:description>
+        <ebu:publisher>
+            <ebu:organisationDetails>
+                <ebu:organisationName/>
+            </ebu:organisationDetails>
+            <ebu:role typeDefinition="publisher"/>
+        </ebu:publisher>
+        <ebu:date>
+            <ebu:created/>
+            <ebu:alternative startDate="2020-07-23" startTime="00:00:00" typeDefinition="mainDate"/>
+        </ebu:date>
+        <ebu:type>
+            <ebu:genre typeDefinition=""/>
+            <ebu:objectType typeDefinition="program"/>
+        </ebu:type>
+        <ebu:format formatDefinition="current">
+            <ebu:audioFormat audioFormatDefinition="hires">
+                <ebu:codec>
+                    <ebu:name>MP2</ebu:name>
+                </ebu:codec>
+            </ebu:audioFormat>
+            <ebu:containerFormat formatDefinition="MPEG"/>
+            <ebu:start>
+                <ebu:timecode>00:00:00:00</ebu:timecode>
+            </ebu:start>
+            <ebu:end>
+                <ebu:timecode>02:00:00:01</ebu:timecode>
+            </ebu:end>
+            <ebu:technicalAttributeString typeDefinition="SOM">00:00:00:00</ebu:technicalAttributeString>
+        </ebu:format>
+        <ebu:identifier typeDefinition="MEDIA_ID">
+            <dc:identifier>TEST_ID</dc:identifier>
+            <ebu:attributor>
+                <ebu:organisationDetails>
+                    <ebu:organisationName>Logdepot</ebu:organisationName>
+                </ebu:organisationDetails>
+            </ebu:attributor>
+        </ebu:identifier>
+        <ebu:identifier typeDefinition="historicalRecordNumber">
+            <dc:identifier/>
+        </ebu:identifier>
+        <ebu:rights>
+            <ebu:rightsHolder>
+                <ebu:organisationDetails>
+                    <ebu:organisationName/>
+                </ebu:organisationDetails>
+            </ebu:rightsHolder>
+        </ebu:rights>
+        <ebu:publicationHistory>
+            <ebu:publicationEvent>
+                <ebu:publicationDate>2020-07-23</ebu:publicationDate>
+                <ebu:publicationTime>00:00:00</ebu:publicationTime>
+                <ebu:publicationChannel typeDefinition="RADIO" typeLabel="VRT">42  || Radio</ebu:publicationChannel>
+            </ebu:publicationEvent>
+        </ebu:publicationHistory>
+    </viaa:metadata>
+</viaa:getMetadataResponse>

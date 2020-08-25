@@ -1,5 +1,6 @@
 from lxml import etree
 from app.models.exceptions import InvalidEventException
+from abc import ABC, abstractmethod
 
 NAMESPACES = {
     "vrt": "http://www.vrt.be/mig/viaa/api",
@@ -8,18 +9,27 @@ NAMESPACES = {
 }
 
 
-class Metadata(object):
-    def __init__(self, raw, framerate, duration, som, soc, eoc, eom, media_id):
+class Metadata(ABC):
+    def __init__(self, raw, media_id):
         self.raw = raw
+        self.media_id = media_id
+
+        self._validate_metadata()
+
+    @abstractmethod
+    def _validate_metadata(self):
+        pass
+
+
+class VideoMetadata(Metadata):
+    def __init__(self, raw, framerate, duration, som, soc, eoc, eom, media_id):
         self.framerate = framerate
         self.duration = duration
         self.som = som
         self.soc = soc
         self.eoc = eoc
         self.eom = eom
-        self.media_id = media_id
-
-        self._validate_metadata()
+        super().__init__(raw, media_id)
 
     def _validate_metadata(self):
         if bool(self.soc) ^ bool(self.eoc):
@@ -63,3 +73,11 @@ class Metadata(object):
             )
 
         return (hours * 3600 + minutes * 60 + seconds) * framerate + frames
+
+
+class AudioMetadata(Metadata):
+    def __init__(self, raw, media_id):
+        super().__init__(raw, media_id)
+
+    def _validate_metadata(self):
+        pass

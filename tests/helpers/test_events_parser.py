@@ -25,6 +25,7 @@ VALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponse",
     "getMetadataResponseLoresNodeBeforeHires",
     "getMetadataResponseSOMSOCEOC",
+    "getMetadataResponseAudio",
 ]
 
 VALID_TIMECODES = [
@@ -102,7 +103,7 @@ def test_timecode_to_frames(timecode):
     event = event_parser.get_event("getMetadataResponse", xml)
 
     # ACT
-    frames = event.metadata._Metadata__timecode_to_frames(timecode[0], timecode[1])
+    frames = event.metadata._VideoMetadata__timecode_to_frames(timecode[0], timecode[1])
 
     # ASSERT
     assert frames == timecode[2]
@@ -117,5 +118,4 @@ def test_invalid_timecode_to_frames(timecode):
 
     # ACT
     with pytest.raises(InvalidEventException):
-        event.metadata._Metadata__timecode_to_frames(timecode[0], timecode[1])
-
+        event.metadata._VideoMetadata__timecode_to_frames(timecode[0], timecode[1])
