@@ -5,6 +5,8 @@ import json
 import time
 import uuid
 from datetime import datetime
+from io import BytesIO
+from hashlib import md5
 
 import requests
 from pika.exceptions import AMQPConnectionError
@@ -13,9 +15,10 @@ from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
 from app.helpers.events_parser import EventParser
-from app.helpers.xml_helper import transform_to_ebucore
+from app.helpers.xml_helper import transform_to_ebucore, construct_sidecar
 from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
+from app.services.ftp import FTPClient
 from app.models.exceptions import InvalidEventException
 
 
@@ -24,6 +27,7 @@ class EventListener:
         configParser = ConfigParser()
         self.log = logging.get_logger(__name__, config=configParser)
         self.config = configParser.app_cfg
+        self.ftp_client = FTPClient(self.config)
         self.mh_client = MediahavenClient(self.config)
         self.event_parser = EventParser()
 
@@ -75,11 +79,21 @@ class EventListener:
 
         # 4. Save ebucore metadata as colleteral
         try:
-            external_id = f"{pid}_metadata"
-            file = transform_to_ebucore(event.metadata.raw)
-            self.mh_client.upload_file(file, pid, external_id, department_id)
-        except Exception:
-            self.log.info("Failed to upload metadata as collateral")
+            collateral = transform_to_ebucore(event.metadata.raw)
+
+            metadata_dict = {
+                "PID": pid,
+                "Md5": md5(BytesIO(collateral).getbuffer()).hexdigest(),
+            }
+            sidecar = construct_sidecar(metadata_dict)
+
+            dest_filename = f"{pid}_metadata"
+            dest_path = f"/vrt/{self.config['ftp']['destination-folder']}"
+
+            self.ftp_client.put(collateral, dest_path, f"{dest_filename}.ebu")
+            self.ftp_client.put(sidecar, dest_path, f"{dest_filename}.xml")
+        except Exception as ex:
+            self.log.info("Failed to upload metadata as collateral.", exception=ex)
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
 
         # 5. Call mtd-transformation-service

@@ -8,18 +8,23 @@ def transform_to_ebucore(xml: str) -> bytes:
     xslt = etree.parse(str(xslt_path.resolve()))
 
     transform = etree.XSLT(xslt)
+
     return etree.tostring(
-        transform(xml), pretty_print=True, encoding="UTF-8", xml_declaration=True,
+        transform(etree.fromstring(xml)),
+        pretty_print=True,
+        encoding="UTF-8",
+        xml_declaration=True,
     )
 
 
 def construct_sidecar(metadata: dict) -> str:
+    pid = metadata["PID"]
     root = etree.Element("MediaHAVEN_external_metadata")
     etree.SubElement(root, "title").text = f"Collateral: pid: {pid}"
 
     description = f"""Metadata for essence:
-    - PID: {metadata["PID"]}
-    - CP: {metadata["CP"]}
+    - PID: {pid}
+    - CP: VRT
     """
     etree.SubElement(root, "description").text = description
 
@@ -27,11 +32,11 @@ def construct_sidecar(metadata: dict) -> str:
     etree.SubElement(mdprops, "CP").text = "VRT"
     etree.SubElement(mdprops, "CP_id").text = "OR-rf5kf25"
     etree.SubElement(mdprops, "sp_name").text = "s3"
-    etree.SubElement(mdprops, "PID").text = metadata["PID"]
+    etree.SubElement(mdprops, "PID").text = f"{pid}_metadata"
     etree.SubElement(mdprops, "md5").text = metadata["Md5"]
 
-    relations = etree.SubElement(root, "dc_relations")
-    etree.SubElement(relations, "is_deel_van").text = metadata["PID"]
+    relations = etree.SubElement(mdprops, "dc_relations")
+    etree.SubElement(relations, "is_deel_van").text = pid
     tree = etree.ElementTree(root)
     return etree.tostring(
         root, pretty_print=True, encoding="UTF-8", xml_declaration=True
