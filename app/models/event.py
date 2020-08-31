@@ -1,4 +1,3 @@
-from app.models.metadata import Metadata
 from lxml import etree
 from abc import ABC, abstractmethod
 

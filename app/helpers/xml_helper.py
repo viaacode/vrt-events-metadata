@@ -36,7 +36,7 @@ def construct_sidecar(metadata: dict) -> str:
     etree.SubElement(mdprops, "md5").text = metadata["Md5"]
 
     relations = etree.SubElement(mdprops, "dc_relations")
-    etree.SubElement(relations, "is_deel_van").text = pid
+    etree.SubElement(relations, "is_verwant_aan").text = pid
     tree = etree.ElementTree(root)
     return etree.tostring(
         root, pretty_print=True, encoding="UTF-8", xml_declaration=True

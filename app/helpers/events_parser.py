@@ -31,6 +31,9 @@ class EventParser(object):
                 return GetMetadataResponseEvent(
                     event_type, metadata, timestamp, correlation_id, status, media_type
                 )
+            else:
+                # TODO: report back to VRT
+                raise InvalidEventException(f"getMetadataResponse status wasn't 'SUCCES': {status}")
 
         if event_type == "metadataUpdatedEvent":
             media_id = self._get_xpath_from_event("./vrt:mediaId")

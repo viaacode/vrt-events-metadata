@@ -60,7 +60,7 @@ class EventListener:
 
             fragment_id = result["MediaDataList"][0]["Internal"]["FragmentId"]
             department_id = result["MediaDataList"][0]["Internal"]["DepartmentId"]
-            pid = result["MediaDataList"][0]["Administrative"]["ExternalId"]
+            pid = result["MediaDataList"][0]["Dynamic"]["PID"]
             self.log.debug(
                 "Found fragment id.", fragment_id=fragment_id, media_id=event.media_id
             )
@@ -77,7 +77,7 @@ class EventListener:
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
             return
 
-        # 4. Save ebucore metadata as colleteral
+        # 4. Save ebucore metadata as collateral
         try:
             collateral = transform_to_ebucore(event.metadata.raw)
 

@@ -7,10 +7,8 @@ from urllib.parse import urlparse
 # Third-party imports
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
-from lxml import etree
 
 # Local imports
-import traceback
 
 # Get logger
 config = ConfigParser()
