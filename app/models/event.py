@@ -29,7 +29,7 @@ class GetMetadataResponseEvent(Event):
         media_type: str,
     ):
         super().__init__(event_type, metadata, timestamp, media_type)
-        self.media_id = correlation_id
+        self.correlation_id = correlation_id
         self.status = status
 
 

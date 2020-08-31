@@ -55,14 +55,16 @@ class EventListener:
         # 3. Check if mediahaven has the object
         try:
             result = self.mh_client.get_fragment(
-                "dc_identifier_localid", event.media_id
+                "dc_identifier_localid", event.metadata.media_id
             )
 
             fragment_id = result["MediaDataList"][0]["Internal"]["FragmentId"]
             department_id = result["MediaDataList"][0]["Internal"]["DepartmentId"]
             pid = result["MediaDataList"][0]["Dynamic"]["PID"]
             self.log.debug(
-                "Found fragment id.", fragment_id=fragment_id, media_id=event.media_id
+                "Found fragment id.",
+                fragment_id=fragment_id,
+                media_id=event.metadata.media_id,
             )
         except RequestException as ex:
             # An error occured when connecting to MH, requeue to try again after 10 secs.
@@ -71,7 +73,9 @@ class EventListener:
             return
         except IndexError as ex:
             self.log.info(
-                "Fragment not found in MH", media_id=event.media_id, exception=ex
+                "Fragment not found in MH",
+                media_id=event.metadata.media_id,
+                exception=ex,
             )
             # Fragment is not found in MH
             channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
