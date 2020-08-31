@@ -4,6 +4,7 @@
 from lxml import etree
 
 import functools
+from io import BytesIO
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -104,3 +105,25 @@ class MediahavenClient:
         response.raise_for_status()
 
         return True
+
+    @__authenticate
+    def upload_file(
+        self, file: bytes, pid: str, external_id: str, department_id: str
+    ) -> None:
+        headers = self._construct_headers()
+
+        payload = {
+            "title": f"Collateral: metadata for pid: {pid}",
+            "externalId": external_id,
+            "autoPublish": True,
+            "departmentId": department_id,
+        }
+
+        # file needs a name ending in .xml or mediahaven will think it's an image.
+        named_file = BytesIO(file)
+        named_file.name = f"{pid}.xml"
+
+        files = [("file", named_file)]
+
+        # Send the POST request, as multipart/form-data
+        response = requests.post(self.url, headers=headers, data=payload, files=files)

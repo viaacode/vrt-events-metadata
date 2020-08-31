@@ -3,6 +3,9 @@
 
 from io import BytesIO
 from lxml import etree
+from app.models.event import GetMetadataResponseEvent, MetadataUpdatedEvent
+from app.models.metadata import VideoMetadata, AudioMetadata
+from app.models.exceptions import InvalidEventException
 
 # Constants
 NAMESPACES = {
@@ -12,26 +15,36 @@ NAMESPACES = {
 }
 
 
-class InvalidEventException(Exception):
-    def __init__(self, message, **kwargs):
-        self.message = message
-        self.kwargs = kwargs
+class EventParser(object):
+    def get_event(self, event_type: str, xml: bytes):
+        self.event = self._parse_event(event_type, xml)
+        media_type = self._get_media_type()
+        metadata = self._parse_metadata(media_type)
 
+        timestamp = self._get_xpath_from_event("./vrt:timestamp", optional=True)
 
-class Event(object):
-    """The base Event object."""
+        if event_type == "getMetadataResponse":
+            correlation_id = self._get_xpath_from_event("./vrt:correlationId")
+            status = self._get_xpath_from_event("./vrt:status")
 
-    def __init__(self, event_type: str, xml: bytes):
-        self.event = self._get_event(event_type, xml)
-        # TODO: Timestamp is currently optional, waiting on VRT to implement, see DEV-1052
-        self.timestamp = self._get_xpath_from_event("./vrt:timestamp", optional=True)
-        self.metadata = self._get_xpath_from_event("./vrt:metadata", xml=True)
-        self.media_id = self._get_xpath_from_event(
-            "//ebu:identifier[@typeDefinition='MEDIA_ID']/dc:identifier"
-        )
-        self._validate_metadata()
+            if status == "SUCCESS":
+                return GetMetadataResponseEvent(
+                    event_type, metadata, timestamp, correlation_id, status, media_type
+                )
+            else:
+                # TODO: report back to VRT
+                raise InvalidEventException(f"getMetadataResponse status wasn't 'SUCCES': {status}")
 
-    def _get_event(self, event_type: str, xml: str):
+        if event_type == "metadataUpdatedEvent":
+            media_id = self._get_xpath_from_event("./vrt:mediaId")
+
+            return MetadataUpdatedEvent(
+                event_type, metadata, timestamp, media_id, media_type
+            )
+
+        raise InvalidEventException(f"Can't handle '{event_type}' events")
+
+    def _parse_event(self, event_type: str, xml: bytes):
         """Parse the input XML to a DOM"""
         try:
             tree = etree.parse(BytesIO(xml))
@@ -42,6 +55,62 @@ class Event(object):
             return tree.xpath(f"/vrt:{event_type}", namespaces=NAMESPACES)[0]
         except IndexError:
             raise InvalidEventException(f"Event is not a '{event_type}'.")
+
+    def _get_media_type(self) -> str:
+        is_video = bool(
+            self._get_xpath_from_event(
+                f"//ebu:format[@formatDefinition='current']/ebu:videoFormat",
+                optional=True,
+            )
+        )
+        is_audio = bool(
+            self._get_xpath_from_event(
+                f"//ebu:format[@formatDefinition='current']/ebu:audioFormat",
+                optional=True,
+            )
+        )
+
+        if is_video:
+            return "video"
+        if is_audio:
+            return "audio"
+
+        raise InvalidEventException("Unknown media type.")
+
+    def _parse_metadata(self, media_type):
+        raw = self._get_xpath_from_event("./vrt:metadata", xml=True)
+        media_id = self._get_xpath_from_event(
+            "//ebu:identifier[@typeDefinition='MEDIA_ID']/dc:identifier"
+        )
+
+        if media_type == "video":
+            base_xpath = "//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='hires']]"
+
+            framerate = int(
+                self._get_xpath_from_event(
+                    f"{base_xpath}/ebu:videoFormat/ebu:frameRate"
+                )
+            )
+            duration = self._get_xpath_from_event(
+                "//ebu:description[@typeDefinition='duration']/dc:description"
+            )
+            som = self._get_xpath_from_event(
+                f"{base_xpath}/ebu:technicalAttributeString[@typeDefinition='SOM']"
+            )
+            soc = self._get_xpath_from_event(
+                f"{base_xpath}/ebu:start/ebu:timecode", optional=True,
+            )
+            eoc = self._get_xpath_from_event(
+                f"{base_xpath}/ebu:end/ebu:timecode", optional=True,
+            )
+            eom = self._get_xpath_from_event(
+                f"{base_xpath}/ebu:technicalAttributeString[@typeDefinition='EOM']",
+                optional=True,
+            )
+
+            return VideoMetadata(raw, framerate, duration, som, soc, eoc, eom, media_id)
+        if media_type == "audio":
+            return AudioMetadata(raw, media_id)
 
     def _get_xpath_from_event(self, xpath, xml=False, optional: bool = False) -> str:
         try:
@@ -56,59 +125,3 @@ class Event(object):
                 return ""
             else:
                 raise InvalidEventException(f"'{xpath}' is not present in the event.")
-
-    def _validate_metadata(self):
-        base_xpath = "//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='hires']]"
-        framerate = int(
-            self._get_xpath_from_event(f"{base_xpath}/ebu:videoFormat/ebu:frameRate")
-        )
-        duration = self._get_xpath_from_event(
-            "//ebu:description[@typeDefinition='duration']/dc:description"
-        )
-        som = self._get_xpath_from_event(
-            f"{base_xpath}/ebu:technicalAttributeString[@typeDefinition='SOM']"
-        )
-        soc = self._get_xpath_from_event(
-            f"{base_xpath}/ebu:start/ebu:timecode", optional=True,
-        )
-        eoc = self._get_xpath_from_event(
-            f"{base_xpath}/ebu:end/ebu:timecode", optional=True,
-        )
-        eom = self._get_xpath_from_event(
-            f"{base_xpath}/ebu:technicalAttributeString[@typeDefinition='EOM']",
-            optional=True,
-        )
-
-        if bool(soc) ^ bool(eoc):
-            raise InvalidEventException(
-                f"Only SOC or EOC is present. They should both be present or none at all."
-            )
-
-        duration_frames = self.__timecode_to_frames(duration, framerate)
-        som_frames = self.__timecode_to_frames(som, framerate)
-        soc_frames = self.__timecode_to_frames(soc, framerate) if soc else som_frames
-        eoc_frames = (
-            self.__timecode_to_frames(eoc, framerate)
-            if eoc
-            else som_frames + duration_frames
-        )
-        eom_frames = self.__timecode_to_frames(eom, framerate) if eom else eoc_frames
-
-        timecodes = [som_frames, soc_frames, eoc_frames, eom_frames]
-
-        if timecodes != sorted(timecodes):
-            raise InvalidEventException(
-                f"Something is wrong with the SOM, SOC, EOC, EOM order."
-            )
-
-    def __timecode_to_frames(self, timecode: str, framerate: int) -> int:
-        try:
-            hours, minutes, seconds, frames = [
-                int(part) for part in timecode.split(":")
-            ]
-        except (TypeError, AttributeError, ValueError) as error:
-            raise InvalidEventException(
-                f"Invalid timecode in the event.", timecode=timecode
-            )
-
-        return (hours * 3600 + minutes * 60 + seconds) * framerate + frames
