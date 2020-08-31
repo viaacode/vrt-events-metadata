@@ -23,6 +23,7 @@ INVALID_METADATA_RESPONSE_EVENTS = [
 
 VALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponse",
+    "getMetadataResponse2",
     "getMetadataResponseLoresNodeBeforeHires",
     "getMetadataResponseSOMSOCEOC",
     "getMetadataResponseAudio",
@@ -67,6 +68,7 @@ def test_parse_get_metadata_response(event):
     assert event.status == "SUCCESS"
     assert event.correlation_id == "test_correlation"
     assert event.metadata.raw is not None
+    assert event.media_type in ["audio", "video"]
 
 
 def test_parse_metadata_updated_event():

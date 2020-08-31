@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<viaa:getMetadataResponse xmlns:viaa="http://www.vrt.be/mig/viaa/api"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:ebu="urn:ebu:metadata-schema:ebuCore_2012"
+    xmlns:ns4="http://www.vrt.be/mig/viaa">
+    <viaa:correlationId>test_correlation</viaa:correlationId>
+    <viaa:timestamp>2019-09-24T17:21:28.787+02:00</viaa:timestamp>
+    <viaa:status>SUCCESS</viaa:status>
+    <viaa:metadata>
+        <ebu:title>
+            <dc:title>xxx Title xxx</dc:title>
+        </ebu:title>
+        <ebu:alternativeTitle>
+            <dc:title/>
+        </ebu:alternativeTitle>
+        <ebu:alternativeTitle typeDefinition="season">
+            <dc:title/>
+        </ebu:alternativeTitle>
+        <ebu:alternativeTitle typeDefinition="series">
+            <dc:title>Belga</dc:title>
+        </ebu:alternativeTitle>
+        <ebu:alternativeTitle typeDefinition="program">
+            <dc:title/>
+        </ebu:alternativeTitle>
+        <ebu:creator>
+            <ebu:organisationDetails>
+                <ebu:organisationName/>
+            </ebu:organisationDetails>
+            <ebu:role typeDefinition="productionCompany"/>
+        </ebu:creator>
+        <ebu:creator>
+            <ebu:organisationDetails>
+                <ebu:organisationName/>
+            </ebu:organisationDetails>
+            <ebu:role typeDefinition="provenance"/>
+        </ebu:creator>
+        <ebu:subject note=""/>
+        <ebu:description typeDefinition="short">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="long">
+            <dc:description>xxx Description xxx</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="season">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="comment">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="cast">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="category">
+            <dc:description>nieuws en duiding</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="categoryTrailer">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="productionMethod">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="status">
+            <dc:description>nieuw</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="cleanMediaVersion">
+            <dc:description>0</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="hasBeenBroadcasted">
+            <dc:description>true</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="contentCheck">
+            <dc:description>false</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="historicalFormat">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="duration">
+            <dc:description>00:01:19:19</dc:description>
+        </ebu:description>
+        <ebu:description typeDefinition="rights">
+            <dc:description/>
+        </ebu:description>
+        <ebu:description typeDefinition="rightsType">
+            <dc:description/>
+        </ebu:description>
+        <ebu:publisher>
+            <ebu:organisationDetails>
+                <ebu:organisationName>belga</ebu:organisationName>
+            </ebu:organisationDetails>
+            <ebu:role typeDefinition="publisher"/>
+        </ebu:publisher>
+        <ebu:date>
+            <ebu:created/>
+            <ebu:alternative startDate="2020-08-27" startTime="00:00:00" typeDefinition="mainDate"/>
+        </ebu:date>
+        <ebu:type>
+            <ebu:genre typeDefinition=""/>
+            <ebu:objectType typeDefinition="footage"/>
+        </ebu:type>
+        <ebu:format formatDefinition="current">
+            <ebu:videoFormat videoFormatDefinition="hires">
+                <ebu:width>1920</ebu:width>
+                <ebu:height>1080</ebu:height>
+                <ebu:frameRate>25</ebu:frameRate>
+                <ebu:aspectRatio>
+                    <ebu:factorNumerator>16</ebu:factorNumerator>
+                    <ebu:factorDenominator>9</ebu:factorDenominator>
+                </ebu:aspectRatio>
+                <ebu:codec>
+                    <ebu:name>AVC-I</ebu:name>
+                </ebu:codec>
+                <ebu:bitRate>113664000</ebu:bitRate>
+            </ebu:videoFormat>
+            <ebu:containerFormat formatDefinition="MXF OP1a"/>
+            <ebu:start>
+                <ebu:timecode>00:00:00:00</ebu:timecode>
+            </ebu:start>
+            <ebu:end>
+                <ebu:timecode>00:01:19:19</ebu:timecode>
+            </ebu:end>
+            <ebu:technicalAttributeString typeDefinition="SOM">00:00:00:00</ebu:technicalAttributeString>
+        </ebu:format>
+        <ebu:format formatDefinition="current">
+            <ebu:videoFormat videoFormatDefinition="lores">
+                <ebu:width>1280</ebu:width>
+                <ebu:height>720</ebu:height>
+                <ebu:frameRate>25
+                </ebu:frameRate>
+                <ebu:aspectRatio>
+                    <ebu:factorNumerator>16</ebu:factorNumerator>
+                    <ebu:factorDenominator>9</ebu:factorDenominator>
+                </ebu:aspectRatio>
+                <ebu:codec>
+                    <ebu:name>H264</ebu:name>
+                </ebu:codec>
+                <ebu:bitRate>3148896</ebu:bitRate>
+            </ebu:videoFormat>
+            <ebu:containerFormat formatDefinition="MP4"/>
+            <ebu:start>
+                <ebu:timecode>00:00:00:00</ebu:timecode>
+            </ebu:start>
+            <ebu:end>
+                <ebu:timecode>00:01:19:19</ebu:timecode>
+            </ebu:end>
+            <ebu:technicalAttributeString typeDefinition="SOM">00:00:00:00</ebu:technicalAttributeString>
+        </ebu:format>
+        <ebu:identifier typeDefinition="MEDIA_ID">
+            <dc:identifier>TEST_ID</dc:identifier>
+            <ebu:attributor>
+                <ebu:organisationDetails>
+                    <ebu:organisationName>AIM</ebu:organisationName>
+                </ebu:organisationDetails>
+            </ebu:attributor>
+        </ebu:identifier>
+        <ebu:identifier typeDefinition="historicalRecordNumber">
+            <dc:identifier/>
+        </ebu:identifier>
+        <ebu:rights>
+            <ebu:rightsHolder>
+                <ebu:organisationDetails>
+                    <ebu:organisationName>xxx</ebu:organisationName>
+                </ebu:organisationDetails>
+            </ebu:rightsHolder>
+        </ebu:rights>
+    </viaa:metadata>
+</viaa:getMetadataResponse>
