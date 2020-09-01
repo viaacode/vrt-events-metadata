@@ -33,7 +33,9 @@ class EventParser(object):
                 )
             else:
                 # TODO: report back to VRT
-                raise InvalidEventException(f"getMetadataResponse status wasn't 'SUCCES': {status}")
+                raise InvalidEventException(
+                    f"getMetadataResponse status wasn't 'SUCCES': {status}"
+                )
 
         if event_type == "metadataUpdatedEvent":
             media_id = self._get_xpath_from_event("./vrt:mediaId")
@@ -60,12 +62,14 @@ class EventParser(object):
         is_video = bool(
             self._get_xpath_from_event(
                 f"//ebu:format[@formatDefinition='current']/ebu:videoFormat",
+                xml=True,
                 optional=True,
             )
         )
         is_audio = bool(
             self._get_xpath_from_event(
                 f"//ebu:format[@formatDefinition='current']/ebu:audioFormat",
+                xml=True,
                 optional=True,
             )
         )
