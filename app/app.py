@@ -22,6 +22,17 @@ from app.services.ftp import FTPClient
 from app.models.exceptions import InvalidEventException
 
 
+class NackException(Exception):
+    """ Exception raised when there is a situation in which handling
+    of the event should be stopped.
+    """
+
+    def __init__(self, message, requeue=False, **kwargs):
+        self.message = message
+        self.requeue = requeue
+        self.kwargs = kwargs
+
+
 class EventListener:
     def __init__(self):
         configParser = ConfigParser()
@@ -37,53 +48,85 @@ class EventListener:
             self.log.error("Connection to RabbitMQ failed.")
             raise error
 
-    def handle_message(self, channel, method, properties, body):
-        """Main method that will handle the incoming messages.
-        """
-        # 1. Determine if event is getMetadataResponse or MetadataUpdate
+    def _parse_event(self, method, properties, body):
         event_type = method.routing_key.split(".")[-1]
 
-        # 2. Get metadata from event
         try:
             event = self.event_parser.get_event(event_type, body)
-        except InvalidEventException as ex:
-            self.log.warning("Invalid event received.", body=body, exception=ex)
-            # The message body doesn't have the required fields.
-            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-            return
+            self.log.info(f"Got an {event_type} for {event.metadata.media_id}.")
+        except InvalidEventException as error:
+            raise NackException(
+                "Unable to parse the incoming event", error=error, body=body,
+            )
 
-        # 3. Check if mediahaven has the object
+        return event
+
+    def _get_items_for_media_id(self, event):
         try:
             result = self.mh_client.get_fragment(
                 "dc_identifier_localid", event.metadata.media_id
             )
-
-            fragment_id = result["MediaDataList"][0]["Internal"]["FragmentId"]
-            department_id = result["MediaDataList"][0]["Internal"]["DepartmentId"]
-            pid = result["MediaDataList"][0]["Dynamic"]["PID"]
-            self.log.debug(
-                "Found fragment id.",
-                fragment_id=fragment_id,
-                media_id=event.metadata.media_id,
+        except RequestException as error:
+            raise NackException(
+                "Unable to connect to Mediahaven", error=error, requeue=True,
             )
-        except RequestException as ex:
-            # An error occured when connecting to MH, requeue to try again after 10 secs.
-            time.sleep(10)
-            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
-            return
-        except IndexError as ex:
-            self.log.info(
-                "Fragment not found in MH",
-                media_id=event.metadata.media_id,
-                exception=ex,
-            )
-            # Fragment is not found in MH
-            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-            return
 
-        # 4. Save ebucore metadata as collateral
+        if result["TotalNrOfResults"] == 0:
+            raise NackException(
+                "Nothing found in MH for media id", media_id=event.metadata.media_id,
+            )
+
+        return result["MediaDataList"]
+
+    def _get_fragment(self, items):
         try:
-            collateral = transform_to_ebucore(event.metadata.raw)
+            fragment = next(filter(lambda item: item["Internal"]["IsFragment"], items))
+        except StopIteration:
+            raise NackException(
+                "Fragment not found in MH for media id",
+                media_id=event.metadata.media_id,
+            )
+
+    def _delete_existing_metadata_collateral(self, items, fragment):
+        try:
+            fragment_pid = fragment["Dynamic"]["PID"]
+
+            collateral = next(
+                filter(
+                    lambda item: item["Administrative"]["ExternalId"]
+                    == f"{fragment_pid}_metadata",
+                    result["MediaDataList"],
+                )
+            )
+
+            collateral_fragment_id = collateral["Internal"]["FragmentId"]
+
+            self.log.info(
+                f"Deleting existing metadata collateral for {fragment_pid}.",
+                pid=fragment_pid,
+                collateral_fragment_id=collateral_fragment_id,
+            )
+
+            self.mh_client.delete_fragment(collateral_fragment_id)
+        except StopIteration:
+            # No existing collateral, do nothing
+            pass
+        except HTTPError as error:
+            raise NackException(
+                "Failed to delete collateral in MediaHaven.",
+                error=error,
+                collateral_fragment_id=collateral_fragment_id,
+            )
+        except RequestException as error:
+            raise NackException(
+                "Error connecting to MediaHaven, retrying....",
+                requeue=True,
+                error=error,
+            )
+
+    def _put_metadata_collateral(self, pid, metadata):
+        try:
+            collateral = transform_to_ebucore(metadata)
 
             metadata_dict = {
                 "PID": pid,
@@ -94,13 +137,21 @@ class EventListener:
             dest_filename = f"{pid}_metadata"
             dest_path = f"/vrt/{self.config['ftp']['destination-folder']}"
 
+            self.log.info(
+                f"Putting ebucore + sidecar to {dest_path} as {dest_filename}."
+            )
+
             self.ftp_client.put(collateral, dest_path, f"{dest_filename}.ebu")
             self.ftp_client.put(sidecar, dest_path, f"{dest_filename}.xml")
-        except Exception as ex:
-            self.log.info("Failed to upload metadata as collateral.", exception=ex)
-            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
+        except Exception as error:
+            raise NackException(
+                "Failed to upload metadata as collateral.",
+                error=error,
+                pid=pid,
+                metadata=metadata,
+            )
 
-        # 5. Call mtd-transformation-service
+    def _transform_metadata(self, event):
         try:
             mtd_cfg = self.config["mtd-transformer"]
             url = f"{mtd_cfg['host']}/transform/?transformation={mtd_cfg['transformation']}"
@@ -110,38 +161,77 @@ class EventListener:
                 headers={"Content-Type": "application/xml"},
             )
             transformation_response.raise_for_status()
-        except HTTPError as ex:
+
             self.log.info(
-                "Failed to transform metadata in the sidecar format.",
+                "Succesfuly transformed metadata using mtd-transformation-service.",
+                media_id=event.metadata.media_id,
+            )
+
+            return transformation_response.text
+        except HTTPError as error:
+            raise NackException(
+                "Failed to transform metadata using mtd-transformation-service.",
+                error=error,
                 metadata=event.metadata.raw,
-                exception=ex,
             )
-            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-            return
-        except RequestException as ex:
-            # An error occured when connecting to MTD-transfo, requeue to try again after 10 secs.
-            time.sleep(10)
-            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
-            return
+        except RequestException as error:
+            raise NackException(
+                "Error connecting to mtd-transformation-service, retrying....",
+                requeue=True,
+                error=error,
+            )
 
-        # 6. Update mediahaven fragement with received metadata
+    def _update_metadata(self, fragment, metadata):
         try:
-            self.mh_client.update_metadata(fragment_id, transformation_response.text)
-        except HTTPError as ex:
-            # Invalid metadata update
-            self.log.error(
-                "Error while updating metadata.", error=ex, fragment_id=fragment_id
-            )
-            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
-            return
-        except RequestException as ex:
-            # An error occured when connecting to MH, requeue to try again after 10 secs.
-            time.sleep(10)
-            channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True)
-            return
+            fragment_id = fragment["Internal"]["FragmentId"]
 
+            self.log.info(f"Updating metadata in MediaHaven for {fragment_id}")
+
+            self.mh_client.update_metadata(fragment_id, metadata)
+        except HTTPError as error:
+            # Invalid metadata update
+            raise NackException(
+                "Failed to update metadata in MediaHaven.",
+                error=error,
+                fragment_id=fragment_id,
+                metadata=metadata,
+            )
+        except RequestException as error:
+            raise NackException(
+                "Error connecting to MediaHaven, retrying....",
+                requeue=True,
+                error=error,
+            )
+
+    def _handle_nack_exception(self, nack_exception, channel, delivery_tag):
+        """ Log an error and send a nack to rabbit """
+        self.log.error(nack_exception.message, **nack_exception.kwargs)
+        if nack_exception.requeue:
+            time.sleep(10)
+        channel.basic_nack(delivery_tag=delivery_tag, requeue=nack_exception.requeue)
+
+    def handle_message(self, channel, method, properties, body):
+        """Main method that will handle the incoming messages.
+        """
+        try:
+            event = self._parse_event(method, properties, body)
+
+            # We need all archived items for media id (fragment + collaterals)
+            items = self._get_items_for_media_id(event)
+
+            fragment = self._get_fragment(items)
+
+            self._delete_existing_metadata_collateral(items, fragment)
+
+            self._put_metadata_collateral(pid, event.metadata.raw)
+
+            metadata = self._transform_metadata(event)
+        except NackException as e:
+            self._handle_nack_exception(e, channel, method.delivery_tag)
+            return
         channel.basic_ack(delivery_tag=method.delivery_tag)
 
     def start(self):
         # Start listening for incoming messages
+        self.log.info("Start to listen for incoming metadata events...")
         self.rabbit_client.listen(self.handle_message)
