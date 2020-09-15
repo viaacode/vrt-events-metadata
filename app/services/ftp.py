@@ -8,12 +8,6 @@ from urllib.parse import urlparse
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
-# Local imports
-
-# Get logger
-config = ConfigParser()
-log = logging.get_logger(__name__, config=config)
-
 # Constants
 BASE_DOMAIN = "viaa.be"
 
@@ -21,8 +15,9 @@ BASE_DOMAIN = "viaa.be"
 class FTPClient(object):
     """Abstraction for FTP"""
 
-    def __init__(self, config: dict = None):
-        self.cfg: dict = config
+    def __init__(self, configParser: ConfigParser = None):
+        self.log = logging.get_logger(__name__, config=configParser)
+        self.cfg: dict = configParser.app_cfg
         self.host = self.__set_host()
         self.conn = self.__connect()
 
@@ -30,7 +25,7 @@ class FTPClient(object):
         """"""
         host = self.cfg["ftp"]["host"]
         parts = urlparse(host)
-        log.debug(f"FTP: scheme={parts.scheme}, host={parts.netloc}")
+        self.log.debug(f"FTP: scheme={parts.scheme}, host={parts.netloc}")
         return parts.netloc
 
     def __connect(self):
@@ -41,14 +36,14 @@ class FTPClient(object):
         try:
             conn = BuiltinFTP(host=self.host, user=ftp_user, passwd=ftp_password)
         except Exception as e:
-            log.error(e)
+            self.log.error(e)
             raise
         else:
-            log.debug(f"Succesfully established connection to {self.host}")
+            self.log.debug(f"Succesfully established connection to {self.host}")
             return conn
 
     def put(self, file, destination_path, destination_filename):
-        log.debug(
+        self.log.debug(
             f"Putting {destination_filename} to {destination_path} on {self.host}"
         )
         with self.__connect() as conn:
@@ -57,7 +52,8 @@ class FTPClient(object):
                 stor_cmd = f"STOR {destination_filename}"
                 conn.storbinary(stor_cmd, BytesIO(file))
             except Exception as exception:
-                log.critical(
+                self.log.critical(
                     f"Failed to put file on {self.host} {destination_path}",
                     exception=exception,
                 )
+                pass

@@ -1,0 +1,672 @@
+{
+    "TotalNrOfResults": 3,
+    "StartIndex": 0,
+    "MediaDataList": [
+        {
+            "Descriptive": {
+                "Title": "s3 test fragments",
+                "OriginalFilename": "qssb3wtt67.mxf",
+                "UploadedBy": "bulkupload@vrt",
+                "KeyframeStart": 0,
+                "CreationDate": "2019:11:22 17:23:00.084",
+                "RightsOwner": "© vrt",
+                "Description": null,
+                "Rights": null,
+                "Keywords": {
+                    "Keyword": []
+                },
+                "Categories": {
+                    "Category": []
+                },
+                "Publisher": null,
+                "Authors": {},
+                "Location": null,
+                "Address": {},
+                "NonPreferredTerm": null,
+                "Publications": null
+            },
+            "Structural": {
+                "MainFragment": "4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f9695d6acf79855408e85cb8edbd4a6deaf",
+                "FragmentDurationTimeCode": "00:00:12.000",
+                "FragmentStartTimeCode": "00:00:00.000",
+                "FragmentEndTimeCode": "00:00:12.000",
+                "FragmentDurationFrames": 300,
+                "FragmentStartFrames": 0,
+                "FragmentEndFrames": 300,
+                "Versioning": {
+                    "Status": "Untracked",
+                    "Version": 1
+                },
+                "Sets": {
+                    "Set": []
+                },
+                "Collections": {
+                    "Collection": []
+                },
+                "Newspapers": {
+                    "Newspaper": []
+                },
+                "Relations": {},
+                "Fragments": {}
+            },
+            "Technical": {
+                "PronomId": "fmt/200",
+                "OriginalExtension": "mxf",
+                "FileSize": 446090800,
+                "Md5": "cd0f018a92e859d376a09d7cf83e51f9",
+                "MimeType": "application/mxf",
+                "Width": 720,
+                "Height": 576,
+                "ImageSize": "720x576",
+                "ImageQuality": "medium",
+                "ImageOrientation": "landscape",
+                "VideoTechnical": "dvvideo 720x576 25fps 32266965bps",
+                "AudioTechnical": "pcm_s16le 4ch 48000Hz 3072000bps",
+                "VideoFormat": "DVCPRO25",
+                "DurationTimeCode": "00:01:50.600",
+                "StartTimeCode": "10:00:00.000",
+                "EndTimeCode": "10:01:50.600",
+                "DurationFrames": 2765,
+                "StartFrames": 900000,
+                "EndFrames": 902765,
+                "BitRate": 32266965,
+                "VideoCodec": "dvvideo",
+                "VideoFps": "25",
+                "VideoBitRate": 32266965,
+                "AudioCodec": "pcm_s16le",
+                "AudioChannels": 4,
+                "AudioSampleRate": 48000,
+                "AudioBitRate": 3072000,
+                "AudioTracks": {
+                    "Track": [
+                        {
+                            "Channels": 1,
+                            "Language": "",
+                            "Title": ""
+                        },
+                        {
+                            "Channels": 1,
+                            "Language": "",
+                            "Title": ""
+                        },
+                        {
+                            "Channels": 1,
+                            "Language": "",
+                            "Title": ""
+                        },
+                        {
+                            "Channels": 1,
+                            "Language": "",
+                            "Title": ""
+                        }
+                    ]
+                },
+                "EssenceOffset": 75776,
+                "EditUnitByteSize": 161280,
+                "FramesPerEditUnit": 1,
+                "EditRate": "25",
+                "IndexEditRate": "25"
+            },
+            "Administrative": {
+                "OrganisationName": "vrt",
+                "LastModifiedDate": "2020-08-31T12:56:41Z",
+                "ExternalId": "qssb3wtt67",
+                "ArchiveDate": "2020:05:06 13:45:29",
+                "Type": "videofragment",
+                "DepartmentName": "vrt",
+                "IsSynchronized": false,
+                "IsOriginal": true,
+                "IsPreservation": false,
+                "IsAccess": false,
+                "Workflow": null,
+                "IngestTape": null
+            },
+            "Internal": {
+                "MediaObjectId": "4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96",
+                "FragmentId": "4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f9697c9ac524f1a471da54c731ceac09bb0",
+                "OriginalStatus": "completed",
+                "BrowseStatus": "completed",
+                "ArchiveStatus": "on_disk",
+                "UploadedById": "ff110a7a-efd0-44e3-8816-0905572421da",
+                "OrganisationId": "110",
+                "IsInIngestSpace": false,
+                "DepartmentId": "dd110b7a-efd0-44e3-8816-0905572421da",
+                "IsFragment": true,
+                "HasKeyframes": true,
+                "ContainsGeoData": false,
+                "PathToKeyframe": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96/keyframes/keyframes_1_1/keyframe1.jpg",
+                "PathToKeyframeThumb": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96/keyframes-thumb/keyframes_1_1/keyframe1.jpg",
+                "PathToVideo": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96/browse.mp4",
+                "Browses": {
+                    "Browse": [
+                        {
+                            "BaseUrl": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96",
+                            "PathToKeyframe": "keyframes/keyframes_1_1/keyframe1.jpg",
+                            "PathToKeyframeThumb": "keyframes-thumb/keyframes_1_1/keyframe1.jpg",
+                            "PathToVideo": "browse.mp4",
+                            "HasKeyframes": true,
+                            "Container": "mp4",
+                            "Label": "mp4",
+                            "FileSize": 24729506,
+                            "Width": 832,
+                            "Height": 468,
+                            "BitRate": 1788364,
+                            "VideoFps": "25",
+                            "AudioCodec": "aac",
+                            "VideoCodec": "h264",
+                            "AudioTracks": {
+                                "Track": [
+                                    {
+                                        "Channels": 2,
+                                        "Language": "",
+                                        "Title": ""
+                                    }
+                                ]
+                            },
+                            "AudioBitRate": 705600,
+                            "VideoBitRate": 1514037,
+                            "AudioChannels": 2,
+                            "AudioSampleRate": 44100
+                        },
+                        {
+                            "BaseUrl": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96",
+                            "PathToKeyframe": "keyframes/keyframes_1_1/keyframe1.jpg",
+                            "PathToKeyframeThumb": "keyframes-thumb/keyframes_1_1/keyframe1.jpg",
+                            "PathToVideo": "peak-0.json",
+                            "HasKeyframes": false,
+                            "Container": "peak",
+                            "Label": "peak-0",
+                            "FileSize": 7428,
+                            "BitRate": 8,
+                            "AudioCodec": "audiowaveform",
+                            "AudioSampleRate": 10
+                        }
+                    ]
+                },
+                "IngestSpaceId": null
+            },
+            "Dynamic": {
+                "dc_identifier_localids": {
+                    "MEDIA_ID": [
+                        "TESTJEVANRUDOLF2"
+                    ]
+                },
+                "dc_titles": {
+                    "serie": [
+                        "EVS"
+                    ]
+                },
+                "dcterms_created": "2019-09-24",
+                "dc_publishers": {
+                    "Distributeur": [
+                        "EBU SPORT"
+                    ]
+                },
+                "dc_rights_rightsHolders": {
+                    "Licentiehouder": [
+                        "Rechtenhouder: ZZEBU\\nRechteninfo: The material may be used only by Eurovision active\n\t\t\t\tmembers and sub-licensees.\\n"
+                    ]
+                },
+                "dc_relations": {
+                    "is_verwant_aan": [
+                        "qssb3wtt67_closedOt"
+                    ]
+                },
+                "PID": "qssb3wtt67",
+                "s3_bucket": "mam-highresvideo",
+                "CP": "VRT",
+                "dc_description_categorie": "sport",
+                "vrt_has_been_broadcasted": "true",
+                "s3_domain": "s3-qas.viaa.be",
+                "vrt_status": "nieuw",
+                "s3_object_key": "MAM/HighresVideo/202004280821279010024191220005056B94C300000007580B00000D0F001144.mxf",
+                "CP_id": "OR-rf5kf25",
+                "dc_identifier_localid": "TESTJEVANRUDOLF2",
+                "dcterms_issued": "2019-09-24",
+                "md5_viaa": "cd0f018a92e859d376a09d7cf83e51f9",
+                "ebu_objectType": "footage",
+                "type_viaa": "video",
+                "s3_object_owner": "Pieter Adams+or-rf5kf25"
+            },
+            "RightsManagement": {
+                "Permissions": {
+                    "Read": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "df110b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da"
+                    ],
+                    "Write": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da"
+                    ],
+                    "Export": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da"
+                    ]
+                },
+                "ExpiryDate": null,
+                "ExpiryStatus": null
+            },
+            "Context": {
+                "IsEditable": true,
+                "IsDeletable": true,
+                "IsPublic": false,
+                "IsExportable": true
+            }
+        },
+        {
+            "Descriptive": {
+                "Title": "Rudolf was hier...",
+                "OriginalFilename": "qssb3wtt67.mxf",
+                "UploadedBy": "bulkupload@vrt",
+                "KeyframeStart": 0,
+                "CreationDate": "2019:11:22 17:23:00.084",
+                "RightsOwner": "© vrt",
+                "Description": null,
+                "Rights": null,
+                "Keywords": {
+                    "Keyword": []
+                },
+                "Categories": {
+                    "Category": []
+                },
+                "Publisher": null,
+                "Authors": {},
+                "Location": null,
+                "Address": {},
+                "NonPreferredTerm": null,
+                "Publications": null
+            },
+            "Structural": {
+                "Fragments": {
+                    "Fragment": [
+                        "4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f9697c9ac524f1a471da54c731ceac09bb0"
+                    ]
+                },
+                "FragmentDurationTimeCode": "00:00:12.000",
+                "FragmentStartTimeCode": "00:00:00.000",
+                "FragmentEndTimeCode": "00:00:12.000",
+                "FragmentDurationFrames": 300,
+                "FragmentStartFrames": 0,
+                "FragmentEndFrames": 300,
+                "Versioning": {
+                    "Status": "Untracked",
+                    "Version": 1
+                },
+                "Sets": {
+                    "Set": []
+                },
+                "Collections": {
+                    "Collection": []
+                },
+                "Newspapers": {
+                    "Newspaper": []
+                },
+                "Relations": {}
+            },
+            "Technical": {
+                "PronomId": "fmt/200",
+                "OriginalExtension": "mxf",
+                "FileSize": 446090800,
+                "Md5": "cd0f018a92e859d376a09d7cf83e51f9",
+                "MimeType": "application/mxf",
+                "Width": 720,
+                "Height": 576,
+                "ImageSize": "720x576",
+                "ImageQuality": "medium",
+                "ImageOrientation": "landscape",
+                "VideoTechnical": "dvvideo 720x576 25fps 32266965bps",
+                "AudioTechnical": "pcm_s16le 4ch 48000Hz 3072000bps",
+                "VideoFormat": "DVCPRO25",
+                "DurationTimeCode": "00:01:50.600",
+                "StartTimeCode": "10:00:00.000",
+                "EndTimeCode": "10:01:50.600",
+                "DurationFrames": 2765,
+                "StartFrames": 900000,
+                "EndFrames": 902765,
+                "BitRate": 32266965,
+                "VideoCodec": "dvvideo",
+                "VideoFps": "25",
+                "VideoBitRate": 32266965,
+                "AudioCodec": "pcm_s16le",
+                "AudioChannels": 4,
+                "AudioSampleRate": 48000,
+                "AudioBitRate": 3072000,
+                "AudioTracks": {
+                    "Track": [
+                        {
+                            "Channels": 1,
+                            "Language": "",
+                            "Title": ""
+                        },
+                        {
+                            "Channels": 1,
+                            "Language": "",
+                            "Title": ""
+                        },
+                        {
+                            "Channels": 1,
+                            "Language": "",
+                            "Title": ""
+                        },
+                        {
+                            "Channels": 1,
+                            "Language": "",
+                            "Title": ""
+                        }
+                    ]
+                },
+                "EssenceOffset": 75776,
+                "EditUnitByteSize": 161280,
+                "FramesPerEditUnit": 1,
+                "EditRate": "25",
+                "IndexEditRate": "25"
+            },
+            "Administrative": {
+                "OrganisationName": "vrt",
+                "LastModifiedDate": "2020-08-31T12:56:41Z",
+                "ExternalId": "qssb3wtt67",
+                "ArchiveDate": "2020:05:06 13:45:29",
+                "Type": "video",
+                "DepartmentName": "vrt",
+                "IsSynchronized": false,
+                "IsOriginal": true,
+                "IsPreservation": false,
+                "IsAccess": false,
+                "Workflow": null,
+                "IngestTape": null
+            },
+            "Internal": {
+                "MediaObjectId": "4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96",
+                "FragmentId": "4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f9695d6acf79855408e85cb8edbd4a6deaf",
+                "OriginalStatus": "completed",
+                "BrowseStatus": "completed",
+                "ArchiveStatus": "on_disk",
+                "UploadedById": "ff110a7a-efd0-44e3-8816-0905572421da",
+                "OrganisationId": "110",
+                "IsInIngestSpace": false,
+                "DepartmentId": "dd110b7a-efd0-44e3-8816-0905572421da",
+                "IsFragment": false,
+                "HasKeyframes": true,
+                "ContainsGeoData": false,
+                "PathToKeyframe": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96/keyframes/keyframes_1_1/keyframe1.jpg",
+                "PathToKeyframeThumb": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96/keyframes-thumb/keyframes_1_1/keyframe1.jpg",
+                "PathToVideo": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96/browse.mp4",
+                "Browses": {
+                    "Browse": [
+                        {
+                            "BaseUrl": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96",
+                            "PathToKeyframe": "keyframes/keyframes_1_1/keyframe1.jpg",
+                            "PathToKeyframeThumb": "keyframes-thumb/keyframes_1_1/keyframe1.jpg",
+                            "PathToVideo": "browse.mp4",
+                            "HasKeyframes": true,
+                            "Container": "mp4",
+                            "Label": "mp4",
+                            "FileSize": 24729506,
+                            "Width": 832,
+                            "Height": 468,
+                            "BitRate": 1788364,
+                            "VideoFps": "25",
+                            "AudioCodec": "aac",
+                            "VideoCodec": "h264",
+                            "AudioTracks": {
+                                "Track": [
+                                    {
+                                        "Channels": 2,
+                                        "Language": "",
+                                        "Title": ""
+                                    }
+                                ]
+                            },
+                            "AudioBitRate": 705600,
+                            "VideoBitRate": 1514037,
+                            "AudioChannels": 2,
+                            "AudioSampleRate": 44100
+                        },
+                        {
+                            "BaseUrl": "https://archief-media-qas.viaa.be/viaa/VRT/4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f96",
+                            "PathToVideo": "peak-0.json",
+                            "HasKeyframes": false,
+                            "Container": "peak",
+                            "Label": "peak-0",
+                            "FileSize": 7428,
+                            "BitRate": 8,
+                            "AudioCodec": "audiowaveform",
+                            "AudioSampleRate": 10
+                        }
+                    ]
+                },
+                "IngestSpaceId": null
+            },
+            "Dynamic": {
+                "dc_identifier_localids": {
+                    "MEDIA_ID": [
+                        "TESTJEVANRUDOLF2"
+                    ]
+                },
+                "dc_titles": {
+                    "serie": [
+                        "EVS"
+                    ]
+                },
+                "dcterms_created": "2019-09-24",
+                "dc_publishers": {
+                    "Distributeur": [
+                        "EBU SPORT"
+                    ]
+                },
+                "dc_rights_rightsHolders": {
+                    "Licentiehouder": [
+                        "Rechtenhouder: ZZEBU\\nRechteninfo: The material may be used only by Eurovision active\n\t\t\t\tmembers and sub-licensees.\\n"
+                    ]
+                },
+                "PID": "qssb3wtt67",
+                "s3_bucket": "mam-highresvideo",
+                "CP": "VRT",
+                "dc_description_categorie": "sport",
+                "vrt_has_been_broadcasted": "true",
+                "s3_domain": "s3-qas.viaa.be",
+                "vrt_status": "nieuw",
+                "s3_object_key": "MAM/HighresVideo/202004280821279010024191220005056B94C300000007580B00000D0F001144.mxf",
+                "CP_id": "OR-rf5kf25",
+                "dc_identifier_localid": "TESTJEVANRUDOLF2",
+                "dcterms_issued": "2019-09-24",
+                "md5_viaa": "cd0f018a92e859d376a09d7cf83e51f9",
+                "ebu_objectType": "footage",
+                "type_viaa": "video",
+                "s3_object_owner": "Pieter Adams+or-rf5kf25"
+            },
+            "RightsManagement": {
+                "Permissions": {
+                    "Read": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "df110b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da"
+                    ],
+                    "Write": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da"
+                    ],
+                    "Export": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da"
+                    ]
+                },
+                "ExpiryDate": null,
+                "ExpiryStatus": null
+            },
+            "Context": {
+                "IsEditable": true,
+                "IsDeletable": true,
+                "IsPublic": false,
+                "IsExportable": true
+            }
+        },
+        {
+            "Descriptive": {
+                "Title": "Collateral: pid: qssb3wtt67_closedOt",
+                "Description": "Subtitles for essence:\n    - filename: closedOt/TESTJEVANRUDOLF2/TESTJEVANRUDOLF2_closedOt.xif\n    - CP: VRT",
+                "OriginalFilename": "qssb3wtt67_closedOt.xif",
+                "UploadedBy": "bulkupload@vrt",
+                "KeyframeStart": 0,
+                "CreationDate": "2020:08:31 14:08:11+02:00",
+                "RightsOwner": "© vrt",
+                "Rights": null,
+                "Keywords": {
+                    "Keyword": []
+                },
+                "Categories": {
+                    "Category": []
+                },
+                "Publisher": null,
+                "Authors": {},
+                "Location": null,
+                "Address": {},
+                "NonPreferredTerm": null,
+                "Publications": null
+            },
+            "Structural": {
+                "FragmentStartFrames": 0,
+                "FragmentEndFrames": 0,
+                "Versioning": {
+                    "Status": "Untracked",
+                    "Version": 1
+                },
+                "Sets": {
+                    "Set": []
+                },
+                "Collections": {
+                    "Collection": []
+                },
+                "Newspapers": {
+                    "Newspaper": []
+                },
+                "Relations": {},
+                "Fragments": {},
+                "FragmentDurationTimeCode": null,
+                "FragmentStartTimeCode": null,
+                "FragmentEndTimeCode": null,
+                "FragmentDurationFrames": null
+            },
+            "Technical": {
+                "PronomId": "x-fmt/111",
+                "OriginalExtension": "xif",
+                "FileSize": 373140,
+                "Md5": "eae7ba06a26c5831ab505679745a7471",
+                "MimeType": "text/plain",
+                "Width": null,
+                "Height": null,
+                "ImageSize": null,
+                "ImageOrientation": null,
+                "ImageQuality": null,
+                "VideoTechnical": null,
+                "AudioTechnical": null,
+                "VideoFormat": null,
+                "DurationTimeCode": null,
+                "StartTimeCode": null,
+                "EndTimeCode": null,
+                "DurationFrames": null,
+                "StartFrames": null,
+                "EndFrames": null,
+                "VideoCodec": null,
+                "VideoFps": null,
+                "VideoBitRate": null,
+                "BitRate": null
+            },
+            "Administrative": {
+                "OrganisationName": "vrt",
+                "LastModifiedDate": "2020-09-03T05:27:30Z",
+                "ExternalId": "qssb3wtt67_closedOt",
+                "ArchiveDate": "2020:08:31 14:08:16",
+                "Type": "document",
+                "DepartmentName": "vrt",
+                "Workflow": "s3",
+                "IsSynchronized": false,
+                "IsOriginal": true,
+                "IsPreservation": false,
+                "IsAccess": false,
+                "IngestTape": null
+            },
+            "Internal": {
+                "MediaObjectId": "bb61b3ba70884af8aaa47d48fb7f4193360fabe8334148e080141aebc08f5106",
+                "FragmentId": "bb61b3ba70884af8aaa47d48fb7f4193360fabe8334148e080141aebc08f51062bb216b1b1534175b122ae283bb0dc98",
+                "OriginalStatus": "completed",
+                "BrowseStatus": "no_browse",
+                "ArchiveStatus": "on_disk",
+                "UploadedById": "ff110a7a-efd0-44e3-8816-0905572421da",
+                "OrganisationId": "110",
+                "IsInIngestSpace": false,
+                "DepartmentId": "dd110b7a-efd0-44e3-8816-0905572421da",
+                "IsFragment": false,
+                "HasKeyframes": false,
+                "ContainsGeoData": false,
+                "PathToKeyframe": "https://mheuropehot.blob.core.windows.net/mediahaven-saas-browse-main/no-preview.png",
+                "PathToKeyframeThumb": "https://mheuropehot.blob.core.windows.net/mediahaven-saas-browse-main/no-preview.png",
+                "IngestSpaceId": null,
+                "Browses": {},
+                "PathToVideo": null
+            },
+            "Dynamic": {
+                "dc_relations": {
+                    "is_verwant_aan": [
+                        "qssb3wtt67_closedOt"
+                    ]
+                },
+                "dc_source": "closedOt/TESTJEVANRUDOLF2/TESTJEVANRUDOLF2_closedOt.xif",
+                "PID": "qssb3wtt67_closedOt",
+                "s3_bucket": "mam-collaterals",
+                "CP": "VRT",
+                "s3_domain": "s3-qas.viaa.be",
+                "s3_object_key": "closedOt/TESTJEVANRUDOLF2/TESTJEVANRUDOLF2_closedOt.xif",
+                "CP_id": "OR-rf5kf25",
+                "dc_identifier_localid": "TESTJEVANRUDOLF2",
+                "md5_viaa": "eae7ba06a26c5831ab505679745a7471",
+                "s3_object_owner": "user VRT+or-rf5kf25",
+                "sp_name": "s3"
+            },
+            "RightsManagement": {
+                "Permissions": {
+                    "Read": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "df110b7a-efd0-44e3-8816-0905572421da",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0"
+                    ],
+                    "Write": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0"
+                    ],
+                    "Export": [
+                        "dd110b7a-efd0-44e3-8816-0905572421da",
+                        "cc7c56fc-58c8-4650-bc63-7e695fbc506c",
+                        "dc100b7a-efd0-44e3-8816-0905572421da",
+                        "56c6c177-185c-452b-9998-f91aedc7bdb0"
+                    ]
+                },
+                "ExpiryDate": null,
+                "ExpiryStatus": null
+            },
+            "Context": {
+                "IsEditable": true,
+                "IsDeletable": true,
+                "IsPublic": false,
+                "IsExportable": true
+            }
+        }
+    ]
+}

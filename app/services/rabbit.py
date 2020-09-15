@@ -57,15 +57,15 @@ class RabbitClient:
 
                     channel.start_consuming()
                 except pika.exceptions.StreamLostError:
-                    self.logger.warning("RMQBridge lost connection, reconnecting...")
+                    self.log.warning("RMQBridge lost connection, reconnecting...")
                     time.sleep(3)
                 except pika.exceptions.ChannelWrongStateError:
-                    self.logger.warning(
+                    self.log.warning(
                         "RMQBridge wrong state in channel, reconnecting..."
                     )
                     time.sleep(3)
                 except pika.exceptions.AMQPHeartbeatTimeout:
-                    self.logger.warning(
+                    self.log.warning(
                         "RMQBridge heartbeat timed out, reconnecting..."
                     )
                     time.sleep(3)
