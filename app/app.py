@@ -38,8 +38,8 @@ class EventListener:
         configParser = ConfigParser()
         self.log = logging.get_logger(__name__, config=configParser)
         self.config = configParser.app_cfg
-        self.ftp_client = FTPClient(self.config)
-        self.mh_client = MediahavenClient(self.config)
+        self.ftp_client = FTPClient(configParser)
+        self.mh_client = MediahavenClient(configParser)
         self.event_parser = EventParser()
 
         try:
@@ -81,6 +81,8 @@ class EventListener:
     def _get_fragment(self, items):
         try:
             fragment = next(filter(lambda item: item["Internal"]["IsFragment"], items))
+
+            return fragment
         except StopIteration:
             raise NackException(
                 "Fragment not found in MH for media id",
@@ -124,8 +126,9 @@ class EventListener:
                 error=error,
             )
 
-    def _put_metadata_collateral(self, pid, metadata):
+    def _put_metadata_collateral(self, fragment, metadata):
         try:
+            pid = fragment["Dynamic"]["PID"]
             collateral = transform_to_ebucore(metadata)
 
             metadata_dict = {
@@ -223,7 +226,7 @@ class EventListener:
 
             self._delete_existing_metadata_collateral(items, fragment)
 
-            self._put_metadata_collateral(pid, event.metadata.raw)
+            self._put_metadata_collateral(fragment, event.metadata.raw)
 
             metadata = self._transform_metadata(event)
         except NackException as e:

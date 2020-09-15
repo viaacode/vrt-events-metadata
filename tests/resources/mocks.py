@@ -20,3 +20,25 @@ def mock_rabbit(mocker):
     mocker.patch.object(RabbitClient, "__init__", mock_init)
     mocker.patch.object(RabbitClient, "send_message", mock_send_message)
     mocker.patch.object(RabbitClient, "listen", mock_listen)
+
+
+@pytest.fixture
+def mock_mediahaven(mocker):
+    def mock_init(self, config):
+        print(f"Initiating MH Client.")
+        pass
+
+    from app.services.mediahaven import MediahavenClient
+
+    mocker.patch.object(MediahavenClient, "__init__", mock_init)
+
+
+@pytest.fixture
+def mock_ftp(mocker):
+    def mock_init(self, config):
+        print(f"Initiating FTP Client.")
+        pass
+
+    from app.services.ftp import FTPClient
+
+    mocker.patch.object(FTPClient, "__init__", mock_init)

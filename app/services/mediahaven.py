@@ -10,6 +10,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import RequestException
 
+from viaa.configuration import ConfigParser
+from viaa.observability import logging
 
 class AuthenticationException(Exception):
     """Exception raised when authentication fails."""
@@ -18,8 +20,9 @@ class AuthenticationException(Exception):
 
 
 class MediahavenClient:
-    def __init__(self, config: dict = None):
-        self.cfg: dict = config
+    def __init__(self, configParser: ConfigParser = None):
+        self.log = logging.get_logger(__name__, config=configParser)
+        self.cfg: dict = configParser.app_cfg
         self.token_info = None
         self.url = f'{self.cfg["mediahaven"]["host"]}/media/'
 
