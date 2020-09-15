@@ -68,7 +68,9 @@ class EventListener:
             )
         except RequestException as error:
             raise NackException(
-                "Unable to connect to Mediahaven", error=error, requeue=True,
+                "Error connecting to MediaHaven, retrying....",
+                error=error,
+                requeue=True,
             )
 
         if result["TotalNrOfResults"] == 0:
