@@ -82,7 +82,7 @@ class EventListener:
 
     def _get_fragment(self, items):
         try:
-            fragment = next(filter(lambda item: item["Internal"]["IsFragment"], items))
+            fragment = next(item for item in items if item["Internal"]["IsFragment"])
 
             return fragment
         except StopIteration:
@@ -96,11 +96,9 @@ class EventListener:
             fragment_pid = fragment["Dynamic"]["PID"]
 
             collateral = next(
-                filter(
-                    lambda item: item["Administrative"]["ExternalId"]
-                    == f"{fragment_pid}_metadata",
-                    result["MediaDataList"],
-                )
+                item
+                for item in items
+                if item["Administrative"]["ExternalId"] == f"{fragment_pid}_metadata"
             )
 
             collateral_fragment_id = collateral["Internal"]["FragmentId"]
