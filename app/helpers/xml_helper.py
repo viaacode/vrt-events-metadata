@@ -17,7 +17,7 @@ def transform_to_ebucore(xml: str) -> bytes:
     )
 
 
-def construct_sidecar(metadata: dict) -> str:
+def construct_sidecar(metadata: dict) -> bytes:
     pid = metadata["PID"]
     root = etree.Element("MediaHAVEN_external_metadata")
     etree.SubElement(root, "title").text = f"Collateral: pid: {pid}"
