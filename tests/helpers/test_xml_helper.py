@@ -19,9 +19,10 @@ def test_construct_sidecar():
     # ARRANGE
     metadata_dict = {
         "PID": "abc123",
-        "Md5": "a1b2c3d4e5f6"
+        "Md5": "a1b2c3d4e5f6",
+        "MEDIA_ID": "media-id",
     }
-    ref_xml = b"<?xml version='1.0' encoding='UTF-8'?>\n<MediaHAVEN_external_metadata>\n  <title>Collateral: pid: abc123</title>\n  <description>Metadata for essence:\n    - PID: abc123\n    - CP: VRT\n    </description>\n  <MDProperties>\n    <CP>VRT</CP>\n    <CP_id>OR-rf5kf25</CP_id>\n    <sp_name>s3</sp_name>\n    <PID>abc123_metadata</PID>\n    <md5>a1b2c3d4e5f6</md5>\n    <dc_relations>\n      <is_verwant_aan>abc123</is_verwant_aan>\n    </dc_relations>\n  </MDProperties>\n</MediaHAVEN_external_metadata>\n"
+    ref_xml = b"<?xml version='1.0' encoding='UTF-8'?>\n<MediaHAVEN_external_metadata>\n  <title>Collateral: pid: abc123</title>\n  <description>Metadata for essence:\n    - PID: abc123\n    - Media ID: media-id\n    - CP: VRT\n    </description>\n  <MDProperties>\n    <CP>VRT</CP>\n    <CP_id>OR-rf5kf25</CP_id>\n    <sp_name>s3</sp_name>\n    <PID>abc123_metadata</PID>\n    <md5>a1b2c3d4e5f6</md5>\n    <dc_identifier_localid>media-id</dc_identifier_localid>\n    <dc_identifier_localids>\n      <MEDIA_ID>media-id</MEDIA_ID>\n    </dc_identifier_localids>\n    <dc_relations>\n      <is_verwant_aan>abc123</is_verwant_aan>\n    </dc_relations>\n  </MDProperties>\n</MediaHAVEN_external_metadata>\n"
 
     # ACT
     test_xml = construct_sidecar(metadata_dict)
