@@ -88,6 +88,7 @@ class EventListener:
             metadata_dict = {
                 "PID": pid,
                 "Md5": md5(BytesIO(collateral).getbuffer()).hexdigest(),
+                "MEDIA_ID": event.metadata.media_id,
             }
             sidecar = construct_sidecar(metadata_dict)
 
