@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<MediaHAVEN_external_metadata>
+  <title>Collateral: pid: abc123</title>
+  <description>Metadata for essence:
+    - PID: abc123
+    - Media ID: media-id
+    - CP: VRT
+    </description>
+  <MDProperties>
+    <CP>VRT</CP>
+    <CP_id>OR-rf5kf25</CP_id>
+    <sp_name>s3</sp_name>
+    <PID>abc123_metadata</PID>
+    <md5>a1b2c3d4e5f6</md5>
+    <dc_identifier_localid>media-id</dc_identifier_localid>
+    <dc_identifier_localids>
+      <MEDIA_ID>media-id</MEDIA_ID>
+    </dc_identifier_localids>
+    <dc_relations>
+      <is_verwant_aan>abc123</is_verwant_aan>
+    </dc_relations>
+  </MDProperties>
+</MediaHAVEN_external_metadata>

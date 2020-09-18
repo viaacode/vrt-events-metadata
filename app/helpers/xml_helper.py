@@ -17,13 +17,15 @@ def transform_to_ebucore(xml: str) -> bytes:
     )
 
 
-def construct_sidecar(metadata: dict) -> str:
+def construct_sidecar(metadata: dict) -> bytes:
     pid = metadata["PID"]
+    media_id = metadata["MEDIA_ID"]
     root = etree.Element("MediaHAVEN_external_metadata")
     etree.SubElement(root, "title").text = f"Collateral: pid: {pid}"
 
     description = f"""Metadata for essence:
     - PID: {pid}
+    - Media ID: {media_id}
     - CP: VRT
     """
     etree.SubElement(root, "description").text = description
@@ -34,6 +36,11 @@ def construct_sidecar(metadata: dict) -> str:
     etree.SubElement(mdprops, "sp_name").text = "s3"
     etree.SubElement(mdprops, "PID").text = f"{pid}_metadata"
     etree.SubElement(mdprops, "md5").text = metadata["Md5"]
+    # Add VRT "Media ID" as local_id
+    etree.SubElement(mdprops, "dc_identifier_localid").text = media_id
+    # Add VRT "Media ID" as itself under local_ids
+    local_ids = etree.SubElement(mdprops, "dc_identifier_localids")
+    etree.SubElement(local_ids, "MEDIA_ID").text = media_id
 
     relations = etree.SubElement(mdprops, "dc_relations")
     etree.SubElement(relations, "is_verwant_aan").text = pid
