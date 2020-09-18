@@ -22,7 +22,7 @@ def test_get_fragment(event_listener):
     el = EventListener()
 
     # ACT
-    fragment = el._get_fragment(json["MediaDataList"])
+    fragment = el._get_fragment(json["MediaDataList"], None)
 
     # ASSERT
     assert fragment["Internal"]["FragmentId"] == "4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f9697c9ac524f1a471da54c731ceac09bb0"

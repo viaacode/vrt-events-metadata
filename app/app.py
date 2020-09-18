@@ -80,7 +80,7 @@ class EventListener:
 
         return result["MediaDataList"]
 
-    def _get_fragment(self, items):
+    def _get_fragment(self, items, event):
         try:
             fragment = next(item for item in items if item["Internal"]["IsFragment"])
 
@@ -126,10 +126,10 @@ class EventListener:
                 error=error,
             )
 
-    def _put_metadata_collateral(self, fragment, metadata):
+    def _put_metadata_collateral(self, fragment, event):
         try:
             pid = fragment["Dynamic"]["PID"]
-            collateral = transform_to_ebucore(metadata)
+            collateral = transform_to_ebucore(event.metadata.raw)
 
             metadata_dict = {
                 "PID": pid,
@@ -152,7 +152,7 @@ class EventListener:
                 "Failed to upload metadata as collateral.",
                 error=error,
                 pid=pid,
-                metadata=metadata,
+                metadata=event.metadata.raw,
             )
 
     def _transform_metadata(self, event):
@@ -223,11 +223,11 @@ class EventListener:
             # We need all archived items for media id (fragment + collaterals)
             items = self._get_items_for_media_id(event)
 
-            fragment = self._get_fragment(items)
+            fragment = self._get_fragment(items, event)
 
             self._delete_existing_metadata_collateral(items, fragment)
 
-            self._put_metadata_collateral(fragment, event.metadata.raw)
+            self._put_metadata_collateral(fragment, event)
 
             metadata = self._transform_metadata(event)
         except NackException as e:
