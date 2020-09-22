@@ -116,10 +116,11 @@ class MediahavenClient:
         # Construct the URL to POST to
         url = f"{self.url}/{fragment_id}"
 
+        # Set a reason for the DELETE
+        data = {"reason": "New metadata available."}
+
         # Send the DELETE request, as multipart/form-data
-        response = requests.delete(
-            url, headers=headers, reason="New metadata available."
-        )
+        response = requests.delete(url, headers=headers, files=data)
 
         if response.status_code == 401:
             # AuthenticationException triggers a retry with a new token
