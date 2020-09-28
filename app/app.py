@@ -230,6 +230,8 @@ class EventListener:
             self._put_metadata_collateral(fragment, event)
 
             metadata = self._transform_metadata(event)
+
+            self._update_metadata(fragment, metadata)
         except NackException as e:
             self._handle_nack_exception(e, channel, method.delivery_tag)
             return
