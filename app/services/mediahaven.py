@@ -13,6 +13,7 @@ from requests.exceptions import RequestException
 from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
+
 class AuthenticationException(Exception):
     """Exception raised when authentication fails."""
 

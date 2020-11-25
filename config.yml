@@ -12,6 +12,8 @@ app:
         username: !ENV ${RABBITMQ_USERNAME}
         password: !ENV ${RABBITMQ_PASSWORD}
         queue: !ENV ${RABBITMQ_QUEUE}
+        exchange: !ENV ${RABBITMQ_EXCHANGE}
+        get_subtitles_routing_key: !ENV ${RABBITMQ_GET_SUBTITLES_ROUTING_KEY}
     mtd-transformer: 
         host: !ENV ${MTD_TRANSFORMER}
         transformation: OR-rf5kf25

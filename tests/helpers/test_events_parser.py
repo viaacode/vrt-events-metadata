@@ -86,6 +86,45 @@ def test_parse_metadata_updated_event():
     assert event.metadata.raw is not None
 
 
+def test_parse_get_metadata_response_with_subtitles():
+    # ARRANGE
+    xml = resources.load_xml_resource("getMetadataResponseWithSubtitles")
+    event_parser = EventParser()
+
+    # ACT
+    event = event_parser.get_event("getMetadataResponse", xml)
+
+    # ASSERT
+    assert event.metadata.openOT_available == True
+    assert event.metadata.closedOT_available == True
+
+
+def test_parse_get_metadata_response_with_openOT():
+    # ARRANGE
+    xml = resources.load_xml_resource("getMetadataResponseWithOpenOT")
+    event_parser = EventParser()
+
+    # ACT
+    event = event_parser.get_event("getMetadataResponse", xml)
+
+    # ASSERT
+    assert event.metadata.openOT_available == True
+    assert event.metadata.closedOT_available == False
+
+
+def test_parse_get_metadata_response_with_closedOT():
+    # ARRANGE
+    xml = resources.load_xml_resource("getMetadataResponseWithClosedOT")
+    event_parser = EventParser()
+
+    # ACT
+    event = event_parser.get_event("getMetadataResponse", xml)
+
+    # ASSERT
+    assert event.metadata.openOT_available == False
+    assert event.metadata.closedOT_available == True
+
+
 @pytest.mark.parametrize("event", INVALID_METADATA_RESPONSE_EVENTS)
 def test_parse_invalid_get_metadata_response(event):
     # ARRANGE

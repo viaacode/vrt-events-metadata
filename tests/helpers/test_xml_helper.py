@@ -15,6 +15,7 @@ def test_ebucore_transformation():
     # ASSERT
     assert b"ebuCoreMain" in ebu_xml
 
+
 def test_construct_sidecar():
     # ARRANGE
     metadata_dict = {
