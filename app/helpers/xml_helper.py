@@ -44,6 +44,9 @@ def construct_sidecar(metadata: dict) -> bytes:
 
     relations = etree.SubElement(mdprops, "dc_relations")
     etree.SubElement(relations, "is_verwant_aan").text = pid
+    # Information for deewee
+    etree.SubElement(mdprops, "object_level").text = "file"
+    etree.SubElement(mdprops, "object_use").text = "metadata"
     tree = etree.ElementTree(root)
     return etree.tostring(
         root, pretty_print=True, encoding="UTF-8", xml_declaration=True
