@@ -212,7 +212,7 @@ class EventListener:
             )
 
     def _request_subtitles(self, event):
-        if media_type == "video" and event.metadata.openOT_available:
+        if event.media_type == "video" and event.metadata.openOT_available:
             open_ot_request = generate_make_subtitle_available_request_xml(
                 "open", event.metadata.media_id, event.metadata.media_id
             )
@@ -222,7 +222,7 @@ class EventListener:
                 self.config["rabbitmq"]["exchange"],
             )
 
-        if media_type == "video" and event.metadata.closedOT_available:
+        if event.media_type == "video" and event.metadata.closedOT_available:
             closed_ot_request = generate_make_subtitle_available_request_xml(
                 "closed", event.metadata.media_id, event.metadata.media_id
             )
