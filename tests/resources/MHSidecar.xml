@@ -19,5 +19,8 @@
     <dc_relations>
       <is_verwant_aan>abc123</is_verwant_aan>
     </dc_relations>
+    <object_level>file</object_level>
+    <object_use>metadata</object_use>
+    <ie_type>n/a</ie_type>
   </MDProperties>
 </MediaHAVEN_external_metadata>
