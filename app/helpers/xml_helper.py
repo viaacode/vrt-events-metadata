@@ -47,6 +47,7 @@ def construct_sidecar(metadata: dict) -> bytes:
     # Information for deewee
     etree.SubElement(mdprops, "object_level").text = "file"
     etree.SubElement(mdprops, "object_use").text = "metadata"
+    etree.SubElement(mdprops, "ie_type").text = "n/a"
     tree = etree.ElementTree(root)
     return etree.tostring(
         root, pretty_print=True, encoding="UTF-8", xml_declaration=True
