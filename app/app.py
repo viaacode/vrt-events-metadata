@@ -197,6 +197,7 @@ class EventListener:
             raise NackException(
                 "Failed to update metadata in MediaHaven.",
                 error=error,
+                error_response=error.response.text,
                 fragment_id=fragment_id,
                 metadata=metadata,
             )
