@@ -65,9 +65,7 @@ class RabbitClient:
                     )
                     time.sleep(3)
                 except pika.exceptions.AMQPHeartbeatTimeout:
-                    self.log.warning(
-                        "RMQBridge heartbeat timed out, reconnecting..."
-                    )
+                    self.log.warning("RMQBridge heartbeat timed out, reconnecting...")
                     time.sleep(3)
 
         except KeyboardInterrupt:

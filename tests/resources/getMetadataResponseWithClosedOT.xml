@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<viaa:getMetadataResponse xmlns:viaa="http://www.vrt.be/mig/viaa/api" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ebu="urn:ebu:metadata-schema:ebuCore_2012" xmlns:ns4="http://www.vrt.be/mig/viaa">
+  <viaa:correlationId>WP00026602</viaa:correlationId>
+  <viaa:status>SUCCESS</viaa:status>
+  <viaa:metadata>
+    <ebu:title>
+      <dc:title>Witse R004 A0006</dc:title>
+    </ebu:title>
+    <ebu:alternativeTitle>
+      <dc:title>Duivelskoppel</dc:title>
+    </ebu:alternativeTitle>
+    <ebu:alternativeTitle typeDefinition="season">
+      <dc:title>Witse R004</dc:title>
+    </ebu:alternativeTitle>
+    <ebu:alternativeTitle typeDefinition="series">
+      <dc:title>Witse</dc:title>
+    </ebu:alternativeTitle>
+    <ebu:alternativeTitle typeDefinition="program">
+      <dc:title>Witse R004 A0006</dc:title>
+    </ebu:alternativeTitle>
+    <ebu:creator>
+      <ebu:organisationDetails>
+        <ebu:organisationName>TV</ebu:organisationName>
+      </ebu:organisationDetails>
+      <ebu:role typeDefinition="productionCompany" />
+    </ebu:creator>
+    <ebu:creator>
+      <ebu:organisationDetails>
+        <ebu:organisationName />
+      </ebu:organisationDetails>
+      <ebu:role typeDefinition="provenance" />
+    </ebu:creator>
+    <ebu:subject note="" />
+    <ebu:description typeDefinition="short">
+      <dc:description>Vlaamse misdaadserie rond een eigenzinnige en gedreven speurder bij de Federale Recherche in Halle.</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="long">
+      <dc:description>De rijke barones Van Calster wordt bij een inbraak vermoord, maar vreemd genoeg worden maar weinig zaken gestolen in haar kasteel. De barones had een veel jongere minnaar, de zogezegde landjonker Hendrik Palfijn, en leefde in onmin met haar zoon Didier. Beide mannen azen op het bezit van de barone, en delen een interesse in Sylvia, een model uit het Oostblok dat het in het Westen wil 'maken'.</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="season">
+      <dc:description>4</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="comment">
+      <dc:description />
+    </ebu:description>
+    <ebu:description typeDefinition="cast">
+      <dc:description>
+        Met: Hubert Damen (Witse), Inge Paulussen (Sam Deconinck), Daan Hugaert (Romain Van Deun), Marc Stroobants (Rudy Dams), Dirk Tuypens (Peter Wijtinckx), Els Olaerts (Annemie Nachtegaele) e.a.
+        Gastacteurs: Katelijne Verbeke (Dokter Véronique Maes), Roel Vanderstukken (Kris), Kristine Van Pellicom (Hazel Ruysselede), Rita Smets (Angèle Van Calster), Gene Bervoets (Hendrik Palfijn), Robert De La Haye (Didier Van Calster) e.a.
+      </dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="category">
+      <dc:description>algemeen</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="categoryTrailer">
+      <dc:description />
+    </ebu:description>
+    <ebu:description typeDefinition="productionMethod">
+      <dc:description>intern</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="status">
+      <dc:description>gearchiveerd</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="cleanMediaVersion">
+      <dc:description>0</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="hasBeenBroadcasted">
+      <dc:description>true</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="contentCheck">
+      <dc:description>false</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="historicalFormat">
+      <dc:description />
+    </ebu:description>
+    <ebu:description typeDefinition="duration">
+      <dc:description>00:55:14:00</dc:description>
+    </ebu:description>
+    <ebu:description typeDefinition="rights">
+      <dc:description />
+    </ebu:description>
+    <ebu:description typeDefinition="rightsType">
+      <dc:description />
+    </ebu:description>
+    <ebu:publisher>
+      <ebu:organisationDetails>
+        <ebu:organisationName />
+      </ebu:organisationDetails>
+      <ebu:role typeDefinition="publisher" />
+    </ebu:publisher>
+    <ebu:date>
+      <ebu:created />
+      <ebu:alternative startDate="2020-08-04" startTime="00:00:00" typeDefinition="mainDate" />
+    </ebu:date>
+    <ebu:type>
+      <ebu:genre typeDefinition="fictie" />
+      <ebu:objectType typeDefinition="program" />
+    </ebu:type>
+    <ebu:format formatDefinition="current">
+      <ebu:videoFormat videoFormatDefinition="hires">
+        <ebu:width>1920</ebu:width>
+        <ebu:height>1080</ebu:height>
+        <ebu:frameRate>25</ebu:frameRate>
+        <ebu:aspectRatio>
+          <ebu:factorNumerator>16</ebu:factorNumerator>
+          <ebu:factorDenominator>9</ebu:factorDenominator>
+        </ebu:aspectRatio>
+        <ebu:codec>
+          <ebu:name>AVC-I</ebu:name>
+        </ebu:codec>
+        <ebu:bitRate>113664000</ebu:bitRate>
+      </ebu:videoFormat>
+      <ebu:containerFormat formatDefinition="MXF OP1a" />
+      <ebu:start>
+        <ebu:timecode>00:03:00:00</ebu:timecode>
+      </ebu:start>
+      <ebu:end>
+        <ebu:timecode>00:58:14:00</ebu:timecode>
+      </ebu:end>
+      <ebu:technicalAttributeString typeDefinition="SOM">00:03:00:00</ebu:technicalAttributeString>
+    </ebu:format>
+    <ebu:format formatDefinition="current">
+      <ebu:videoFormat videoFormatDefinition="lores">
+        <ebu:width>1280</ebu:width>
+        <ebu:height>720</ebu:height>
+        <ebu:frameRate>25</ebu:frameRate>
+        <ebu:aspectRatio>
+          <ebu:factorNumerator>16</ebu:factorNumerator>
+          <ebu:factorDenominator>9</ebu:factorDenominator>
+        </ebu:aspectRatio>
+        <ebu:codec>
+          <ebu:name>H264</ebu:name>
+        </ebu:codec>
+        <ebu:bitRate>2106680</ebu:bitRate>
+      </ebu:videoFormat>
+      <ebu:containerFormat formatDefinition="MP4" />
+      <ebu:start>
+        <ebu:timecode>00:03:00:00</ebu:timecode>
+      </ebu:start>
+      <ebu:end>
+        <ebu:timecode>00:58:14:00</ebu:timecode>
+      </ebu:end>
+      <ebu:technicalAttributeString typeDefinition="SOM">00:03:00:00</ebu:technicalAttributeString>
+    </ebu:format>
+    <ebu:identifier typeDefinition="MEDIA_ID">
+      <dc:identifier>WP00026602</dc:identifier>
+      <ebu:attributor>
+        <ebu:organisationDetails>
+          <ebu:organisationName>WON</ebu:organisationName>
+        </ebu:organisationDetails>
+      </ebu:attributor>
+    </ebu:identifier>
+    <ebu:identifier typeDefinition="historicalRecordNumber">
+      <dc:identifier />
+    </ebu:identifier>
+    <ebu:identifier formatLanguage="NL" typeDefinition="otIdClosed">
+      <dc:identifier />
+    </ebu:identifier>
+    <ebu:relation internalRunningOrderNumber="6" typeDefinition="season" />
+    <ebu:relation typeDefinition="season">
+      <ebu:relationIdentifier>
+        <dc:identifier>4488222529</dc:identifier>
+      </ebu:relationIdentifier>
+    </ebu:relation>
+    <ebu:rights>
+      <ebu:rightsHolder>
+        <ebu:organisationDetails>
+          <ebu:organisationName />
+        </ebu:organisationDetails>
+      </ebu:rightsHolder>
+    </ebu:rights>
+  </viaa:metadata>
+</viaa:getMetadataResponse>

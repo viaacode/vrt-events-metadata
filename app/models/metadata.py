@@ -22,13 +22,27 @@ class Metadata(ABC):
 
 
 class VideoMetadata(Metadata):
-    def __init__(self, raw, framerate, duration, som, soc, eoc, eom, media_id):
+    def __init__(
+        self,
+        raw,
+        framerate,
+        duration,
+        som,
+        soc,
+        eoc,
+        eom,
+        media_id,
+        openOT_available,
+        closedOT_available,
+    ):
         self.framerate = framerate
         self.duration = duration
         self.som = som
         self.soc = soc
         self.eoc = eoc
         self.eom = eom
+        self.openOT_available = openOT_available
+        self.closedOT_available = closedOT_available
         super().__init__(raw, media_id)
 
     def _validate_metadata(self):

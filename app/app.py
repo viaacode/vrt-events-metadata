@@ -15,7 +15,11 @@ from viaa.configuration import ConfigParser
 from viaa.observability import logging
 
 from app.helpers.events_parser import EventParser
-from app.helpers.xml_helper import transform_to_ebucore, construct_sidecar
+from app.helpers.xml_helper import (
+    transform_to_ebucore,
+    construct_sidecar,
+    generate_make_subtitle_available_request_xml,
+)
 from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
 from app.services.ftp import FTPClient
@@ -208,6 +212,27 @@ class EventListener:
                 error=error,
             )
 
+    def _request_subtitles(self, event):
+        if event.media_type == "video" and event.metadata.openOT_available:
+            open_ot_request = generate_make_subtitle_available_request_xml(
+                "open", event.metadata.media_id, event.metadata.media_id
+            )
+            self.rabbit_client.send_message(
+                self.config["rabbitmq"]["get_subtitles_routing_key"],
+                open_ot_request,
+                self.config["rabbitmq"]["exchange"],
+            )
+
+        if event.media_type == "video" and event.metadata.closedOT_available:
+            closed_ot_request = generate_make_subtitle_available_request_xml(
+                "closed", event.metadata.media_id, event.metadata.media_id
+            )
+            self.rabbit_client.send_message(
+                self.config["rabbitmq"]["get_subtitles_routing_key"],
+                closed_ot_request,
+                self.config["rabbitmq"]["exchange"],
+            )
+
     def _handle_nack_exception(self, nack_exception, channel, delivery_tag):
         """ Log an error and send a nack to rabbit """
         self.log.error(nack_exception.message, **nack_exception.kwargs)
@@ -233,6 +258,8 @@ class EventListener:
             metadata = self._transform_metadata(event)
 
             self._update_metadata(fragment, metadata)
+
+            self._request_subtitles(event)
         except NackException as e:
             self._handle_nack_exception(e, channel, method.delivery_tag)
             return

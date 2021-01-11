@@ -111,8 +111,46 @@ class EventParser(object):
                 f"{base_xpath}/ebu:technicalAttributeString[@typeDefinition='EOM']",
                 optional=True,
             )
+            openOT_available = bool(
+                self._get_xpath_from_event(
+                    f"//ebu:identifier[@typeDefinition='otIdOpen']",
+                    optional=True,
+                    xml=True,
+                )
+            ) or bool(
+                self._get_xpath_from_event(
+                    f"//ebu:format/ebu:dataFormat/ebu:captioningFormat[@formatDefinition='open']",
+                    optional=True,
+                    xml=True,
+                )
+            )
 
-            return VideoMetadata(raw, framerate, duration, som, soc, eoc, eom, media_id)
+            closedOT_available = bool(
+                self._get_xpath_from_event(
+                    f"//ebu:identifier[@typeDefinition='otIdClosed']",
+                    optional=True,
+                    xml=True,
+                )
+            ) or bool(
+                self._get_xpath_from_event(
+                    f"//ebu:format/ebu:dataFormat/ebu:captioningFormat[@formatDefinition='closed']",
+                    optional=True,
+                    xml=True,
+                )
+            )
+
+            return VideoMetadata(
+                raw,
+                framerate,
+                duration,
+                som,
+                soc,
+                eoc,
+                eom,
+                media_id,
+                openOT_available,
+                closedOT_available,
+            )
         if media_type == "audio":
             return AudioMetadata(raw, media_id)
 
