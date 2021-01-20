@@ -26,6 +26,7 @@ VALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponse2",
     "getMetadataResponseLoresNodeBeforeHires",
     "getMetadataResponseSOMSOCEOC",
+    "getMetadataResponseWithWhitespace",
     "getMetadataResponseAudio",
 ]
 

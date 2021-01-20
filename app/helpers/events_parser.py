@@ -49,7 +49,7 @@ class EventParser(object):
     def _parse_event(self, event_type: str, xml: bytes):
         """Parse the input XML to a DOM"""
         try:
-            tree = etree.parse(BytesIO(xml))
+            tree = etree.parse(BytesIO(xml.strip()))
         except etree.XMLSyntaxError:
             raise InvalidEventException("Event is not valid XML.")
 
