@@ -7,6 +7,7 @@ import functools
 from io import BytesIO
 
 import requests
+import urllib
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import RequestException
 
@@ -73,12 +74,18 @@ class MediahavenClient:
     def get_fragment(self, query_key: str, value: str) -> dict:
         headers = self._construct_headers()
 
-        # Query is constructed as a string to prevent requests url encoding,
-        # Mediahaven returns wrong result when encoded
-        query = f"?q=%2b({query_key}:{value})"
+        # Construct query as '+(query_key:"value")'
+        query = f'+({query_key}:"{value}")'
+
+        params_dict: dict = {
+            "q": query,
+        }
+
+        # Encode the spaces in the query parameters as %20 and not +
+        params = urllib.parse.urlencode(params_dict, quote_via=urllib.parse.quote)
 
         # Send the GET request
-        response = requests.get(f"{self.url}{query}", headers=headers,)
+        response = requests.get(self.url, headers=headers, params=params)
 
         if response.status_code == 401:
             # AuthenticationException triggers a retry with a new token
