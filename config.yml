@@ -14,6 +14,7 @@ app:
         queue: !ENV ${RABBITMQ_QUEUE}
         exchange: !ENV ${RABBITMQ_EXCHANGE}
         get_subtitles_routing_key: !ENV ${RABBITMQ_GET_SUBTITLES_ROUTING_KEY}
+        prefetch_count: !ENV ${RABBITMQ_PREFETCH_COUNT}
     mtd-transformer: 
         host: !ENV ${MTD_TRANSFORMER}
         transformation: OR-rf5kf25
