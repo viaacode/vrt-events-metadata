@@ -15,4 +15,5 @@ def env_setup(monkeypatch):
     monkeypatch.setenv("RABBITMQ_QUEUE", "queue")
     monkeypatch.setenv("RABBITMQ_EXCHANGE", "exchange")
     monkeypatch.setenv("RABBITMQ_GET_SUBTITLES_ROUTING_KEY", "routingkey")
+    monkeypatch.setenv("RABBITMQ_PREFETCH_COUNT", "1")
     monkeypatch.setenv("MTD_TRANSFORMER", "url")
