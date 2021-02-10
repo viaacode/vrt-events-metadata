@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<makeSubtitleAvailableRequest xmlns="http://www.vrt.be/mig/viaa">
+  <requestor>VIAA</requestor>
+  <correlationId>correlationId</correlationId>
+  <id>mediaId</id>
+  <destinationPath>mam-collaterals/openOT/mediaId/</destinationPath>
+  <otType>OPEN</otType>
+</makeSubtitleAvailableRequest>
