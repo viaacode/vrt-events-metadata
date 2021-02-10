@@ -56,9 +56,9 @@ def construct_sidecar(metadata: dict) -> bytes:
 
 def generate_make_subtitle_available_request_xml(
     ot_type: str, correlation_id: str, media_id: str
-) -> str:
+) -> bytes:
     NAMESPACES = {
-        None: "http://www.vrt.be/mig/viaa/api",
+        None: "http://www.vrt.be/mig/viaa",
     }
     xml_data_dict = {
         "requestor": "VIAA",
@@ -73,4 +73,4 @@ def generate_make_subtitle_available_request_xml(
         etree.SubElement(root, sub).text = val
     return etree.tostring(
         root, pretty_print=True, encoding="UTF-8", xml_declaration=True
-    ).decode("UTF-8")
+    )
