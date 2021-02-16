@@ -61,7 +61,7 @@ def generate_make_subtitle_available_request_xml(
         None: "http://www.vrt.be/mig/viaa",
     }
     xml_data_dict = {
-        "requestor": "VIAA",
+        "requestor": "meemoo",
         "correlationId": correlation_id,
         "id": media_id,
         "destinationPath": f"mam-collaterals/{ot_type}OT/{media_id}/",
