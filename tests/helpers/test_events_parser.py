@@ -14,11 +14,11 @@ INVALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponseSocAfterEom",
     "getMetadataResponseSomMissing",
     "getMetadataResponseMalformedTimecode",
-    "getMetadataResponseHiresMissing",
     "getMetadataResponseMediaIDMissing",
     "getMetadataResponseInvalidTimecode",
     "getMetadataResponseWrongRootTag",
     "invalidXml",
+    "getMetadataResponseHiresAndLoresMissing",
 ]
 
 VALID_METADATA_RESPONSE_EVENTS = [
@@ -28,6 +28,7 @@ VALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponseSOMSOCEOC",
     "getMetadataResponseWithWhitespace",
     "getMetadataResponseAudio",
+    "getMetadataResponseHiresMissing",
 ]
 
 VALID_TIMECODES = [
@@ -51,6 +52,11 @@ INVALID_TIMECODES = [
     "-5:00:00:02",
     "01:-03:03:04",
     "Ik heb zin in een zin, maar heeft deze zin wel zin?",
+]
+
+CALCULATE_RESOLUTION_XPATH_EVENTS = [
+    ("getMetadataResponse", "hires"),
+    ("getMetadataResponseHiresMissing", "lores"),
 ]
 
 
@@ -161,3 +167,20 @@ def test_invalid_timecode_to_frames(timecode):
     # ACT
     with pytest.raises(InvalidEventException):
         event.metadata._VideoMetadata__timecode_to_frames(timecode[0], timecode[1])
+
+
+@pytest.mark.parametrize("event, res", CALCULATE_RESOLUTION_XPATH_EVENTS)
+def test_parse_calculate_resolution_xpath(event, res):
+    # ARRANGE
+    xml = resources.load_xml_resource(event)
+    event_parser = EventParser()
+
+    # ACT
+    event_parser.event = event_parser._parse_event("getMetadataResponse", xml)
+    resolution = event_parser._calculate_resolution_xpath()
+
+    # ASSERT
+    
+    assert resolution == (
+        f"//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='{res}']]"
+    )
