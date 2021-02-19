@@ -81,6 +81,28 @@ class EventParser(object):
 
         raise InvalidEventException("Unknown media type.")
 
+    def _calculate_resolution_xpath(self) -> str:
+        """ Calculates the XPATH for the resolution information.
+
+        It will use hires information if it is available. Otherwise, use lores information.
+
+        Returns:
+            The XPATH for the resolution information.
+
+        Raises:
+            InvalidEventException: If no hires and no lores are available.
+        """
+        resolutions = ("hires", "lores")
+        xpath_resolutions = [
+            f"//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='{res}']]"
+            for res
+            in resolutions
+        ]
+        for xpath_resolution in xpath_resolutions:
+            if self.event.xpath(xpath_resolution, namespaces=NAMESPACES):
+                return xpath_resolution
+        raise InvalidEventException("No hires/lores information available.")
+
     def _parse_metadata(self, media_type):
         raw = self._get_xpath_from_event("./vrt:metadata", xml=True)
         media_id = self._get_xpath_from_event(
@@ -88,7 +110,7 @@ class EventParser(object):
         )
 
         if media_type == "video":
-            base_xpath = "//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='hires']]"
+            base_xpath = self._calculate_resolution_xpath()
 
             framerate = int(
                 self._get_xpath_from_event(
