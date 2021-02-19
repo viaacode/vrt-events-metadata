@@ -21,7 +21,7 @@ class EventParser(object):
         media_type = self._get_media_type()
         metadata = self._parse_metadata(media_type)
 
-        timestamp = self._get_xpath_from_event("./vrt:timestamp", optional=True)
+        timestamp = self._get_xpath_from_event("./vrt:timestamp")
 
         if event_type == "getMetadataResponse":
             correlation_id = self._get_xpath_from_event("./vrt:correlationId")
