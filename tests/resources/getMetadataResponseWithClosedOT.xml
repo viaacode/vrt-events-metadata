@@ -1,62 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<viaa:getMetadataResponse xmlns:viaa="http://www.vrt.be/mig/viaa/api" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ebu="urn:ebu:metadata-schema:ebuCore_2012" xmlns:ns4="http://www.vrt.be/mig/viaa">
-  <viaa:correlationId>WP00026602</viaa:correlationId>
+<viaa:getMetadataResponse xmlns:viaa="http://www.vrt.be/mig/viaa/api"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:ebu="urn:ebu:metadata-schema:ebuCore_2012"
+  xmlns:ns4="http://www.vrt.be/mig/viaa">
+  <viaa:timestamp>2021-02-18T17:40:21.180+01:00</viaa:timestamp>
+  <viaa:correlationId>WP00181540</viaa:correlationId>
   <viaa:status>SUCCESS</viaa:status>
   <viaa:metadata>
     <ebu:title>
-      <dc:title>Witse R004 A0006</dc:title>
+      <dc:title>Winteruur R006 A0022</dc:title>
     </ebu:title>
     <ebu:alternativeTitle>
-      <dc:title>Duivelskoppel</dc:title>
+      <dc:title>Koen De Bouw</dc:title>
     </ebu:alternativeTitle>
     <ebu:alternativeTitle typeDefinition="season">
-      <dc:title>Witse R004</dc:title>
+      <dc:title>Winteruur R006</dc:title>
     </ebu:alternativeTitle>
     <ebu:alternativeTitle typeDefinition="series">
-      <dc:title>Witse</dc:title>
+      <dc:title>Winteruur</dc:title>
     </ebu:alternativeTitle>
     <ebu:alternativeTitle typeDefinition="program">
-      <dc:title>Witse R004 A0006</dc:title>
+      <dc:title>Winteruur R006 A0022</dc:title>
     </ebu:alternativeTitle>
     <ebu:creator>
       <ebu:organisationDetails>
-        <ebu:organisationName>TV</ebu:organisationName>
+        <ebu:organisationName>Panenka</ebu:organisationName>
       </ebu:organisationDetails>
-      <ebu:role typeDefinition="productionCompany" />
+      <ebu:role typeDefinition="productionCompany"/>
     </ebu:creator>
     <ebu:creator>
       <ebu:organisationDetails>
-        <ebu:organisationName />
+        <ebu:organisationName/>
       </ebu:organisationDetails>
-      <ebu:role typeDefinition="provenance" />
+      <ebu:role typeDefinition="provenance"/>
     </ebu:creator>
-    <ebu:subject note="" />
+    <ebu:subject note="STUDIOGAST, HOND, VOORDRACHT, BOEK, DE BOUW KOEN"/>
     <ebu:description typeDefinition="short">
-      <dc:description>Vlaamse misdaadserie rond een eigenzinnige en gedreven speurder bij de Federale Recherche in Halle.</dc:description>
+      <dc:description>Wim Helsen nodigt interessante gasten uit voor een gesprek over hun favoriete tekst.</dc:description>
     </ebu:description>
     <ebu:description typeDefinition="long">
-      <dc:description>De rijke barones Van Calster wordt bij een inbraak vermoord, maar vreemd genoeg worden maar weinig zaken gestolen in haar kasteel. De barones had een veel jongere minnaar, de zogezegde landjonker Hendrik Palfijn, en leefde in onmin met haar zoon Didier. Beide mannen azen op het bezit van de barone, en delen een interesse in Sylvia, een model uit het Oostblok dat het in het Westen wil 'maken'.</dc:description>
+      <dc:description>Gast: Koen De Bouw
+
+Koen De Bouw kiest voor een tekst uit 'De boer die sterft' van Karel van de Woestijne.</dc:description>
     </ebu:description>
     <ebu:description typeDefinition="season">
-      <dc:description>4</dc:description>
+      <dc:description>6</dc:description>
     </ebu:description>
     <ebu:description typeDefinition="comment">
-      <dc:description />
+      <dc:description/>
     </ebu:description>
     <ebu:description typeDefinition="cast">
-      <dc:description>
-        Met: Hubert Damen (Witse), Inge Paulussen (Sam Deconinck), Daan Hugaert (Romain Van Deun), Marc Stroobants (Rudy Dams), Dirk Tuypens (Peter Wijtinckx), Els Olaerts (Annemie Nachtegaele) e.a.
-        Gastacteurs: Katelijne Verbeke (Dokter Véronique Maes), Roel Vanderstukken (Kris), Kristine Van Pellicom (Hazel Ruysselede), Rita Smets (Angèle Van Calster), Gene Bervoets (Hendrik Palfijn), Robert De La Haye (Didier Van Calster) e.a.
-      </dc:description>
+      <dc:description>Helsen Wim</dc:description>
     </ebu:description>
     <ebu:description typeDefinition="category">
       <dc:description>algemeen</dc:description>
     </ebu:description>
     <ebu:description typeDefinition="categoryTrailer">
-      <dc:description />
+      <dc:description/>
     </ebu:description>
     <ebu:description typeDefinition="productionMethod">
-      <dc:description>intern</dc:description>
+      <dc:description>extern</dc:description>
     </ebu:description>
     <ebu:description typeDefinition="status">
       <dc:description>gearchiveerd</dc:description>
@@ -71,36 +74,60 @@
       <dc:description>false</dc:description>
     </ebu:description>
     <ebu:description typeDefinition="historicalFormat">
-      <dc:description />
+      <dc:description/>
     </ebu:description>
     <ebu:description typeDefinition="duration">
-      <dc:description>00:55:14:00</dc:description>
+      <dc:description>00:13:18:10</dc:description>
     </ebu:description>
     <ebu:description typeDefinition="rights">
-      <dc:description />
+      <dc:description/>
     </ebu:description>
     <ebu:description typeDefinition="rightsType">
-      <dc:description />
+      <dc:description/>
     </ebu:description>
     <ebu:publisher>
       <ebu:organisationDetails>
-        <ebu:organisationName />
+        <ebu:organisationName/>
       </ebu:organisationDetails>
-      <ebu:role typeDefinition="publisher" />
+      <ebu:role typeDefinition="publisher"/>
     </ebu:publisher>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Helsen Wim</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="presenter"/>
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Van Hove Annemie</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="producer"/>
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Vanderlinden Katrien</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="director"/>
+    </ebu:contributor>
+    <ebu:contributor>
+      <ebu:contactDetails>
+        <ebu:name>Couvreur Walter</ebu:name>
+      </ebu:contactDetails>
+      <ebu:role typeDefinition="onbepaald"/>
+    </ebu:contributor>
     <ebu:date>
-      <ebu:created />
-      <ebu:alternative startDate="2020-08-04" startTime="00:00:00" typeDefinition="mainDate" />
+      <ebu:created/>
+      <ebu:alternative startDate="2020-12-08" startTime="00:00:00" typeDefinition="mainDate"/>
     </ebu:date>
     <ebu:type>
-      <ebu:genre typeDefinition="fictie" />
-      <ebu:objectType typeDefinition="program" />
+      <ebu:genre typeDefinition="magazine"/>
+      <ebu:objectType typeDefinition="program"/>
     </ebu:type>
     <ebu:format formatDefinition="current">
       <ebu:videoFormat videoFormatDefinition="hires">
         <ebu:width>1920</ebu:width>
         <ebu:height>1080</ebu:height>
-        <ebu:frameRate>25</ebu:frameRate>
+        <ebu:frameRate factorDenominator="1" factorNumerator="25">25</ebu:frameRate>
         <ebu:aspectRatio>
           <ebu:factorNumerator>16</ebu:factorNumerator>
           <ebu:factorDenominator>9</ebu:factorDenominator>
@@ -110,20 +137,20 @@
         </ebu:codec>
         <ebu:bitRate>113664000</ebu:bitRate>
       </ebu:videoFormat>
-      <ebu:containerFormat formatDefinition="MXF OP1a" />
+      <ebu:containerFormat formatDefinition="MXF OP1a"/>
       <ebu:start>
-        <ebu:timecode>00:03:00:00</ebu:timecode>
+        <ebu:timecode>10:00:00:00</ebu:timecode>
       </ebu:start>
       <ebu:end>
-        <ebu:timecode>00:58:14:00</ebu:timecode>
+        <ebu:timecode>10:13:18:10</ebu:timecode>
       </ebu:end>
-      <ebu:technicalAttributeString typeDefinition="SOM">00:03:00:00</ebu:technicalAttributeString>
+      <ebu:technicalAttributeString typeDefinition="SOM">10:00:00:00</ebu:technicalAttributeString>
     </ebu:format>
     <ebu:format formatDefinition="current">
       <ebu:videoFormat videoFormatDefinition="lores">
         <ebu:width>1280</ebu:width>
         <ebu:height>720</ebu:height>
-        <ebu:frameRate>25</ebu:frameRate>
+        <ebu:frameRate factorDenominator="1" factorNumerator="25">25</ebu:frameRate>
         <ebu:aspectRatio>
           <ebu:factorNumerator>16</ebu:factorNumerator>
           <ebu:factorDenominator>9</ebu:factorDenominator>
@@ -131,43 +158,84 @@
         <ebu:codec>
           <ebu:name>H264</ebu:name>
         </ebu:codec>
-        <ebu:bitRate>2106680</ebu:bitRate>
+        <ebu:bitRate>3250432</ebu:bitRate>
       </ebu:videoFormat>
-      <ebu:containerFormat formatDefinition="MP4" />
+      <ebu:containerFormat formatDefinition="MP4"/>
       <ebu:start>
-        <ebu:timecode>00:03:00:00</ebu:timecode>
+        <ebu:timecode>10:00:00:00</ebu:timecode>
       </ebu:start>
       <ebu:end>
-        <ebu:timecode>00:58:14:00</ebu:timecode>
+        <ebu:timecode>10:13:18:10</ebu:timecode>
       </ebu:end>
-      <ebu:technicalAttributeString typeDefinition="SOM">00:03:00:00</ebu:technicalAttributeString>
+      <ebu:technicalAttributeString typeDefinition="SOM">10:00:00:00</ebu:technicalAttributeString>
     </ebu:format>
+    <ebu:format formatDefinition="current">
+      <ebu:dataFormat>
+        <ebu:captioningFormat formatDefinition="closed" language="nl"/>
+      </ebu:dataFormat>
+      <ebu:start>
+        <ebu:timecode>10:00:00:00</ebu:timecode>
+      </ebu:start>
+      <ebu:end>
+        <ebu:timecode>10:13:18:10</ebu:timecode>
+      </ebu:end>
+      <ebu:technicalAttributeString typeDefinition="SOM">10:00:00:00</ebu:technicalAttributeString>
+      <ebu:dateCreated startDate="2020-12-04" startTime="11:57:35"/>
+      <ebu:dateModified startDate="2020-12-04" startTime="11:57:35"/>
+    </ebu:format>
+    <ebu:identifier typeDefinition="historicalRecordNumber">
+      <dc:identifier/>
+    </ebu:identifier>
     <ebu:identifier typeDefinition="MEDIA_ID">
-      <dc:identifier>WP00026602</dc:identifier>
+      <dc:identifier>WP00181540</dc:identifier>
       <ebu:attributor>
         <ebu:organisationDetails>
           <ebu:organisationName>WON</ebu:organisationName>
         </ebu:organisationDetails>
       </ebu:attributor>
     </ebu:identifier>
-    <ebu:identifier typeDefinition="historicalRecordNumber">
-      <dc:identifier />
-    </ebu:identifier>
     <ebu:identifier formatLanguage="NL" typeDefinition="otIdClosed">
-      <dc:identifier />
+      <dc:identifier/>
     </ebu:identifier>
-    <ebu:relation internalRunningOrderNumber="6" typeDefinition="season" />
+    <ebu:relation internalRunningOrderNumber="22" typeDefinition="season"/>
+    <ebu:relation typeDefinition="Programma verwijst naar trailer">
+      <ebu:relationIdentifier>
+        <dc:identifier>WTC20502_00185545</dc:identifier>
+      </ebu:relationIdentifier>
+    </ebu:relation>
     <ebu:relation typeDefinition="season">
       <ebu:relationIdentifier>
-        <dc:identifier>4488222529</dc:identifier>
+        <dc:identifier>922552729527</dc:identifier>
       </ebu:relationIdentifier>
     </ebu:relation>
     <ebu:rights>
       <ebu:rightsHolder>
         <ebu:organisationDetails>
-          <ebu:organisationName />
+          <ebu:organisationName/>
         </ebu:organisationDetails>
       </ebu:rightsHolder>
     </ebu:rights>
+    <ebu:publicationHistory>
+      <ebu:publicationEvent>
+        <ebu:publicationDate>2020-12-09</ebu:publicationDate>
+        <ebu:publicationTime>00:00:00</ebu:publicationTime>
+        <ebu:publicationChannel typeDefinition="TV" typeLabel="CANVAS"/>
+      </ebu:publicationEvent>
+      <ebu:publicationEvent>
+        <ebu:publicationDate>2020-12-08</ebu:publicationDate>
+        <ebu:publicationTime>00:00:00</ebu:publicationTime>
+        <ebu:publicationChannel typeDefinition="TV" typeLabel="CANVAS"/>
+      </ebu:publicationEvent>
+      <ebu:publicationEvent>
+        <ebu:publicationDate>2020-12-08</ebu:publicationDate>
+        <ebu:publicationTime>00:00:00</ebu:publicationTime>
+        <ebu:publicationChannel typeDefinition="VRTNU" typeLabel="Onbepaald"/>
+      </ebu:publicationEvent>
+      <ebu:publicationEvent>
+        <ebu:publicationDate>2020-12-08</ebu:publicationDate>
+        <ebu:publicationTime>00:00:00</ebu:publicationTime>
+        <ebu:publicationChannel typeDefinition="VRTNU" typeLabel="Onbepaald"/>
+      </ebu:publicationEvent>
+    </ebu:publicationHistory>
   </viaa:metadata>
 </viaa:getMetadataResponse>
