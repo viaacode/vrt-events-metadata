@@ -1,0 +1,39 @@
+@startuml vrt-events-metadata
+
+autonumber
+
+title VRT Events Metadata
+
+participant rabbit as "RabbitMQ"
+participant vem as "vrt-events-metadata"
+participant mh as "MediaHaven"
+participant ftp as "FTP Server"
+participant mtd as "Metadata Transformation Service"
+
+activate vem
+vem -> rabbit: Listen to queue
+activate rabbit
+loop
+	rabbit --> vem: getMetadataResponse or metadataUpdatedEvent
+	deactivate rabbit
+	vem -> vem: Parse event
+	vem -> mh: Check if MH has fragment (media_id)
+	activate mh
+	mh -> vem: return fragment
+	vem -> vem: Transform metadata to collateral via XSLT
+	vem -> vem: Construct sidecar metadata
+	vem -> ftp: Transfer collateral to MH tra
+	activate ftp
+	vem -> ftp: Transfer sidecar XML to MH tra
+	deactivate ftp
+	vem -> mtd: Request to transform metadata
+	activate mtd
+	mtd --> vem: Return transformed metadata
+	deactivate mtd
+	vem -> mh: Update fragment with transformed metadata
+	mh --> vem: Return result
+	deactivate mh
+	deactivate vem
+end
+
+@enduml
