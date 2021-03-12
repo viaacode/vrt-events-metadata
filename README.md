@@ -12,6 +12,15 @@ The incoming metadata gets transformed using the [mtd-transformer](https://githu
 - Python 3.6+
 - Access to the [meemoo PyPi](http://do-prd-mvn-01.do.viaa.be:8081)
 
+## Diagrams
+
+<details>
+  <summary>Sequence diagram (click to expand)</summary>
+
+  ![VRT Events Metadata](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/viaacode/vrt-events-metadata/master/docs/v-e-m_sequence-diagram.plantuml&fmt=svg)
+
+</details>
+
 ## Usage
 
 1. Clone this repository with:
