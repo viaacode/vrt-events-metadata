@@ -217,6 +217,7 @@ class EventListener:
             open_ot_request = generate_make_subtitle_available_request_xml(
                 "open", event.metadata.media_id, event.metadata.media_id
             )
+            self.log.info(f"Requesting subtitles for media_id {event.metadata.media_id}")
             self.rabbit_client.send_message(
                 self.config["rabbitmq"]["get_subtitles_routing_key"],
                 open_ot_request,
@@ -227,6 +228,7 @@ class EventListener:
             closed_ot_request = generate_make_subtitle_available_request_xml(
                 "closed", event.metadata.media_id, event.metadata.media_id
             )
+            self.log.info(f"Requesting subtitles for media_id {event.metadata.media_id}")
             self.rabbit_client.send_message(
                 self.config["rabbitmq"]["get_subtitles_routing_key"],
                 closed_ot_request,
