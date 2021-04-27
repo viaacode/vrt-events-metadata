@@ -31,7 +31,9 @@ loop
 	mtd --> vem: Return transformed metadata
 	deactivate mtd
 	vem -> mh: Update fragment with transformed metadata
-	vem -> rabbit: Request subtitles
+        opt is video and subtitles are available
+	    vem -> rabbit: Request subtitles
+        end
 	mh --> vem: Return result
 	deactivate mh
 	deactivate vem
