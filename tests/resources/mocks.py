@@ -28,9 +28,13 @@ def mock_mediahaven(mocker):
         print(f"Initiating MH Client.")
         pass
 
+    def mock_get_fragment(self, query_key, value):
+        return { "TotalNrOfResults": 0 }
+
     from app.services.mediahaven import MediahavenClient
 
     mocker.patch.object(MediahavenClient, "__init__", mock_init)
+    mocker.patch.object(MediahavenClient, "get_fragment", mock_get_fragment)
 
 
 @pytest.fixture
