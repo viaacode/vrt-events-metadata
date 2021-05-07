@@ -45,7 +45,7 @@ class RabbitClient:
 
     def listen(self, on_message_callback, queue=None):
 
-        self.consumer_tag = 'Not yet created'
+        consumer_tag = 'Not yet created'
 
         if queue is None:
             queue = self.rabbitConfig["queue"]
@@ -58,10 +58,10 @@ class RabbitClient:
                     channel.basic_qos(
                         prefetch_count=self.prefetch_count, global_qos=False
                     )
-                    self.consumer_tag = channel.basic_consume(
+                    consumer_tag = channel.basic_consume(
                         queue=queue, on_message_callback=on_message_callback
                     )
-                    self.log.info(f"Consumer tag is: {self.consumer_tag}")
+                    self.log.info(f"Consumer tag is: {consumer_tag}")
 
                     channel.start_consuming()
                 except pika.exceptions.StreamLostError:
