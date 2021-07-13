@@ -5,7 +5,7 @@ from lxml import etree
 from app.helpers.xml_helper import transform_to_ebucore
 from tests.resources import resources
 from tests.resources.mocks import mock_ftp, mock_rabbit, mock_mediahaven
-from app.app import EventListener
+from app.app import EventListener, EventParser, NoResultException
 
 
 @pytest.fixture
@@ -29,3 +29,18 @@ def test_get_fragment(event_listener):
         fragment["Internal"]["FragmentId"]
         == "4885061ab2e047728558d24411dd44b8d89c983031994cec9d774270fb807f9697c9ac524f1a471da54c731ceac09bb0"
     )
+
+
+@patch('time.sleep', MagicMock())
+def test_get_items_for_media_id_retry(mocker, event_listener):
+    # Arrange
+    event_parser = EventParser()
+    xml = resources.load_xml_resource("metadataUpdatedEvent")
+    event = event_parser.get_event("metadataUpdatedEvent", xml)
+    spy = mocker.spy(event_listener.mh_client, 'get_fragment')
+
+    # Act and assert
+    with pytest.raises(NoResultException) as exception:
+        items = event_listener._get_items_for_media_id(event)
+
+    assert spy.call_count == 5

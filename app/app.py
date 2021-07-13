@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
 import time
-import uuid
-from datetime import datetime
 from io import BytesIO
 from hashlib import md5
+from retry import retry
 
 import requests
 from pika.exceptions import AMQPConnectionError
@@ -37,6 +35,10 @@ class NackException(Exception):
         self.kwargs = kwargs
 
 
+class NoResultException(Exception):
+    pass
+
+
 class EventListener:
     def __init__(self):
         configParser = ConfigParser()
@@ -65,6 +67,7 @@ class EventListener:
 
         return event
 
+    @retry(exceptions=NoResultException, delay=2, tries=5, backoff=2)
     def _get_items_for_media_id(self, event):
         try:
             result = self.mh_client.get_fragment(
@@ -78,9 +81,8 @@ class EventListener:
             )
 
         if result["TotalNrOfResults"] == 0:
-            raise NackException(
-                "Nothing found in MH for media id", media_id=event.metadata.media_id,
-            )
+            self.log.error(f"Nothing found in MH for media id {event.metadata.media_id}")
+            raise NoResultException
 
         return result["MediaDataList"]
 
