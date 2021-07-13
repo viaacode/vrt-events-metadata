@@ -22,6 +22,6 @@ six==1.15.0
 structlog==20.1.0
 toml==0.10.1
 typed-ast==1.4.1
-urllib3==1.25.9
+urllib3==1.26.5
 viaa-chassis==0.2.0rc1
 wcwidth==0.1.9
