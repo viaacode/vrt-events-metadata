@@ -23,7 +23,7 @@ def construct_sidecar(metadata: dict) -> bytes:
     root = etree.Element("MediaHAVEN_external_metadata")
     etree.SubElement(root, "title").text = f"Collateral: pid: {pid}"
 
-    description = f"""Metadata for essence:
+    description = f"""Metadata for item:
     - PID: {pid}
     - Media ID: {media_id}
     - CP: VRT
