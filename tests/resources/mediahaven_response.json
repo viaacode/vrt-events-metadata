@@ -624,7 +624,11 @@
                         "qssb3wtt67_closedOt"
                     ]
                 },
-                "dc_source": "closedOt/TESTJEVANRUDOLF2/TESTJEVANRUDOLF2_closedOt.xif",
+                "dc_identifier_localids": {
+                    "Bestandsnaam": [
+                        "closedOt/TESTJEVANRUDOLF2/TESTJEVANRUDOLF2_closedOt.xif"
+                    ]
+                },
                 "PID": "qssb3wtt67_closedOt",
                 "s3_bucket": "mam-collaterals",
                 "CP": "VRT",
