@@ -8,7 +8,12 @@ from datetime import datetime
 from io import BytesIO
 from hashlib import md5
 
+
 import requests
+from mediahaven import MediaHaven
+from mediahaven.resources.base_resource import MediaHavenPageObject
+from mediahaven.mediahaven import MediaHavenException
+from mediahaven.oauth2 import RequestTokenError, ROPCGrant 
 from pika.exceptions import AMQPConnectionError
 from requests.exceptions import HTTPError, RequestException
 from viaa.configuration import ConfigParser
@@ -20,7 +25,6 @@ from app.helpers.xml_helper import (
     construct_sidecar,
     generate_make_subtitle_available_request_xml,
 )
-from app.services.mediahaven import MediahavenClient
 from app.services.rabbit import RabbitClient
 from app.services.ftp import FTPClient
 from app.models.exceptions import InvalidEventException
@@ -43,7 +47,21 @@ class EventListener:
         self.log = logging.get_logger(__name__, config=configParser)
         self.config = configParser.app_cfg
         self.ftp_client = FTPClient(configParser)
-        self.mh_client = MediahavenClient(configParser)
+
+        mediahaven_config = self.config["mediahaven"]
+        client_id = mediahaven_config["client_id"]
+        client_secret = mediahaven_config["client_secret"]
+        user = mediahaven_config["username"]
+        password = mediahaven_config["password"]
+        url = mediahaven_config["host"]
+        grant = ROPCGrant(url, client_id, client_secret)
+        try:
+            grant.request_token(user, password)
+        except RequestTokenError as e:
+            self.log.error(e)
+            raise e
+
+        self.mediahaven_client = MediaHaven(url, grant)
         self.event_parser = EventParser()
 
         try:
@@ -67,26 +85,26 @@ class EventListener:
 
     def _get_items_for_media_id(self, event):
         try:
-            result = self.mh_client.get_fragment(
-                "dc_identifier_localid", event.metadata.media_id
+            result = self.mediahaven_client.records.search(
+                q=f"+(dc_identifier_localid:{event.metadata.media_id})",
             )
-        except RequestException as error:
+        except MediaHavenException as error:
             raise NackException(
                 "Error connecting to MediaHaven, retrying....",
                 error=error,
                 requeue=True,
             )
 
-        if result["TotalNrOfResults"] == 0:
+        if result.total_nr_of_results == 0:
             raise NackException(
                 "Nothing found in MH for media id", media_id=event.metadata.media_id,
             )
 
-        return result["MediaDataList"]
+        return result
 
-    def _get_fragment(self, items, event):
+    def _get_fragment(self, items: MediaHavenPageObject, event):
         try:
-            fragment = next(item for item in items if item["Internal"]["IsFragment"])
+            fragment = next(item for item in items.as_generator() if item.Internal.IsFragment)
 
             return fragment
         except StopIteration:
@@ -95,25 +113,25 @@ class EventListener:
                 media_id=event.metadata.media_id,
             )
 
-    def _delete_existing_metadata_collateral(self, items, fragment):
+    def _delete_existing_metadata_collateral(self, items: MediaHavenPageObject, fragment):
         try:
-            fragment_pid = fragment["Dynamic"]["PID"]
+            fragment_pid = fragment.Dynamic.PID
 
             collateral = next(
                 item
-                for item in items
-                if item["Administrative"]["ExternalId"] == f"{fragment_pid}_metadata"
+                for item in items.as_generator()
+                if item.Administrative.ExternalId == f"{fragment_pid}_metadata"
             )
 
-            collateral_fragment_id = collateral["Internal"]["FragmentId"]
+            collateral_fragment_id = collateral.Internal.FragmentId
 
             self.log.info(
                 f"Deleting existing metadata collateral for {fragment_pid}.",
                 pid=fragment_pid,
                 collateral_fragment_id=collateral_fragment_id,
             )
-
-            self.mh_client.delete_fragment(collateral_fragment_id)
+            
+            self.mediahaven_client.records.delete(collateral_fragment_id)
         except StopIteration:
             # No existing collateral, do nothing
             pass
@@ -132,7 +150,7 @@ class EventListener:
 
     def _put_metadata_collateral(self, fragment, event):
         try:
-            pid = fragment["Dynamic"]["PID"]
+            pid = fragment.Dynamic.PID
             collateral = transform_to_ebucore(event.metadata.raw)
 
             metadata_dict = {
@@ -191,11 +209,11 @@ class EventListener:
 
     def _update_metadata(self, fragment, metadata):
         try:
-            fragment_id = fragment["Internal"]["FragmentId"]
+            fragment_id = fragment.Internal.FragmentId
 
             self.log.info(f"Updating metadata in MediaHaven for {fragment_id}")
 
-            self.mh_client.update_metadata(fragment_id, metadata)
+            self.mediahaven_client.records.update(fragment_id, xml=metadata)
         except HTTPError as error:
             # Invalid metadata update
             raise NackException(
