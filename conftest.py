@@ -6,6 +6,8 @@ def env_setup(monkeypatch):
     monkeypatch.setenv("MEDIAHAVEN_USERNAME", "username")
     monkeypatch.setenv("MEDIAHAVEN_PASSWORD", "password")
     monkeypatch.setenv("MEDIAHAVEN_HOST", "host")
+    monkeypatch.setenv("MEDIAHAVEN_CLIENT_ID", "id")
+    monkeypatch.setenv("MEDIAHAVEN_CLIENT_SECRET", "secret")
     monkeypatch.setenv("FTP_HOST", "host")
     monkeypatch.setenv("FTP_USER", "username")
     monkeypatch.setenv("FTP_PASSWORD", "password")
