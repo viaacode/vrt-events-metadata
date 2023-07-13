@@ -1,5 +1,4 @@
-from lxml import etree
-from abc import ABC, abstractmethod
+from abc import ABC
 
 NAMESPACES = {
     "vrt": "http://www.vrt.be/mig/viaa/api",
@@ -35,7 +34,12 @@ class GetMetadataResponseEvent(Event):
 
 class MetadataUpdatedEvent(Event):
     def __init__(
-        self, event_type: str, metadata, timestamp: str, media_id: str, media_type: str,
+        self,
+        event_type: str,
+        metadata,
+        timestamp: str,
+        media_id: str,
+        media_type: str,
     ):
         super().__init__(event_type, metadata, timestamp, media_type)
         self.media_id = media_id

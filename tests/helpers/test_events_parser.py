@@ -1,6 +1,4 @@
 import pytest
-from app.models.event import Event
-from app.models.metadata import Metadata
 from app.helpers.events_parser import EventParser
 from app.models.exceptions import InvalidEventException
 
@@ -128,8 +126,8 @@ def test_parse_get_metadata_response_with_closedOT():
     event = event_parser.get_event("getMetadataResponse", xml)
 
     # ASSERT
-    assert event.metadata.openOT_available == False
-    assert event.metadata.closedOT_available == True
+    assert event.metadata.openOT_available is False
+    assert event.metadata.closedOT_available is True
 
 
 @pytest.mark.parametrize("event", INVALID_METADATA_RESPONSE_EVENTS)
@@ -180,7 +178,7 @@ def test_parse_calculate_resolution_xpath(event, res):
     resolution = event_parser._calculate_resolution_xpath()
 
     # ASSERT
-    
+
     assert resolution == (
         f"//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='{res}']]"
     )

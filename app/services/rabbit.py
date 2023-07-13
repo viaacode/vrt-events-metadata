@@ -38,7 +38,9 @@ class RabbitClient:
     def send_message(self, routing_key, body, exchange=""):
         try:
             self.channel.basic_publish(
-                exchange=exchange, routing_key=routing_key, body=body,
+                exchange=exchange,
+                routing_key=routing_key,
+                body=body,
             )
         except pika.exceptions.AMQPConnectionError as error:
             raise error

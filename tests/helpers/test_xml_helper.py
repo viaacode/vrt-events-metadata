@@ -1,7 +1,8 @@
-import pytest
-
-from lxml import etree
-from app.helpers.xml_helper import transform_to_ebucore, construct_sidecar, generate_make_subtitle_available_request_xml
+from app.helpers.xml_helper import (
+    transform_to_ebucore,
+    construct_sidecar,
+    generate_make_subtitle_available_request_xml,
+)
 from tests.resources import resources
 
 
@@ -31,6 +32,7 @@ def test_construct_sidecar():
     # ASSERT
     assert ref_xml == test_xml
 
+
 def test_construct_subtitle_request():
     # ARRANGE
     ot_type = "open"
@@ -39,7 +41,9 @@ def test_construct_subtitle_request():
     ref_xml = resources.load_xml_resource("makeSubtitleAvailableRequest")
 
     # ACT
-    test_xml = generate_make_subtitle_available_request_xml(ot_type, correlation_id, media_id)
+    test_xml = generate_make_subtitle_available_request_xml(
+        ot_type, correlation_id, media_id
+    )
 
     # ASSERT
     assert ref_xml == test_xml

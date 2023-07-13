@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
 import time
-import uuid
-from datetime import datetime
 from io import BytesIO
 from hashlib import md5
 
@@ -13,7 +10,7 @@ import requests
 from mediahaven import MediaHaven
 from mediahaven.resources.base_resource import MediaHavenPageObject
 from mediahaven.mediahaven import MediaHavenException
-from mediahaven.oauth2 import RequestTokenError, ROPCGrant 
+from mediahaven.oauth2 import RequestTokenError, ROPCGrant
 from pika.exceptions import AMQPConnectionError
 from requests.exceptions import HTTPError, RequestException
 from viaa.configuration import ConfigParser
@@ -31,7 +28,7 @@ from app.models.exceptions import InvalidEventException
 
 
 class NackException(Exception):
-    """ Exception raised when there is a situation in which handling
+    """Exception raised when there is a situation in which handling
     of the event should be stopped.
     """
 
@@ -78,7 +75,9 @@ class EventListener:
             self.log.info(f"Got an {event_type} for {event.metadata.media_id}.")
         except InvalidEventException as error:
             raise NackException(
-                "Unable to parse the incoming event", error=error, body=body,
+                "Unable to parse the incoming event",
+                error=error,
+                body=body,
             )
 
         return event
@@ -97,14 +96,17 @@ class EventListener:
 
         if result.total_nr_of_results == 0:
             raise NackException(
-                "Nothing found in MH for media id", media_id=event.metadata.media_id,
+                "Nothing found in MH for media id",
+                media_id=event.metadata.media_id,
             )
 
         return result
 
     def _get_fragment(self, items: MediaHavenPageObject, event):
         try:
-            fragment = next(item for item in items.as_generator() if item.Internal.IsFragment)
+            fragment = next(
+                item for item in items.as_generator() if item.Internal.IsFragment
+            )
 
             return fragment
         except StopIteration:
@@ -113,7 +115,9 @@ class EventListener:
                 media_id=event.metadata.media_id,
             )
 
-    def _delete_existing_metadata_collateral(self, items: MediaHavenPageObject, fragment):
+    def _delete_existing_metadata_collateral(
+        self, items: MediaHavenPageObject, fragment
+    ):
         try:
             fragment_pid = fragment.Dynamic.PID
 
@@ -130,7 +134,7 @@ class EventListener:
                 pid=fragment_pid,
                 collateral_fragment_id=collateral_fragment_id,
             )
-            
+
             self.mediahaven_client.records.delete(collateral_fragment_id)
         except StopIteration:
             # No existing collateral, do nothing
@@ -235,7 +239,9 @@ class EventListener:
             open_ot_request = generate_make_subtitle_available_request_xml(
                 "open", event.metadata.media_id, event.metadata.media_id
             )
-            self.log.info(f"Requesting subtitles for media_id {event.metadata.media_id}")
+            self.log.info(
+                f"Requesting subtitles for media_id {event.metadata.media_id}"
+            )
             self.rabbit_client.send_message(
                 self.config["rabbitmq"]["get_subtitles_routing_key"],
                 open_ot_request,
@@ -246,7 +252,9 @@ class EventListener:
             closed_ot_request = generate_make_subtitle_available_request_xml(
                 "closed", event.metadata.media_id, event.metadata.media_id
             )
-            self.log.info(f"Requesting subtitles for media_id {event.metadata.media_id}")
+            self.log.info(
+                f"Requesting subtitles for media_id {event.metadata.media_id}"
+            )
             self.rabbit_client.send_message(
                 self.config["rabbitmq"]["get_subtitles_routing_key"],
                 closed_ot_request,
@@ -254,15 +262,14 @@ class EventListener:
             )
 
     def _handle_nack_exception(self, nack_exception, channel, delivery_tag):
-        """ Log an error and send a nack to rabbit """
+        """Log an error and send a nack to rabbit"""
         self.log.error(nack_exception.message, **nack_exception.kwargs)
         if nack_exception.requeue:
             time.sleep(10)
         channel.basic_nack(delivery_tag=delivery_tag, requeue=nack_exception.requeue)
 
     def handle_message(self, channel, method, properties, body):
-        """Main method that will handle the incoming messages.
-        """
+        """Main method that will handle the incoming messages."""
         try:
             event = self._parse_event(method, properties, body)
 

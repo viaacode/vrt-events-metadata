@@ -1,4 +1,3 @@
-from lxml import etree
 from app.models.exceptions import InvalidEventException
 from abc import ABC, abstractmethod
 
@@ -48,7 +47,7 @@ class VideoMetadata(Metadata):
     def _validate_metadata(self):
         if bool(self.soc) ^ bool(self.eoc):
             raise InvalidEventException(
-                f"Only SOC or EOC is present. They should both be present or none at all."
+                "Only SOC or EOC is present. They should both be present or none at all."
             )
 
         duration_frames = self.__timecode_to_frames(self.duration, self.framerate)
@@ -73,7 +72,7 @@ class VideoMetadata(Metadata):
 
         if timecodes != sorted(timecodes):
             raise InvalidEventException(
-                f"Something is wrong with the SOM, SOC, EOC, EOM order."
+                "Something is wrong with the SOM, SOC, EOC, EOM order."
             )
 
     def __timecode_to_frames(self, timecode: str, framerate: int) -> int:
@@ -81,9 +80,9 @@ class VideoMetadata(Metadata):
             hours, minutes, seconds, frames = [
                 int(part) for part in timecode.split(":")
             ]
-        except (TypeError, AttributeError, ValueError) as error:
+        except (TypeError, AttributeError, ValueError):
             raise InvalidEventException(
-                f"Invalid timecode in the event.", timecode=timecode
+                "Invalid timecode in the event.", timecode=timecode
             )
 
         return (hours * 3600 + minutes * 60 + seconds) * framerate + frames

@@ -1,10 +1,7 @@
 import pytest
-from unittest.mock import patch, MagicMock
 
-from lxml import etree
 from mediahaven.mocks.base_resource import MediaHavenPageObjectJSONMock
 
-from app.helpers.xml_helper import transform_to_ebucore
 from tests.resources import resources
 from tests.resources.mocks import mock_ftp, mock_rabbit, mock_mediahaven
 from app.app import EventListener
@@ -12,7 +9,7 @@ from app.app import EventListener
 
 @pytest.fixture
 def event_listener(mock_ftp, mock_rabbit, mock_mediahaven):
-    """ Creates an event listener with mocked rabbit client, MH client and
+    """Creates an event listener with mocked rabbit client, MH client and
     FTP client.
     """
     return EventListener()
