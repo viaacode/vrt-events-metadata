@@ -217,7 +217,12 @@ class EventListener:
 
             self.log.info(f"Updating metadata in MediaHaven for {fragment_id}")
 
-            self.mediahaven_client.records.update(fragment_id, xml=metadata)
+            self.mediahaven_client.records.update(
+                fragment_id,
+                metadata=metadata,
+                metadata_content_type="application/xml",
+                reason="[VRT-events-metadata] Metadata updated",
+            )
         except HTTPError as error:
             # Invalid metadata update
             raise NackException(
