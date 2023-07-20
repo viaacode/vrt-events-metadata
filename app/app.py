@@ -92,9 +92,15 @@ class EventListener:
             time.sleep(SLEEP_TIME)
         except MediaHavenException as error:
             raise NackException(
-                "Error connecting to MediaHaven, retrying....",
+                "Failed to search records in MediaHaven.",
                 error=error,
+                media_id=event.metadata.media_id,
+            )
+        except RequestException as error:
+            raise NackException(
+                "Error connecting to MediaHaven, retrying....",
                 requeue=True,
+                error=error,
             )
 
         if result.total_nr_of_results == 0:
@@ -143,7 +149,7 @@ class EventListener:
         except StopIteration:
             # No existing collateral, do nothing
             pass
-        except HTTPError as error:
+        except MediaHavenException as error:
             raise NackException(
                 "Failed to delete collateral in MediaHaven.",
                 error=error,
@@ -228,7 +234,7 @@ class EventListener:
                 reason="[VRT-events-metadata] Metadata updated",
             )
             time.sleep(SLEEP_TIME)
-        except HTTPError as error:
+        except MediaHavenException as error:
             # Invalid metadata update
             raise NackException(
                 "Failed to update metadata in MediaHaven.",
