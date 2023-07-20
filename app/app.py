@@ -26,6 +26,8 @@ from app.services.rabbit import RabbitClient
 from app.services.ftp import FTPClient
 from app.models.exceptions import InvalidEventException
 
+SLEEP_TIME = 0.7
+
 
 class NackException(Exception):
     """Exception raised when there is a situation in which handling
@@ -87,6 +89,7 @@ class EventListener:
             result = self.mediahaven_client.records.search(
                 q=f"+(dc_identifier_localid:{event.metadata.media_id})",
             )
+            time.sleep(SLEEP_TIME)
         except MediaHavenException as error:
             raise NackException(
                 "Error connecting to MediaHaven, retrying....",
@@ -136,6 +139,7 @@ class EventListener:
             )
 
             self.mediahaven_client.records.delete(collateral_fragment_id)
+            time.sleep(SLEEP_TIME)
         except StopIteration:
             # No existing collateral, do nothing
             pass
@@ -223,6 +227,7 @@ class EventListener:
                 metadata_content_type="application/xml",
                 reason="[VRT-events-metadata] Metadata updated",
             )
+            time.sleep(SLEEP_TIME)
         except HTTPError as error:
             # Invalid metadata update
             raise NackException(
