@@ -18,12 +18,9 @@ from viaa.observability import logging
 
 from app.helpers.events_parser import EventParser
 from app.helpers.xml_helper import (
-    transform_to_ebucore,
-    construct_sidecar,
     generate_make_subtitle_available_request_xml,
 )
 from app.services.rabbit import RabbitClient
-from app.services.ftp import FTPClient
 from app.models.exceptions import InvalidEventException
 
 SLEEP_TIME = 0.7
@@ -45,7 +42,6 @@ class EventListener:
         configParser = ConfigParser()
         self.log = logging.get_logger(__name__, config=configParser)
         self.config = configParser.app_cfg
-        self.ftp_client = FTPClient(configParser)
 
         mediahaven_config = self.config["mediahaven"]
         client_id = mediahaven_config["client_id"]
@@ -122,73 +118,6 @@ class EventListener:
             raise NackException(
                 "Fragment not found in MH for media id",
                 media_id=event.metadata.media_id,
-            )
-
-    def _delete_existing_metadata_collateral(
-        self, items: MediaHavenPageObject, fragment
-    ):
-        try:
-            fragment_pid = fragment.Dynamic.PID
-
-            collateral = next(
-                item
-                for item in items.as_generator()
-                if item.Administrative.ExternalId == f"{fragment_pid}_metadata"
-            )
-
-            collateral_fragment_id = collateral.Internal.FragmentId
-
-            self.log.info(
-                f"Deleting existing metadata collateral for {fragment_pid}.",
-                pid=fragment_pid,
-                collateral_fragment_id=collateral_fragment_id,
-            )
-
-            self.mediahaven_client.records.delete(collateral_fragment_id)
-            time.sleep(SLEEP_TIME)
-        except StopIteration:
-            # No existing collateral, do nothing
-            pass
-        except MediaHavenException as error:
-            raise NackException(
-                "Failed to delete collateral in MediaHaven.",
-                error=error,
-                collateral_fragment_id=collateral_fragment_id,
-            )
-        except RequestException as error:
-            raise NackException(
-                "Error connecting to MediaHaven, retrying....",
-                requeue=True,
-                error=error,
-            )
-
-    def _put_metadata_collateral(self, fragment, event):
-        try:
-            pid = fragment.Dynamic.PID
-            collateral = transform_to_ebucore(event.metadata.raw)
-
-            metadata_dict = {
-                "PID": pid,
-                "Md5": md5(BytesIO(collateral).getbuffer()).hexdigest(),
-                "MEDIA_ID": event.metadata.media_id,
-            }
-            sidecar = construct_sidecar(metadata_dict)
-
-            dest_filename = f"{pid}_metadata"
-            dest_path = f"/vrt/{self.config['ftp']['destination-folder']}"
-
-            self.log.info(
-                f"Putting ebucore + sidecar to {dest_path} as {dest_filename}."
-            )
-
-            self.ftp_client.put(collateral, dest_path, f"{dest_filename}.ebu")
-            self.ftp_client.put(sidecar, dest_path, f"{dest_filename}.xml")
-        except Exception as error:
-            raise NackException(
-                "Failed to upload metadata as collateral.",
-                error=error,
-                pid=pid,
-                metadata=event.metadata.raw,
             )
 
     def _transform_metadata(self, event):
@@ -292,10 +221,6 @@ class EventListener:
             items = self._get_items_for_media_id(event)
 
             fragment = self._get_fragment(items, event)
-
-            self._delete_existing_metadata_collateral(items, fragment)
-
-            self._put_metadata_collateral(fragment, event)
 
             metadata = self._transform_metadata(event)
 
