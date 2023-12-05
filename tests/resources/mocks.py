@@ -24,13 +24,19 @@ def mock_rabbit(mocker):
 
 @pytest.fixture
 def mock_mediahaven(mocker):
-    def mock_init(self, config):
+    def mock_init(self, url, grant):
         print(f"Initiating MH Client.")
         pass
 
-    from app.services.mediahaven import MediahavenClient
+    def mock_request_token(self, user, password):
+        print(f"Mocking getting a token.")
+        pass
 
-    mocker.patch.object(MediahavenClient, "__init__", mock_init)
+    from mediahaven import MediaHaven
+    from mediahaven.oauth2 import ROPCGrant
+
+    mocker.patch.object(MediaHaven, "__init__", mock_init)
+    mocker.patch.object(ROPCGrant, "request_token", mock_request_token)
 
 
 @pytest.fixture

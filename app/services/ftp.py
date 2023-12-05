@@ -1,5 +1,4 @@
 # System imports
-import os
 from io import BytesIO
 from ftplib import FTP as BuiltinFTP
 from urllib.parse import urlparse
