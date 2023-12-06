@@ -62,6 +62,7 @@ class EventListener:
 
         self.mediahaven_client = MediaHaven(url, grant)
         self.event_parser = EventParser()
+        self.queue_name = self.config["rabbitmq"]["queue"]
 
         try:
             self.rabbit_client = RabbitClient()
@@ -309,5 +310,5 @@ class EventListener:
 
     def start(self):
         # Start listening for incoming messages
-        self.log.info("Start to listen for incoming metadata events...")
+        self.log.info(f"Waiting for messages on queue {self.queue_name}")
         self.rabbit_client.listen(self.handle_message)
