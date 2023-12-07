@@ -3,12 +3,12 @@ import pytest
 from mediahaven.mocks.base_resource import MediaHavenPageObjectJSONMock
 
 from tests.resources import resources
-from tests.resources.mocks import mock_ftp, mock_rabbit, mock_mediahaven
+from tests.resources.mocks import mock_rabbit, mock_mediahaven
 from app.app import EventListener
 
 
 @pytest.fixture
-def event_listener(mock_ftp, mock_rabbit, mock_mediahaven):
+def event_listener(mock_rabbit, mock_mediahaven):
     """Creates an event listener with mocked rabbit client, MH client and
     FTP client.
     """

@@ -37,14 +37,3 @@ def mock_mediahaven(mocker):
 
     mocker.patch.object(MediaHaven, "__init__", mock_init)
     mocker.patch.object(ROPCGrant, "request_token", mock_request_token)
-
-
-@pytest.fixture
-def mock_ftp(mocker):
-    def mock_init(self, config):
-        print(f"Initiating FTP Client.")
-        pass
-
-    from app.services.ftp import FTPClient
-
-    mocker.patch.object(FTPClient, "__init__", mock_init)
