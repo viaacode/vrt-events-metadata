@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time
-from io import BytesIO
+from io import StringIO
 from hashlib import md5
 
 
@@ -22,8 +22,11 @@ from app.helpers.xml_helper import (
 )
 from app.services.rabbit import RabbitClient
 from app.models.exceptions import InvalidEventException
+from lxml import etree
+from pathlib import Path
 
 SLEEP_TIME = 0.7
+XSLT_LOCATION = Path("app", "resources", "main.xslt")
 
 
 class NackException(Exception):
@@ -122,33 +125,31 @@ class EventListener:
 
     def _transform_metadata(self, event):
         try:
-            mtd_cfg = self.config["mtd-transformer"]
-            url = f"{mtd_cfg['host']}/transform/?transformation={mtd_cfg['transformation']}"
-            transformation_response = requests.post(
-                url,
-                data=event.metadata.raw,
-                headers={"Content-Type": "application/xml"},
-            )
-            transformation_response.raise_for_status()
+            # Parse the XSLT file
+            xslt_tree = etree.parse(str(XSLT_LOCATION))
+            xslt_transformer = etree.XSLT(xslt_tree)
 
+            # Parse the XML file
+            xml_tree = etree.parse(StringIO(event.metadata.raw))
+
+            # Apply the transformation
+            result_tree = xslt_transformer(xml_tree)
+
+            # Output the result
+            transformed_xml = etree.tostring(
+                result_tree, xml_declaration=True, pretty_print=True, encoding="utf-8"
+            ).decode("utf-8")
             self.log.info(
-                "Succesfuly transformed metadata using mtd-transformation-service.",
+                "Succesfully transformed metadata.",
                 media_id=event.metadata.media_id,
             )
-
-            return transformation_response.text
-        except HTTPError as error:
+        except Exception as error:
             raise NackException(
-                "Failed to transform metadata using mtd-transformation-service.",
+                "Failed to transform metadata.",
                 error=error,
                 metadata=event.metadata.raw,
             )
-        except RequestException as error:
-            raise NackException(
-                "Error connecting to mtd-transformation-service, retrying....",
-                requeue=True,
-                error=error,
-            )
+        return transformed_xml
 
     def _update_metadata(self, fragment, metadata):
         try:
