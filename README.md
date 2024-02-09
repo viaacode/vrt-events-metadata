@@ -9,7 +9,7 @@ The incoming metadata gets transformed using the [mtd-transformer](https://githu
 
 - Git
 - Docker (optional)
-- Python 3.6+
+- Python 3.10+
 - Access to the [meemoo PyPi](http://do-prd-mvn-01.do.viaa.be:8081)
 
 ## Diagrams
