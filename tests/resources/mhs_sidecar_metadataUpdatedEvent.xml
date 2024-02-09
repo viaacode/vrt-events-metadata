@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mhs:Sidecar xmlns:mhs="https://zeticon.mediahaven.com/metadata/19.2/mhs/" xmlns:mh="https://zeticon.mediahaven.com/metadata/19.2/mh/" xmlns:ns9="http://www.vrt.be/mig/viaa/api" xmlns:vrt="http://this.this.com" version="19.2">
+  <mhs:Descriptive>
+    <mh:Title>Rudolf was hier...</mh:Title>
+    <mh:Description>[Juergen Klopp, Megan Rapinoe and Lionel Messi win awards in Milano]?\nJuergen Klopp wins coach of the year, Megan Rapinoe best female player, Lionel Messi best male player and Jill Ellis best female coach at the FIFA BEST awards.\n?-Vs of BEST award exteriors\n?-Kylian Mbapp\xc3\xa9 exiting ceremony\n?-WS Sari Van Veenendaal\n?SOUNDBITE (English) Virgil Van Dyke:""\n?-Jill Ellis exiting ceremony\n?SOUNDBITE (German) Juergen Klopp: "The curse seems lifted, as of now things go only in the right direction. We will see. It was a very successful year for us. This is great but as i said on stage, if Maurizio (Pochettino) had won that final than someone else would be lifting this trophy. Well now I have it, so is life. This is not something I would ever have expected, not when I finished school, not when I finished my studies. This is a special moment"\n?-Lionel Messi exiting ceremony hastily\n?SOUNDBITE (English) Megan Rapinoe:""\n?-MS Lucy Bronze\n?SOUNDBITE (English) Luka Modric:""\n?-WS of La Scala theater with award\nOpnamelocatie: MilanoITALYEUROPE</mh:Description>
+  </mhs:Descriptive>
+  <mhs:Structural>
+    <mh:FragmentStartFrames>0</mh:FragmentStartFrames>
+    <mh:FragmentEndFrames>5121</mh:FragmentEndFrames>
+  </mhs:Structural>
+  <mhs:Dynamic>
+    <CP>VRT</CP>
+    <CP_id>OR-rf5kf25</CP_id>
+    <dc_identifier_localid>TESTJEVANRUDOLF</dc_identifier_localid>
+    <dc_identifier_localids type="list" strategy="OVERWRITE">
+      <MEDIA_ID>TESTJEVANRUDOLF</MEDIA_ID>
+    </dc_identifier_localids>
+    <dc_relations/>
+    <title>Rudolf was hier...</title>
+    <dc_titles type="list" strategy="OVERWRITE"> serie EVS</dc_titles>
+    <dcterms_created>2019-09-24</dcterms_created>
+    <dcterms_issued>2019-09-24</dcterms_issued>
+    <dc_creators type="list" strategy="OVERWRITE"/>
+    <dc_contributors type="list" strategy="OVERWRITE"/>
+    <dc_publishers type="list" strategy="OVERWRITE">
+      <Distributeur>EBU SPORT</Distributeur>
+    </dc_publishers>
+    <ebu_objectType>footage</ebu_objectType>
+    <description>[Juergen Klopp, Megan Rapinoe and Lionel Messi win awards in Milano]?\nJuergen Klopp wins coach of the year, Megan Rapinoe best female player, Lionel Messi best male player and Jill Ellis best female coach at the FIFA BEST awards.\n?-Vs of BEST award exteriors\n?-Kylian Mbapp\xc3\xa9 exiting ceremony\n?-WS Sari Van Veenendaal\n?SOUNDBITE (English) Virgil Van Dyke:""\n?-Jill Ellis exiting ceremony\n?SOUNDBITE (German) Juergen Klopp: "The curse seems lifted, as of now things go only in the right direction. We will see. It was a very successful year for us. This is great but as i said on stage, if Maurizio (Pochettino) had won that final than someone else would be lifting this trophy. Well now I have it, so is life. This is not something I would ever have expected, not when I finished school, not when I finished my studies. This is a special moment"\n?-Lionel Messi exiting ceremony hastily\n?SOUNDBITE (English) Megan Rapinoe:""\n?-MS Lucy Bronze\n?SOUNDBITE (English) Luka Modric:""\n?-WS of La Scala theater with award\nOpnamelocatie: MilanoITALYEUROPE</description>
+    <dc_description_lang/>
+    <dc_description_ondertitels/>
+    <dc_description_programma/>
+    <dc_description_cast/>
+    <dc_description_transcriptie/>
+    <dc_description_categorie>sport</dc_description_categorie>
+    <dc_types type="list" strategy="OVERWRITE">
+      <multiselect/>
+    </dc_types>
+    <dc_coverages/>
+    <dc_subjects type="list" strategy="OVERWRITE">
+      <Trefwoord/>
+    </dc_subjects>
+    <dc_languages/>
+    <dc_rights_licenses type="list" strategy="OVERWRITE">
+      <multiselect>BEZOEKERTOOL-CONTENT</multiselect>
+      <multiselect>BEZOEKERTOOL-METADATA-ALL</multiselect>
+    </dc_rights_licenses>
+    <dc_rights_rightsOwners/>
+    <dc_rights_rightsHolders type="list" strategy="OVERWRITE">
+      <Licentiehouder>Rechtenhouder: ZZEBU\nRechteninfo: The material may be used only by Eurovision active members and sub-licensees.\n</Licentiehouder>
+    </dc_rights_rightsHolders>
+    <dc_rights_credit/>
+    <dc_rights_comment/>
+    <vrt_status>nieuw</vrt_status>
+    <vrt_has_been_broadcasted>true</vrt_has_been_broadcasted>
+    <type_viaa>video</type_viaa>
+    <vrt_production_method/>
+    <dc_rights/>
+  </mhs:Dynamic>
+</mhs:Sidecar>

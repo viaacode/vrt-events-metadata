@@ -32,19 +32,37 @@ def test_get_fragment(event_listener):
     )
 
 
-def test_transform_metadata(event_listener):
+@pytest.mark.parametrize(
+    "xml_resource, event_type, expected_xml, ",
+    [
+        (
+            "getMetadataResponse",
+            "getMetadataResponse",
+            "mhs_sidecar_getMetadataResponse",
+        ),
+        (
+            "getMetadataResponse2",
+            "getMetadataResponse",
+            "mhs_sidecar_getMetadataResponse2",
+        ),
+        (
+            "metadataUpdatedEvent",
+            "metadataUpdatedEvent",
+            "mhs_sidecar_metadataUpdatedEvent",
+        ),
+    ],
+)
+def test_transform_metadata(event_listener, xml_resource, event_type, expected_xml):
     # ARRANGE
-    xml = resources.load_xml_resource("getMetadataResponse2")
+    xml = resources.load_xml_resource(xml_resource)
     event_parser = EventParser()
-    event = event_parser.get_event("getMetadataResponse", xml)
+    event = event_parser.get_event(event_type, xml)
     el = EventListener()
 
     # ACT
     transformed_xml = el._transform_metadata(event)
 
     # ASSERT
-    expected_xml = resources.load_xml_resource(
-        "mhs_sidecar_getMetadataResponse2"
-    ).decode("utf-8")
+    expected_xml = resources.load_xml_resource(expected_xml).decode("utf-8")
 
     assert transformed_xml == expected_xml
