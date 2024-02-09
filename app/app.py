@@ -143,6 +143,11 @@ class EventListener:
                 "Succesfully transformed metadata.",
                 media_id=event.metadata.media_id,
             )
+            self.log.debug(
+                "Transformed metadata",
+                media_id=event.metadata.media_id,
+                metadata=transformed_xml,
+            )
         except Exception as error:
             raise NackException(
                 "Failed to transform metadata.",
