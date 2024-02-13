@@ -17,7 +17,9 @@
     </dc_identifier_localids>
     <dc_relations/>
     <title>Winners FIFA BEST Awards</title>
-    <dc_titles type="list" strategy="OVERWRITE"> serie EVS</dc_titles>
+    <dc_titles type="list" strategy="OVERWRITE">
+      <serie>EVS</serie>
+    </dc_titles>
     <dcterms_created>2019-09-24</dcterms_created>
     <dcterms_issued>2019-09-24</dcterms_issued>
     <dc_creators type="list" strategy="OVERWRITE"/>

@@ -17,7 +17,9 @@
     </dc_identifier_localids>
     <dc_relations/>
     <title>xxx Title xxx</title>
-    <dc_titles type="list" strategy="OVERWRITE"> serie Belga</dc_titles>
+    <dc_titles type="list" strategy="OVERWRITE">
+      <serie>Belga</serie>
+    </dc_titles>
     <dcterms_created>2020-08-27</dcterms_created>
     <dcterms_issued>2020-08-27</dcterms_issued>
     <dc_creators type="list" strategy="OVERWRITE"/>

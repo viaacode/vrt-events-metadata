@@ -22,10 +22,10 @@
     <xsl:template name="vrt:englishToDutch">
         <xsl:param name="word" />
         <xsl:choose>
-            <xsl:when test="$word='season'"> seizoen </xsl:when>
-            <xsl:when test="$word='series'"> serie </xsl:when>
-            <xsl:when test="$word='program'"> programma </xsl:when>
-            <xsl:otherwise> alternatief </xsl:otherwise>
+            <xsl:when test="$word='season'">seizoen</xsl:when>
+            <xsl:when test="$word='series'">serie</xsl:when>
+            <xsl:when test="$word='program'">programma</xsl:when>
+            <xsl:otherwise>alternatief</xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
@@ -100,11 +100,15 @@
                 <dc_titles type="list" strategy="OVERWRITE">
                     <xsl:for-each select="//ebu:alternativeTitle">
                         <xsl:if test="normalize-space(current()/dc:title)">
-                            <xsl:call-template name="vrt:englishToDutch">
-                                <xsl:with-param name="word" select="current()/@typeDefinition" />
-                            </xsl:call-template>
-                            <xsl:value-of
-                                select="current()/dc:title" />
+                            <xsl:variable name="title_type">
+                                <xsl:call-template name="vrt:englishToDutch">
+                                    <xsl:with-param name="word" select="current()/@typeDefinition" />
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <xsl:element
+                                name="{$title_type}">
+                                <xsl:value-of select="current()/dc:title" />
+                            </xsl:element>
                         </xsl:if>
                     </xsl:for-each>
                 </dc_titles>
