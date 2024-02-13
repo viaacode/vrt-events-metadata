@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mhs:Sidecar xmlns:mhs="https://zeticon.mediahaven.com/metadata/19.2/mhs/" xmlns:mh="https://zeticon.mediahaven.com/metadata/19.2/mh/" xmlns:ns9="http://www.vrt.be/mig/viaa/api" xmlns:vrt="http://this.this.com" version="19.2">
+  <mhs:Descriptive>
+    <mh:Title>xxx Title xxx</mh:Title>
+    <mh:Description>xxx Description xxx</mh:Description>
+  </mhs:Descriptive>
+  <mhs:Structural>
+    <mh:FragmentStartFrames>0</mh:FragmentStartFrames>
+    <mh:FragmentEndFrames>1994</mh:FragmentEndFrames>
+  </mhs:Structural>
+  <mhs:Dynamic>
+    <CP>VRT</CP>
+    <CP_id>OR-rf5kf25</CP_id>
+    <dc_identifier_localid>TEST_ID</dc_identifier_localid>
+    <dc_identifier_localids type="list" strategy="OVERWRITE">
+      <MEDIA_ID>TEST_ID</MEDIA_ID>
+    </dc_identifier_localids>
+    <dc_relations/>
+    <title>xxx Title xxx</title>
+    <dc_titles type="list" strategy="OVERWRITE">
+      <serie>Belga</serie>
+    </dc_titles>
+    <dcterms_created>2020-08-27</dcterms_created>
+    <dcterms_issued>2020-08-27</dcterms_issued>
+    <dc_creators type="list" strategy="OVERWRITE"/>
+    <dc_contributors type="list" strategy="OVERWRITE"/>
+    <dc_publishers type="list" strategy="OVERWRITE">
+      <Distributeur>belga</Distributeur>
+    </dc_publishers>
+    <ebu_objectType>footage</ebu_objectType>
+    <description>xxx Description xxx</description>
+    <dc_description_lang/>
+    <dc_description_ondertitels/>
+    <dc_description_programma/>
+    <dc_description_cast/>
+    <dc_description_transcriptie/>
+    <dc_description_categorie>nieuws en duiding</dc_description_categorie>
+    <dc_types type="list" strategy="OVERWRITE">
+      <multiselect/>
+    </dc_types>
+    <dc_coverages/>
+    <dc_subjects type="list" strategy="OVERWRITE">
+      <Trefwoord/>
+    </dc_subjects>
+    <dc_languages/>
+    <dc_rights_licenses type="list" strategy="OVERWRITE">
+      <multiselect>BEZOEKERTOOL-CONTENT</multiselect>
+      <multiselect>BEZOEKERTOOL-METADATA-ALL</multiselect>
+    </dc_rights_licenses>
+    <dc_rights_rightsOwners/>
+    <dc_rights_rightsHolders type="list" strategy="OVERWRITE">
+      <Licentiehouder>xxx</Licentiehouder>
+    </dc_rights_rightsHolders>
+    <dc_rights_credit/>
+    <dc_rights_comment/>
+    <vrt_status>nieuw</vrt_status>
+    <vrt_has_been_broadcasted>true</vrt_has_been_broadcasted>
+    <type_viaa>video</type_viaa>
+    <vrt_production_method/>
+    <dc_rights/>
+  </mhs:Dynamic>
+</mhs:Sidecar>

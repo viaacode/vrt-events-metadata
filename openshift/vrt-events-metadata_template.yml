@@ -121,7 +121,6 @@ objects:
       RABBITMQ_PREFETCH_COUNT: some_value
       RABBITMQ_EXCHANGE: some_value
       RABBITMQ_GET_SUBTITLES_ROUTING_KEY: some_value
-      MTD_TRANSFORMER: some_value
       MEDIAHAVEN_PASSWORD: some_value
       MEDIAHAVEN_HOST: some_value
       MEDIAHAVEN_USERNAME: some_value

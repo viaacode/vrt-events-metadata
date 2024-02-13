@@ -2,7 +2,7 @@ viaa:
     logging:
         level: DEBUG
 app:
-    mediahaven: 
+    mediahaven:
         host: !ENV ${MEDIAHAVEN_HOST}
         username: !ENV ${MEDIAHAVEN_USERNAME}
         password: !ENV ${MEDIAHAVEN_PASSWORD}
@@ -17,9 +17,6 @@ app:
         exchange: !ENV ${RABBITMQ_EXCHANGE}
         get_subtitles_routing_key: !ENV ${RABBITMQ_GET_SUBTITLES_ROUTING_KEY}
         prefetch_count: !ENV ${RABBITMQ_PREFETCH_COUNT}
-    mtd-transformer: 
-        host: !ENV ${MTD_TRANSFORMER}
-        transformation: OR-rf5kf25
     mam-update-service:
         queue: mam-update-requests
     ftp:
@@ -27,5 +24,3 @@ app:
         user: !ENV ${FTP_USER}
         password: !ENV ${FTP_PASSWORD}
         destination-folder: DISK-SHARE-EVENTS
-
-
