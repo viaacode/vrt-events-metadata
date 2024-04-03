@@ -25,18 +25,40 @@
     <xsl:variable name="StartOfMedia">
         <xsl:call-template name="vrt:timecodeToFrames">
             <xsl:with-param name="time" select="(//ebu:format[@formatDefinition='current'])[1]/ebu:technicalAttributeString[@typeDefinition='SOM']"/>
-            <xsl:with-param name="StartOfMedia" select="''"/>
         </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:variable name="StartOfContentFrames">
+        <xsl:choose>
+            <xsl:when test="(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode">
+                <xsl:call-template name="vrt:timecodeToFrames">
+                    <xsl:with-param name="time" select="(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>0</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="EndOfContentFrames">
+        <xsl:choose>
+            <xsl:when test="(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode">
+                <xsl:call-template name="vrt:timecodeToFrames">
+                    <xsl:with-param name="time" select="(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="vrt:timecodeToFrames">
+                    <xsl:with-param name="time" select="//ebu:description[@typeDefinition='duration']/dc:description"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:variable>
 
 
     <xsl:variable name="StartOfContent">
         <xsl:choose>
             <xsl:when test="(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode">
-                <xsl:call-template name="vrt:timecodeToFrames">
-                    <xsl:with-param name="time" select="(//ebu:format[@formatDefinition='current'])[1]/ebu:start/ebu:timecode"/>
-                    <xsl:with-param name="StartOfMedia" select="$StartOfMedia"/>
-                </xsl:call-template>
+                <xsl:value-of select="$StartOfContentFrames - $StartOfMedia"/>
             </xsl:when>
             <xsl:otherwise>0</xsl:otherwise>
         </xsl:choose>
@@ -45,16 +67,10 @@
     <xsl:variable name="EndOfContent">
         <xsl:choose>
             <xsl:when test="(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode">
-                <xsl:call-template name="vrt:timecodeToFrames">
-                    <xsl:with-param name="time" select="(//ebu:format[@formatDefinition='current'])[1]/ebu:end/ebu:timecode"/>
-                    <xsl:with-param name="StartOfMedia" select="$StartOfMedia"/>
-                </xsl:call-template>
+                <xsl:value-of select="$EndOfContentFrames - $StartOfMedia"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:call-template name="vrt:timecodeToFrames">
-                    <xsl:with-param name="time" select="//ebu:description[@typeDefinition='duration']/dc:description"/>
-                    <xsl:with-param name="StartOfMedia" select="$StartOfMedia"/>
-                </xsl:call-template>
+                <xsl:value-of select="$EndOfContentFrames"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -62,7 +78,6 @@
     <!-- Named template for timecode to frames conversion -->
     <xsl:template name="vrt:timecodeToFrames">
         <xsl:param name="time"/>
-        <xsl:param name="StartOfMedia"/>
         
         <xsl:variable name="hours" select="number(substring($time, 1, 2))"/>
         <xsl:variable name="minutes" select="number(substring($time, 4, 2))"/>
