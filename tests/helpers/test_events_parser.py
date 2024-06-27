@@ -81,7 +81,6 @@ def test_parse_get_metadata_response(event):
     assert event.media_type in ["audio", "video"]
 
 
-@pytest.mark.xfail
 @pytest.mark.parametrize("event", FAILED_METADATA_RESPONSE_EVENTS)
 def test_parse_failed_get_metadata_response(event):
     # ARRANGE

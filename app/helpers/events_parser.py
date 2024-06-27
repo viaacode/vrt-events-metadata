@@ -18,27 +18,31 @@ NAMESPACES = {
 class EventParser(object):
     def get_event(self, event_type: str, xml: bytes):
         self.event = self._parse_event(event_type, xml)
-        media_type = self._get_media_type()
-        metadata = self._parse_metadata(media_type)
-
-        timestamp = self._get_timestamp()
 
         if event_type == "getMetadataResponse":
-            correlation_id = self._get_correlation_id()
             status = self._get_status()
-
-            if status == "SUCCESS":
-                return GetMetadataResponseEvent(
-                    event_type, metadata, timestamp, correlation_id, status, media_type
-                )
-            else:
+            if status != "SUCCESS":
                 # TODO: report back to VRT
                 raise InvalidEventException(
                     f"getMetadataResponse status wasn't 'SUCCES': {status}"
                 )
 
+            correlation_id = self._get_correlation_id()
+
+            media_type = self._get_media_type()
+            metadata = self._parse_metadata(media_type)
+            timestamp = self._get_timestamp()
+
+            return GetMetadataResponseEvent(
+                event_type, metadata, timestamp, correlation_id, status, media_type
+            )
+
         if event_type == "metadataUpdatedEvent":
             media_id = self._get_media_id()
+
+            media_type = self._get_media_type()
+            metadata = self._parse_metadata(media_type)
+            timestamp = self._get_timestamp()
 
             return MetadataUpdatedEvent(
                 event_type, metadata, timestamp, media_id, media_type
