@@ -21,11 +21,11 @@ class EventParser(object):
         media_type = self._get_media_type()
         metadata = self._parse_metadata(media_type)
 
-        timestamp = self._get_xpath_from_event("./vrt:timestamp")
+        timestamp = self._get_timestamp()
 
         if event_type == "getMetadataResponse":
-            correlation_id = self._get_xpath_from_event("./vrt:correlationId")
-            status = self._get_xpath_from_event("./vrt:status")
+            correlation_id = self._get_correlation_id()
+            status = self._get_status()
 
             if status == "SUCCESS":
                 return GetMetadataResponseEvent(
@@ -38,7 +38,7 @@ class EventParser(object):
                 )
 
         if event_type == "metadataUpdatedEvent":
-            media_id = self._get_xpath_from_event("./vrt:mediaId")
+            media_id = self._get_media_id()
 
             return MetadataUpdatedEvent(
                 event_type, metadata, timestamp, media_id, media_type
@@ -57,6 +57,18 @@ class EventParser(object):
             return tree.xpath(f"/vrt:{event_type}", namespaces=NAMESPACES)[0]
         except IndexError:
             raise InvalidEventException(f"Event is not a '{event_type}'.")
+
+    def _get_timestamp(self) -> str:
+        return self._get_xpath_from_event("./vrt:timestamp")
+
+    def _get_correlation_id(self) -> str:
+        return self._get_xpath_from_event("./vrt:correlationId")
+
+    def _get_status(self) -> str:
+        return self._get_xpath_from_event("./vrt:status")
+
+    def _get_media_id(self) -> str:
+        return self._get_xpath_from_event("./vrt:mediaId")
 
     def _get_media_type(self) -> str:
         is_video = bool(
