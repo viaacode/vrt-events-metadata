@@ -29,6 +29,11 @@ VALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponseHiresMissing",
 ]
 
+FAILED_METADATA_RESPONSE_EVENTS = [
+    "getMetadataResponseFailedMinimal", # no metadata and status FAILED
+    "getMetadataResponseFailed", # valid metadata but status FAILED
+]
+
 VALID_TIMECODES = [
     ("00:00:00:00", 25, 0),
     ("00:00:00:01", 50, 1),
@@ -74,6 +79,18 @@ def test_parse_get_metadata_response(event):
     assert event.correlation_id == "test_correlation"
     assert event.metadata.raw is not None
     assert event.media_type in ["audio", "video"]
+
+
+@pytest.mark.xfail
+@pytest.mark.parametrize("event", FAILED_METADATA_RESPONSE_EVENTS)
+def test_parse_failed_get_metadata_response(event):
+    # ARRANGE
+    xml = resources.load_xml_resource(event)
+    event_parser = EventParser()
+
+    # ACT/ASSERT
+    with pytest.raises(InvalidEventException, match=r"^getMetadataResponse status wasn't 'SUCCES': .*$"):
+        event = event_parser.get_event("getMetadataResponse", xml)
 
 
 def test_parse_metadata_updated_event():
