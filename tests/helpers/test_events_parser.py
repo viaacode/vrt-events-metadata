@@ -29,6 +29,11 @@ VALID_METADATA_RESPONSE_EVENTS = [
     "getMetadataResponseHiresMissing",
 ]
 
+FAILED_METADATA_RESPONSE_EVENTS = [
+    "getMetadataResponseFailedMinimal", # no metadata and status FAILED
+    "getMetadataResponseFailed", # valid metadata but status FAILED
+]
+
 VALID_TIMECODES = [
     ("00:00:00:00", 25, 0),
     ("00:00:00:01", 50, 1),
@@ -74,6 +79,17 @@ def test_parse_get_metadata_response(event):
     assert event.correlation_id == "test_correlation"
     assert event.metadata.raw is not None
     assert event.media_type in ["audio", "video"]
+
+
+@pytest.mark.parametrize("event", FAILED_METADATA_RESPONSE_EVENTS)
+def test_parse_failed_get_metadata_response(event):
+    # ARRANGE
+    xml = resources.load_xml_resource(event)
+    event_parser = EventParser()
+
+    # ACT/ASSERT
+    with pytest.raises(InvalidEventException, match=r"^getMetadataResponse status wasn't 'SUCCES': .*$"):
+        event = event_parser.get_event("getMetadataResponse", xml)
 
 
 def test_parse_metadata_updated_event():
@@ -136,7 +152,7 @@ def test_parse_invalid_get_metadata_response(event):
     xml = resources.load_xml_resource(event)
     event_parser = EventParser()
 
-    # ACT
+    # ACT/ASSERT
     with pytest.raises(InvalidEventException):
         event = event_parser.get_event("getMetadataResponse", xml)
 
@@ -162,7 +178,7 @@ def test_invalid_timecode_to_frames(timecode):
     event_parser = EventParser()
     event = event_parser.get_event("getMetadataResponse", xml)
 
-    # ACT
+    # ACT/ASSERT
     with pytest.raises(InvalidEventException):
         event.metadata._VideoMetadata__timecode_to_frames(timecode[0], timecode[1])
 
@@ -178,7 +194,6 @@ def test_parse_calculate_resolution_xpath(event, res):
     resolution = event_parser._calculate_resolution_xpath()
 
     # ASSERT
-
     assert resolution == (
         f"//ebu:format[@formatDefinition='current'][./ebu:videoFormat[@videoFormatDefinition='{res}']]"
     )

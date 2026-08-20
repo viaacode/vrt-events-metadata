@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<viaa:getMetadataResponse xmlns:viaa="http://www.vrt.be/mig/viaa/api" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:ebu="urn:ebu:metadata-schema:ebuCore_2012" xmlns:ns4="http://www.vrt.be/mig/viaa">
+  <viaa:timestamp>2023-07-13T16:02:40.180+02:00</viaa:timestamp>
+  <viaa:correlationId>AIM20284912</viaa:correlationId>
+  <viaa:status>FAILED</viaa:status>
+</viaa:getMetadataResponse>
